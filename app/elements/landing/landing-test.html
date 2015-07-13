@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Flamingo" />
+  <title>Flamingo</title>
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+  <!-- Chrome for Android theme color -->
+  <meta name="theme-color" content="#303F9F">
+
+  <!-- Tile color for Win8 -->
+  <meta name="msapplication-TileColor" content="#3372DF">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Flamingo">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Flamingo">
+
+  <script src="<?=site_url('js/bower_components/webcomponentsjs/webcomponents-lite.js')?>"></script>
+
+
+  <link rel="import" href="<?=site_url('js/bower_components/iron-flex-layout/classes/iron-flex-layout.html')?>">
+  <link rel="import" href="<?=site_url('js/bower_components/iron-pages/iron-pages.html')?>">
+  <link rel="import" href="<?=site_url('js/bower_components/iron-image/iron-image.html')?>">
+  <script src="<?=site_url('js/bower_components/page/page.js')?>"></script>
+  <script>
+    window.addEventListener('WebComponentsReady', function() {
+
+      page('/', function () {
+        app.route = 'en';
+      });
+
+      page('/en', function () {
+        app.route = 'en';
+      });
+
+      page('/kr', function () {
+        app.route = 'kr';
+      });    
+
+    });
+  </script>
+  <style>
+    iron-image {
+      width: 100%;
+      height: 700px;
+    }
+  </style>
+
+</head>
+
+<body unresolved class="fullbleed layout vertical">
+  <iron-pages attr-for-selected="data-route" selected="{{route}}">
+    <section data-route="en">
+      <div class="vertical-section">        
+        <iron-image src="<?=site_url('img/landing/ig_landing_1.jpg')?>" sizing="contain"></iron-image>           
+      </div>
+      <div class="vertical-section">
+        <iron-image src="<?=site_url('img/landing/ig_landing_2.jpg')?>" sizing="contain"></iron-image>           
+      </div>
+      <div class="vertical-section">
+        <iron-image src="<?=site_url('img/landing/ig_landing_3.jpg')?>" sizing="contain"></iron-image>           
+      </div>
+      <div class="vertical-section">
+        <iron-image src="<?=site_url('img/landing/ig_landing_4.jpg')?>" sizing="contain"></iron-image>           
+      </div>
+    </section>
+    <section data-route="kr">
+      <div class="vertical-section">        
+        <iron-image src="<?=site_url('img/landing/kr_landing_1.jpg')?>" sizing="contain"></iron-image>           
+      </div>
+      <div class="vertical-section">
+        <iron-image src="<?=site_url('img/landing/kr_landing_2.jpg')?>" sizing="contain"></iron-image>           
+      </div>
+      <div class="vertical-section">
+        <iron-image src="<?=site_url('img/landing/kr_landing_3.jpg')?>" sizing="contain"></iron-image>           
+      </div>
+      <div class="vertical-section">
+        <iron-image src="<?=site_url('img/landing/kr_landing_4.jpg')?>" sizing="contain"></iron-image>           
+      </div>
+    </section>
+  </iron-pages>
+</body>
+</html>
