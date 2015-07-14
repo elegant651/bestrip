@@ -22,6 +22,13 @@
 	        <x-pretty-json object=[[dinosaurs]]></x-pretty-json>	      
 	    </div>
 
+	    <div class="vertical-section">
+	    	<h3>Data push Test </h3>
+	    	<firebase-collection	          
+	    		id="fcTest"
+	          	location="https://luminous-heat-7725.firebaseio.com/questions"
+	          	data="{{questions}}"></firebase-collection>	          
+	        <button on-tap="pushTest">PushTest</button>
 	</template>
 </dom-module>
 <script>
@@ -30,6 +37,13 @@
 
 		properties: {
 
+		},
+
+		pushTest: function() {
+			var data = {
+				test: "testData"
+			};
+			this.$.fcTest.add(data);
 		}
 		
 	});
