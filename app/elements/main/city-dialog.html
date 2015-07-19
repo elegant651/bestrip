@@ -1,0 +1,36 @@
+
+<dom-module id="city-dialog">
+	<style>
+		#dlogCity {
+			@apply(--layout-vertical);
+		}
+
+		.cityWrapper {
+			width: 100%;
+			@apply(--layout-horizontal);
+		}
+	</style>
+	<template>
+		<paper-dialog id="dlogCity">
+			<div class="cityWrapper">
+				<div>city1</div>
+				<div>city2</div>
+			</div>
+			<div class="cityWrapper">
+				<div>city3</div>
+				<div>city4</div>
+			</div>
+		</paper-dialog>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: "city-dialog",
+
+		properties: {
+
+		}
+
+
+	});
+</script>

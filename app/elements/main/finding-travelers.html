@@ -1,0 +1,26 @@
+
+<dom-module id="finding-travelers">
+	<style>
+
+	</style>
+	<template>
+		<div class="vertical-section">
+			<template is="dom-repeat" items="[[travels]]" as="travel">
+				<div class="horizontal-section">
+					<iron-image></iron-image>
+					<div class="name"></div>
+					<paper-button>Request</paper-button> 
+				</div>
+			</template>			
+		</div>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: "finding-travelers",
+
+		properties: {
+
+		}
+	});
+</script>
