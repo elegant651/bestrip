@@ -74,6 +74,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <span>Home</span>
               </a>
 
+              <a data-route="register" href="/register">
+                <iron-icon icon="info"></iron-icon>
+                <span>Register Schedule</span>
+              </a>
+
+              <a data-route="search" href="/search">
+                <iron-icon icon="info"></iron-icon>
+                <span>Finding Schedule</span>
+              </a>
+
+              <a data-route="schedules" href="/schedules">
+                <iron-icon icon="info"></iron-icon>
+                <span>Listing Schedule</span>
+              </a>
+
               <a data-route="users" href="/users">
                 <iron-icon icon="info"></iron-icon>
                 <span>Users</span>
@@ -115,7 +130,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <!-- <firebase-data></firebase-data>                 -->
                 <register-schedule></register-schedule>
 
-
                 <p class="paper-font-subhead">You now have:</p>
                 <my-list></my-list>
 
@@ -125,13 +139,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <paper-material elevation="1">
                 <p class="paper-font-body2">This is another card.</p>
 
-              </paper-material>
+              </paper-material>              
 
-              <paper-material elevation="1" class="paper-font-body2">
-                <h1 id="license">License</h1>
-                
-              </paper-material>
+            </section>
 
+            <section data-route="register">
+
+            </section>
+
+            <section data-route="search">
+
+            </section>
+
+            <section data-route="schedules">
+
+            </section>
+
+            <section data-route="contactinfo">
+              <paper-material elevation="1">
+                info number : <span>{{params.id}}</span>
+              </paper-material>
             </section>
 
             <section data-route="users">

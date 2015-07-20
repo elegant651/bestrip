@@ -1,0 +1,25 @@
+
+<dom-module id="contact-info">
+	<style>
+
+	</style>
+	<template>
+		<div class="vertical-section">
+			<template is="dom-repeat" items="[[contacts]]" as="contact">
+				<div class="horizontal-section">
+					<iron-image></iron-image>
+					<div class="contact"></div>					
+				</div>
+			</template>			
+		</div>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: "contact-info",
+
+		properties: {
+
+		}
+	});
+</script>

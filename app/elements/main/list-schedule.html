@@ -6,7 +6,14 @@
 			
 		</div>
 		<div class="vertical-section">
-			
+			<template is="dom-repeat" items="[[travels]]" as="travel">
+				<div class="horizontal-section">
+					<iron-image></iron-image>
+					
+					<paper-button>Accept</paper-button> 
+					<paper-button>Refuse</paper-button> 
+				</div>
+			</template>			
 		</div>
 	</template>
 </dom-module>
