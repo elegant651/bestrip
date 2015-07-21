@@ -7,9 +7,18 @@
 		}
 
 		.list-element {
-			width: 100%;
+			width: 100%;			
+						
+		}
+
+		.title {
+			font-size: 15px;
+			font-weight: bold;
+		}
+
+		.listWrapper {
 			@apply(--layout-horizontal);
-			@apply(--layout-justified);				
+			@apply(--layout-justified);	
 		}
 
 		.usersWrapper {
@@ -38,22 +47,51 @@
 		</div>
 		<div class="vertical-section">
 			<!-- <template is="dom-repeat" items="[[travels]]" as="travel"> -->
-				<div class="list-element">
-					<div class="usersWrapper">
-						<div class="userbox">
-							<iron-image src="../../images/touch/apple-touch-icon.png" style="width:100px; height:100px;"></iron-image>
-							<div class="username">UserName1</div>
+
+				<!-- Type1 : mySchedule -->
+				<div class="list-element">					
+					<div class="title">6.26 - London</div>
+					<div class="listWrapper">
+						<div class="usersWrapper">
+							<div class="userbox">
+								<iron-image src="../../images/touch/apple-touch-icon.png" style="width:100px; height:100px;"></iron-image>
+								<div class="username">UserName1</div>
+							</div>
+
+							<div class="userbox">
+								<iron-image src="../../images/touch/apple-touch-icon.png" style="width:100px; height:100px;"></iron-image>
+								<div class="username">UserName2</div>
+							</div>
 						</div>
 
-						<div class="userbox">
-							<iron-image src="../../images/touch/apple-touch-icon.png" style="width:100px; height:100px;"></iron-image>
-							<div class="username">UserName2</div>
+						<div class="buttons">
+
+							<paper-fab id="btnInvite" on-tap="invite" icon="social:person-add"></paper-fab>
+							<paper-fab id="btnComplete" on-tap="complete" icon="launch"></paper-fab>			
 						</div>
 					</div>
+				</div>
 
-					<div class="buttons">
-						<paper-fab id="btnAccept" icon="check"></paper-fab>
-						<paper-fab id="btnRefuse" icon="close"></paper-fab>						
+				<!-- Type2 : request message -->
+				<div class="list-element">
+					<div class="title">6.26 - London</div>
+					<div class="listWrapper">
+						<div class="usersWrapper">
+							<div class="userbox">
+								<iron-image src="../../images/touch/apple-touch-icon.png" style="width:100px; height:100px;"></iron-image>
+								<div class="username">UserName1</div>
+							</div>
+
+							<div class="userbox">
+								<iron-image src="../../images/touch/apple-touch-icon.png" style="width:100px; height:100px;"></iron-image>
+								<div class="username">UserName2</div>
+							</div>
+						</div>
+
+						<div class="buttons">
+							<paper-fab id="btnAccept" on-tap="accept" icon="check"></paper-fab>
+							<paper-fab id="btnRefuse" on-tap="refuse" icon="close"></paper-fab>			
+						</div>
 					</div>
 				</div>
 			<!-- </template>			 -->
@@ -65,6 +103,14 @@
 		is: "list-schedule",
 
 		properties: {
+
+		},
+
+		accept: function() {
+
+		},
+
+		refuse: function() {
 
 		}
 	});
