@@ -1,19 +1,62 @@
 
 
 <dom-module id="list-schedule">
+	<style>
+		:host {
+
+		}
+
+		.list-element {
+			width: 100%;
+			@apply(--layout-horizontal);
+			@apply(--layout-justified);				
+		}
+
+		.usersWrapper {
+			@apply(--layout-horizontal);
+		}
+
+		.userbox {
+			width: 100px;
+		}
+
+		.buttons {
+			width: 200px;
+		}
+
+		.buttons #btnAccept {
+			--paper-fab-background: var(--paper-blue-300);
+		}
+
+		.buttons #btnRefuse {
+
+		}
+	</style>
 	<template>
 		<div class="vertical-section">
 			
 		</div>
 		<div class="vertical-section">
-			<template is="dom-repeat" items="[[travels]]" as="travel">
-				<div class="horizontal-section">
-					<iron-image></iron-image>
-					
-					<paper-button>Accept</paper-button> 
-					<paper-button>Refuse</paper-button> 
+			<!-- <template is="dom-repeat" items="[[travels]]" as="travel"> -->
+				<div class="list-element">
+					<div class="usersWrapper">
+						<div class="userbox">
+							<iron-image src="../../images/touch/apple-touch-icon.png" style="width:100px; height:100px;"></iron-image>
+							<div class="username">UserName1</div>
+						</div>
+
+						<div class="userbox">
+							<iron-image src="../../images/touch/apple-touch-icon.png" style="width:100px; height:100px;"></iron-image>
+							<div class="username">UserName2</div>
+						</div>
+					</div>
+
+					<div class="buttons">
+						<paper-fab id="btnAccept" icon="check"></paper-fab>
+						<paper-fab id="btnRefuse" icon="close"></paper-fab>						
+					</div>
 				</div>
-			</template>			
+			<!-- </template>			 -->
 		</div>
 	</template>
 </dom-module>
