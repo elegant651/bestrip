@@ -30,7 +30,7 @@
 				<paper-input id="piStartDate" label="Select Start Date" on-tap="showDateDlog"></paper-input>
 				<paper-input id="piFinishDate" label="Select Finish Date" on-tap="showDateDlog"></paper-input>
 			</div>
-			<paper-date-picker-dialog id="datePicker" date="2015/8/8"></paper-date-picker-dialog>
+			<paper-date-picker-dialog id="datePicker" date="2015/8/8" on-value-changed="dateValueChanged"></paper-date-picker-dialog>
 		</div>
 		<div class="vertical-section">
 			<h2>Theme</h2>
@@ -67,6 +67,10 @@
 
 		register: function() {
 
+		},
+
+		dateValueChanged: function() {
+			
 		}
 	});
 </script>
