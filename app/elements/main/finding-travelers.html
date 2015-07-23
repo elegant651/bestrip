@@ -1,17 +1,48 @@
 
 <dom-module id="finding-travelers">
 	<style>
+		.searchWrapper {
+			@apply(--layout-horizontal);
+		}
 
+		.travelBox {
+			@apply(--layout-horizontal);	
+			@apply(--layout-justified);	
+		}
+
+		#btnSearch {
+			margin-top: 60px;
+		}
 	</style>
 	<template>
-		<div class="vertical-section">
-			<template is="dom-repeat" items="[[travels]]" as="travel">
-				<div class="horizontal-section">
-					<iron-image></iron-image>
-					<div class="name"></div>
-					<paper-button>Request</paper-button> 
+		<paper-material elevation="1">
+			<div class="searchWrapper">
+				<div class="vertical-section">
+					<h2>City</h2>
+					<paper-button data-dialog="dlogCity" on-tap="showCityDlog">Select City<paper-button>
+					<city-dialog id="cityDlog"></city-dialog>
 				</div>
-			</template>			
+				<div class="vertical-section">
+					<h2>Date</h2>
+					<paper-button on-tap="showDateDlog">Select Date<paper-button>
+					<paper-date-picker-dialog id="datePicker" date="2015/8/8"></paper-date-picker-dialog>
+				</div>
+
+				<paper-button id="btnSearch" raised on-tap="search" class="colorful ripple"><iron-icon icon="search"></iron-icon>Search</paper-button>				
+			</div>
+		</paper-material>
+
+
+		<div class="vertical-section">
+			<h2>6.26 - London</h2>
+
+			<!-- <template is="dom-repeat" items="[[travels]]" as="travel"> -->
+				<div class="travelBox">
+					<iron-image src="../../images/touch/apple-touch-icon.png" style="width:100px; height:100px;"></iron-image>
+					<div class="name">UserName</div>
+					<paper-fab id="btnRequest" on-tap="request" icon="arrow-forward"></paper-fab>
+				</div>
+			<!-- </template>			 -->
 		</div>
 	</template>
 </dom-module>
@@ -21,6 +52,14 @@
 
 		properties: {
 
+		},
+
+		showCityDlog: function() {			
+			this.$.cityDlog.querySelector('paper-dialog').open();
+		},
+
+		showDateDlog: function() {
+			this.$.datePicker.toggle();
 		}
 	});
 </script>

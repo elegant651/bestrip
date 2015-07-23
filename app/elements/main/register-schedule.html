@@ -1,17 +1,35 @@
 
 <dom-module id="register-schedule">
 	<style>
-		
+		.wrapperDate {
+			@apply(--layout-horizontal);			
+		}
+
+		.wrapperDate paper-input {
+			margin-right: 20px;
+		}
+
+		paper-button.colorful {
+			background: #4285f4;
+      		color: #fff;
+		}
+
+		#btnRegister {
+			margin-top: 20px;
+		}
 	</style>
 	<template>
 		<div class="vertical-section">
 			<h2>City</h2>
-			<paper-button data-dialog="dlogCity" on-tap="showCityDlog">Select City<paper-button>
+			<paper-button raised data-dialog="dlogCity" on-tap="showCityDlog">Select City<paper-button>
 			<city-dialog id="cityDlog"></city-dialog>
 		</div>
 		<div class="vertical-section">
-			<h2>Date</h2>
-			<paper-button on-tap="showDateDlog">Select Date<paper-button>
+			<h2>Date</h2>			
+			<div class="wrapperDate">
+				<paper-input id="piStartDate" label="Select Start Date" on-tap="showDateDlog"></paper-input>
+				<paper-input id="piFinishDate" label="Select Finish Date" on-tap="showDateDlog"></paper-input>
+			</div>
 			<paper-date-picker-dialog id="datePicker" date="2015/8/8"></paper-date-picker-dialog>
 		</div>
 		<div class="vertical-section">
@@ -27,7 +45,7 @@
 			<paper-input label="phone number or facebook"></paper-input>
 		</div>
 		<div class="vertical-section">
-			<paper-button on-tap="register">Register</paper-button>
+			<paper-button id="btnRegister" raised on-tap="register" class="colorful ripple"><iron-icon icon="check"></iron-icon>Register</paper-button>
 		</div>
 	</template>
 </dom-module>
