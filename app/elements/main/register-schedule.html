@@ -27,8 +27,8 @@
 		<div class="vertical-section">
 			<h2>Date</h2>			
 			<div class="wrapperDate">
-				<paper-input id="piStartDate" label="Select Start Date" on-tap="showDateDlog"></paper-input>
-				<paper-input id="piFinishDate" label="Select Finish Date" on-tap="showDateDlog"></paper-input>
+				<paper-input id="piStartDate" label="Select Start Date" on-tap="showStartDateDlog"></paper-input>
+				<paper-input id="piFinishDate" label="Select Finish Date" on-tap="showFinishDateDlog"></paper-input>
 			</div>
 			<paper-date-picker-dialog id="datePicker" date="2015/8/8" on-value-changed="dateValueChanged"></paper-date-picker-dialog>
 		</div>
@@ -54,14 +54,20 @@
 		is: "register-schedule",
 
 		properties: {
-
+			dlogType: Number
 		},
 
 		showCityDlog: function() {			
 			this.$.cityDlog.querySelector('paper-dialog').open();
 		},
 
-		showDateDlog: function() {
+		showStartDateDlog: function() {
+			this.dlogType = 0;
+			this.$.datePicker.toggle();
+		},
+
+		showFinishDateDlog: function() {
+			this.dlogType = 1;
 			this.$.datePicker.toggle();
 		},
 
@@ -70,7 +76,18 @@
 		},
 
 		dateValueChanged: function() {
+			console.log("dateValueChanged:" + this.$.datePicker.value);			
+			var date = this.$.datePicker.value;
+			var year = Intl.DateTimeFormat(this.locale, { year: 'numeric' }).format(date);
+			var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
+			var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
 			
+			var strDate = year+" "+month+" "+day;
+    		if(this.dlogType==0){
+    			this.$.piStartDate.setAttribute("value", strDate);
+    		} else {
+    			this.$.piFinishDate.setAttribute("value", strDate);
+    		}
 		}
 	});
 </script>
