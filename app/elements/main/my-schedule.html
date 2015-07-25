@@ -1,11 +1,6 @@
 
-
-<dom-module id="list-schedule">
+<dom-module id="my-schedule">
 	<style>
-		:host {
-
-		}
-
 		.list-element {
 			width: 100%;			
 						
@@ -32,24 +27,12 @@
 		.buttons {
 			width: 200px;
 		}
-
-		.buttons #btnAccept {
-			--paper-fab-background: var(--paper-blue-300);
-		}
-
-		.buttons #btnRefuse {
-
-		}
 	</style>
 	<template>
 		<div class="vertical-section">
-			
-		</div>
-		<div class="vertical-section">
-			<!-- <template is="dom-repeat" items="[[travels]]" as="travel"> -->				
-
-				<!-- Type2 : request message -->
-				<div class="list-element">
+			<!-- <template is="dom-repeat" items="[[schedules]]" as="schedule"> --> -->
+				
+				<div class="list-element">					
 					<div class="title">6.26 - London</div>
 					<div class="listWrapper">
 						<div class="usersWrapper">
@@ -65,28 +48,21 @@
 						</div>
 
 						<div class="buttons">
-							<paper-fab id="btnAccept" on-tap="accept" icon="check"></paper-fab>
-							<paper-fab id="btnRefuse" on-tap="refuse" icon="close"></paper-fab>			
+
+							<paper-fab id="btnInvite" on-tap="invite" icon="social:person-add"></paper-fab>
+							<paper-fab id="btnComplete" on-tap="complete" icon="launch"></paper-fab>			
 						</div>
 					</div>
 				</div>
-			<!-- </template>			 -->
+			<!-- </template> -->
 		</div>
 	</template>
 </dom-module>
 <script>
 	Polymer({
-		is: "list-schedule",
+		is: "my-schedule",
 
 		properties: {
-
-		},
-
-		accept: function() {
-
-		},
-
-		refuse: function() {
 
 		}
 	});

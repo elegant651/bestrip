@@ -18,11 +18,10 @@
 			margin-top: 20px;
 		}
 	</style>
-	<template>
+	<template>		
 		<div class="vertical-section">
 			<h2>City</h2>
-			<paper-button raised data-dialog="dlogCity" on-tap="showCityDlog">Select City<paper-button>
-			<city-dialog id="cityDlog"></city-dialog>
+			<paper-button id="btnSelCity" raised data-dialog="dlogCity" on-tap="showCityDlog">Select City<paper-button>	
 		</div>
 		<div class="vertical-section">
 			<h2>Date</h2>			
@@ -38,6 +37,8 @@
 				<paper-radio-button name="all">All</paper-radio-button>
 				<paper-radio-button name="transport">Transport</paper-radio-button>
 				<paper-radio-button name="stay">Stay</paper-radio-button>
+				<paper-radio-button name="food">Food</paper-radio-button>
+				<paper-radio-button name="sightsee">Sightsee</paper-radio-button>
 			</paper-radio-group>
 		</div>
 		<div class="vertical-section">
@@ -47,6 +48,7 @@
 		<div class="vertical-section">
 			<paper-button id="btnRegister" raised on-tap="register" class="colorful ripple"><iron-icon icon="check"></iron-icon>Register</paper-button>
 		</div>
+		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
 	</template>
 </dom-module>
 <script>
@@ -54,11 +56,12 @@
 		is: "register-schedule",
 
 		properties: {
-			dlogType: Number
+			dlogType: Number,
+			selCityIdx: Number
 		},
 
-		showCityDlog: function() {			
-			this.$.cityDlog.querySelector('paper-dialog').open();
+		showCityDlog: function() {						
+			this.$.cityDlog.toggle();
 		},
 
 		showStartDateDlog: function() {
@@ -88,6 +91,12 @@
     		} else {
     			this.$.piFinishDate.setAttribute("value", strDate);
     		}
+		},
+
+		onSelectCity: function(e) {			
+			this.selCityIdx = e.detail.idx;
+			var strName = e.detail.name;
+			this.$.btnSelCity.innerHTML = strName;
 		}
 	});
 </script>
