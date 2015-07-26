@@ -30,7 +30,7 @@
 	</style>
 	<template>
 		<div class="vertical-section">
-			<!-- <template is="dom-repeat" items="[[schedules]]" as="schedule"> --> -->
+			<!-- <template is="dom-repeat" items="[[schedules]]" as="schedule"> --> 
 				
 				<div class="list-element">					
 					<div class="title">6.26 - London</div>
@@ -50,7 +50,7 @@
 						<div class="buttons">
 
 							<paper-fab id="btnInvite" on-tap="invite" icon="social:person-add"></paper-fab>
-							<paper-fab id="btnComplete" on-tap="complete" icon="launch"></paper-fab>			
+							<a href="/contactinfo/123"><paper-fab id="btnComplete" on-tap="complete" icon="launch"></paper-fab></a>			
 						</div>
 					</div>
 				</div>
@@ -63,7 +63,7 @@
 		is: "my-schedule",
 
 		properties: {
-
+			scheduleId: Number	
 		}
 	});
 </script>

@@ -1,16 +1,22 @@
 
 <dom-module id="contact-info">
 	<style>
-
+		.contactWrapper {
+			@apply(--layout-horizontal);			
+		}
 	</style>
 	<template>
 		<div class="vertical-section">
-			<template is="dom-repeat" items="[[contacts]]" as="contact">
-				<div class="horizontal-section">
-					<iron-image></iron-image>
-					<div class="contact"></div>					
+			<a href="/myschedule"><paper-fab icon="arrow-back"></paper-fab></a>
+		</div>
+		<div class="vertical-section">
+			<!-- <template is="dom-repeat" items="[[contacts]]" as="contact"> -->
+				<div class="contactWrapper">
+					<iron-image src="../../images/touch/apple-touch-icon.png" style="width:100px; height:100px;"></iron-image>
+					<div class="username">UserName1</div>
+					<div class="contact">{{scheduleId}}</div>										
 				</div>
-			</template>			
+			<!-- </template>			 -->
 		</div>
 	</template>
 </dom-module>
@@ -19,7 +25,7 @@
 		is: "contact-info",
 
 		properties: {
-
+			scheduleId: Number
 		}
 	});
 </script>

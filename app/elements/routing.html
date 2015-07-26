@@ -29,10 +29,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     page('/schedules', function() {
       app.route = 'schedules';
+    });    
+
+    page('/myschedule', function() {
+      app.route = 'myschedule';
     });
 
-    page('/contactinfo/:id', function () {
+    page('/contactinfo/:id', function (data) {
       app.route = 'contactinfo';
+      app.params = data.params;
     });
 
     page('/users', function () {

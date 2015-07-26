@@ -5,27 +5,37 @@
 			@apply(--layout-horizontal);
 		}
 
-		.travelBox {
-			@apply(--layout-horizontal);	
-			@apply(--layout-justified);	
+		.wrapperDate {
+			@apply(--layout-horizontal);			
+		}
+
+		.wrapperDate paper-input {
+			margin-right: 20px;
 		}
 
 		#btnSearch {
 			margin-top: 60px;
 		}
+
+		.travelBox {
+			@apply(--layout-horizontal);	
+			@apply(--layout-justified);	
+		}
+		
 	</style>
 	<template>
 		<paper-material elevation="1">
 			<div class="searchWrapper">
 				<div class="vertical-section">
 					<h2>City</h2>
-					<paper-button data-dialog="dlogCity" on-tap="showCityDlog">Select City<paper-button>
-					<city-dialog id="cityDlog"></city-dialog>
+					<paper-button id="btnSelCity" data-dialog="dlogCity" on-tap="showCityDlog">Select City<paper-button>
 				</div>
 				<div class="vertical-section">
 					<h2>Date</h2>
-					<paper-button on-tap="showDateDlog">Select Date<paper-button>
-					<paper-date-picker-dialog id="datePicker" date="2015/8/8"></paper-date-picker-dialog>
+					<div class="wrapperDate">
+						<paper-input id="piStartDate" label="Select Start Date" on-tap="showStartDateDlog"></paper-input>
+						<paper-input id="piFinishDate" label="Select Finish Date" on-tap="showFinishDateDlog"></paper-input>
+					</div>				
 				</div>
 
 				<paper-button id="btnSearch" raised on-tap="search" class="colorful ripple"><iron-icon icon="search"></iron-icon>Search</paper-button>				
@@ -44,6 +54,8 @@
 				</div>
 			<!-- </template>			 -->
 		</div>
+		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
+		<paper-date-picker-dialog id="datePicker" date="2015/8/8" on-value-changed="dateValueChanged"></paper-date-picker-dialog>
 	</template>
 </dom-module>
 <script>
@@ -51,15 +63,42 @@
 		is: "finding-travelers",
 
 		properties: {
-
+			dlogType: Number
 		},
 
 		showCityDlog: function() {			
-			this.$.cityDlog.querySelector('paper-dialog').open();
+			this.$.cityDlog.toggle();
 		},
 
-		showDateDlog: function() {
+		showStartDateDlog: function() {
+			this.dlogType = 0;
 			this.$.datePicker.toggle();
+		},
+
+		showFinishDateDlog: function() {
+			this.dlogType = 1;
+			this.$.datePicker.toggle();
+		},
+
+		dateValueChanged: function() {
+			console.log("dateValueChanged:" + this.$.datePicker.value);			
+			var date = this.$.datePicker.value;
+			var year = Intl.DateTimeFormat(this.locale, { year: 'numeric' }).format(date);
+			var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
+			var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
+			
+			var strDate = year+" "+month+" "+day;
+    		if(this.dlogType==0){
+    			this.$.piStartDate.setAttribute("value", strDate);
+    		} else {
+    			this.$.piFinishDate.setAttribute("value", strDate);
+    		}
+		},
+
+		onSelectCity: function(e) {			
+			this.selCityIdx = e.detail.idx;
+			var strName = e.detail.name;
+			this.$.btnSelCity.innerHTML = strName;
 		}
 	});
 </script>

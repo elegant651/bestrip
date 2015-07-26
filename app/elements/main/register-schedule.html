@@ -72,11 +72,7 @@
 		showFinishDateDlog: function() {
 			this.dlogType = 1;
 			this.$.datePicker.toggle();
-		},
-
-		register: function() {
-
-		},
+		},		
 
 		dateValueChanged: function() {
 			console.log("dateValueChanged:" + this.$.datePicker.value);			
@@ -97,6 +93,10 @@
 			this.selCityIdx = e.detail.idx;
 			var strName = e.detail.name;
 			this.$.btnSelCity.innerHTML = strName;
+		},
+
+		register: function() {
+			
 		}
 	});
 </script>
