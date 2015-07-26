@@ -15,7 +15,7 @@
 	</style>
 	<template>
 		<div class="vertical-section">
-			<div class="loginWrapper">
+			<div class="loginWrapper" on-tap="facebookLogin">
 				<iron-image src="../../images/main/facebook_btn.png" style="width:100px; height:100px;"></iron-image>
 				<span>Facebook Login</span>
 			</div>
@@ -32,6 +32,10 @@
 
 		behaviors: [
 	      Polymer.PaperDialogBehavior
-	    ]
+	    ],
+
+	    facebookLogin: function() {
+	    	
+	    }
 	});
 </script>
