@@ -95,7 +95,7 @@
 	    	if (this.statusKnown && this.user) {
 	    		console.log("logging in :"+this.user.uid);
 
-	    		this.fire('login-complete', {userid: this.user.uid});
+	    		this.fire('login-complete', {userid: this.user.uid}, {bubbles: true});
 	    		// this.toggle();
 	    	}
 	    }
