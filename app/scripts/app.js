@@ -27,12 +27,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // imports are loaded and elements have been registered
     var btnLogin = document.querySelector('#btnLogin');
     var loginDlog = document.querySelector('#loginDlog');
-    loginDlog.addEventListener('login-complete', function(e) {
-        var userId = e.detail.userid;
-        console.log("cc:"+userId);
-        btnLogin.innerHTML("Log Out");
+    loginDlog.addEventListener('login-complete', function(e) {                
+        btnLogin.innerHTML = "LOG OUT";
     });
-    loginDlog.toggle();
+    loginDlog.addEventListener('logout-complete', function(e) {
+        btnLogin.innerHTML = "LOG IN";
+    });    
     
     btnLogin.addEventListener('click', function() {
         loginDlog.toggle();

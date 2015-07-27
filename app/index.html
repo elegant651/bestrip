@@ -148,7 +148,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="register">
-                <register-schedule></register-schedule>
+                <register-schedule userid="{{userid}}"></register-schedule>
             </section>
 
             <section data-route="search">
@@ -197,7 +197,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </iron-pages>
         </div>
 
-        <login-dialog id="loginDlog"></login-dialog>
+        <login-dialog id="loginDlog" userid="{{userid}}"></login-dialog>
       </paper-header-panel>
     </paper-drawer-panel>
 

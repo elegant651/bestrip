@@ -19,6 +19,7 @@
 		}
 	</style>
 	<template>		
+		<div>{{userid}}</div>
 		<div class="vertical-section">
 			<h2>City</h2>
 			<paper-button id="btnSelCity" raised data-dialog="dlogCity" on-tap="showCityDlog">Select City<paper-button>	
@@ -43,10 +44,10 @@
 		</div>
 		<div class="vertical-section">
 			<h2>Contact</h2>
-			<paper-input label="phone number or facebook"></paper-input>
+			<paper-input id="ipContact" label="phone number or facebook" maxlength="50" value="{{contact}}"></paper-input>
 		</div>
 		<div class="vertical-section">
-			<paper-button id="btnRegister" raised on-tap="register" class="colorful ripple"><iron-icon icon="check"></iron-icon>Register</paper-button>
+			<paper-button id="btnRegister" raised disabled$="{{checkData(userid, selCityIdx, startDate, finishDate, contact)}}" on-tap="register" class="colorful ripple"><iron-icon icon="check"></iron-icon>Register</paper-button>
 		</div>
 		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
 	</template>
@@ -56,8 +57,31 @@
 		is: "register-schedule",
 
 		properties: {
+			userid: {
+				type: String,
+				value: null				
+			},
+
 			dlogType: Number,
-			selCityIdx: Number
+			selCityIdx: {
+				type: Number,
+				value: -1
+			},
+
+			startDate: {
+				type: Number,
+				value: -1
+			},
+
+			finishDate: {
+				type: Number,
+				value: -1
+			},
+
+			contact: {
+				type: String,
+				value: null
+			}			
 		},
 
 		showCityDlog: function() {						
@@ -84,8 +108,10 @@
 			var strDate = year+" "+month+" "+day;
     		if(this.dlogType==0){
     			this.$.piStartDate.setAttribute("value", strDate);
+    			this.startDate = date;
     		} else {
     			this.$.piFinishDate.setAttribute("value", strDate);
+    			this.finishDate = date;
     		}
 		},
 
@@ -95,8 +121,29 @@
 			this.$.btnSelCity.innerHTML = strName;
 		},
 
+		checkData: function(userid, selCityIdx, startDate, finishDate, contact) {
+			console.log(userid +"/"+selCityIdx+"/"+startDate+"/"+finishDate+"/"+contact);
+			if(this.userid==null){
+				return true;
+			}
+			if(this.selCityIdx==-1){
+				return true;
+			}
+			if(this.startDate==-1){
+				return true;				
+			}
+			if(this.finishDate==-1){
+				return true;
+			}
+			if(this.$.ipContact.value==null || this.$.ipContact.value===""){
+				return true;
+			}
+
+			return false;
+		},	
+
 		register: function() {
-			
+
 		}
 	});
 </script>
