@@ -24,6 +24,11 @@
 		
 	</style>
 	<template>
+		<firebase-collection	  
+				id="fcSchedules"        
+	          location="https://flamingo365.firebaseio.com/schedules"
+	          data="{{schedules}}"></firebase-collection>
+
 		<paper-material elevation="1">
 			<div class="searchWrapper">
 				<div class="vertical-section">
@@ -43,16 +48,16 @@
 		</paper-material>
 
 
-		<div class="vertical-section">
-			<h2>6.26 - London</h2>
+		<div class="vertical-section">			
 
-			<!-- <template is="dom-repeat" items="[[travels]]" as="travel"> -->
+			<template is="dom-repeat" items="[[schedules]]" as="schedule">
+				<h2>6.26 - London<span>{{computeCityname(schedule.selCityIdx)}}</span></h2>
 				<div class="travelBox">
 					<iron-image src="../../images/touch/apple-touch-icon.png" style="width:100px; height:100px;"></iron-image>
-					<div class="name">UserName</div>
+					<div class="name">[[schedule.userid]]</div>
 					<paper-fab id="btnRequest" on-tap="request" icon="arrow-forward"></paper-fab>
 				</div>
-			<!-- </template>			 -->
+			</template>			
 		</div>
 		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
 		<paper-date-picker-dialog id="datePicker" date="2015/8/8" on-value-changed="dateValueChanged"></paper-date-picker-dialog>
@@ -99,6 +104,10 @@
 			this.selCityIdx = e.detail.idx;
 			var strName = e.detail.name;
 			this.$.btnSelCity.innerHTML = strName;
+		},
+
+		computeCityname: function(cityIdx) {
+			console.log("c:"+cityIdx);
 		}
 	});
 </script>
