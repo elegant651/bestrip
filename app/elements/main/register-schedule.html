@@ -17,8 +17,13 @@
 		#btnRegister {
 			margin-top: 20px;
 		}
+		
 	</style>
 	<template>		
+		<firebase-collection	  
+				id="fcSchedules"        
+	          location="https://flamingo365.firebaseio.com/schedules"
+	          data="{{schedules}}"></firebase-collection>
 		<div>{{userid}}</div>
 		<div class="vertical-section">
 			<h2>City</h2>
@@ -50,6 +55,7 @@
 			<paper-button id="btnRegister" raised disabled$="{{checkData(userid, selCityIdx, startDate, finishDate, contact)}}" on-tap="register" class="colorful ripple"><iron-icon icon="check"></iron-icon>Register</paper-button>
 		</div>
 		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
+		
 	</template>
 </dom-module>
 <script>
@@ -82,10 +88,10 @@
 				type: String,
 				value: null
 			}			
-		},
+		},		
 
 		showCityDlog: function() {						
-			this.$.cityDlog.toggle();
+			this.$.cityDlog.toggle();			
 		},
 
 		showStartDateDlog: function() {
@@ -105,13 +111,13 @@
 			var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
 			var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
 			
-			var strDate = year+" "+month+" "+day;
+			var strDate = year+" "+month+" "+day;			
     		if(this.dlogType==0){
     			this.$.piStartDate.setAttribute("value", strDate);
-    			this.startDate = date;
+    			this.startDate = date.getTime();    			
     		} else {
     			this.$.piFinishDate.setAttribute("value", strDate);
-    			this.finishDate = date;
+    			this.finishDate = date.getTime();
     		}
 		},
 
@@ -121,8 +127,7 @@
 			this.$.btnSelCity.innerHTML = strName;
 		},
 
-		checkData: function(userid, selCityIdx, startDate, finishDate, contact) {
-			console.log(userid +"/"+selCityIdx+"/"+startDate+"/"+finishDate+"/"+contact);
+		checkData: function(userid, selCityIdx, startDate, finishDate, contact) {			
 			if(this.userid==null){
 				return true;
 			}
@@ -143,7 +148,15 @@
 		},	
 
 		register: function() {
-
+			var data = {
+				userid: this.userid,
+				selCityIdx: this.selCityIdx,
+				startDate: this.startDate,
+				finishDate: this.finishDate,
+				contact: this.contact
+			};
+			this.$.fcSchedules.add(data);
+			this.fire('show-dialog', {content: "Registration has completed."});
 		}
 	});
 </script>

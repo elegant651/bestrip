@@ -12,3 +12,9 @@ body {
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #333;
 }
+
+#paperDlog {
+	z-index: 12;			
+	max-width: 200px;
+	max-height: 200px;
+}

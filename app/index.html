@@ -148,7 +148,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="register">
-                <register-schedule userid="{{userid}}"></register-schedule>
+                <register-schedule id="registerSchedule" userid="{{userid}}"></register-schedule>
             </section>
 
             <section data-route="search">
@@ -215,6 +215,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </platinum-sw-cache>
     </platinum-sw-register>
 
+    <paper-dialog id="paperDlog" modal>
+        <div id="content"></div>
+        <div class="buttons">
+          <a href="/"><paper-button dialog-confirm autofocus>Tap me to close</paper-button></a>
+        </div>
+      </paper-dialog>
   </template>
 
   <!-- build:js scripts/app.js -->
