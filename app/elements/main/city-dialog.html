@@ -19,29 +19,29 @@
 	<template>
 		
 			<div class="cityWrapper">
-				<div class="citybox" on-tap="selectCity1">
+				<div class="citybox" on-tap="selectCity" data-idx="1">
 					<iron-image src="../../images/main/kr_citylist_london.png" style="width:100px; height:100px;"></iron-image>
 					<div class="title">London</div>
 				</div>
-				<div class="citybox" on-tap="selectCity2">
+				<div class="citybox" on-tap="selectCity" data-idx="2">
 					<iron-image src="../../images/main/kr_citylist_paris.png" style="width:100px; height:100px;"></iron-image>
 					<div class="title">Paris</div>
 				</div>
-				<div class="citybox" on-tap="selectCity3">
+				<div class="citybox" on-tap="selectCity" data-idx="3">
 					<iron-image src="../../images/main/kr_citylist_berlin.png" style="width:100px; height:100px;"></iron-image>
 					<div class="title">Berlin</div>
 				</div>
-				<div class="citybox" on-tap="selectCity4">
+				<div class="citybox" on-tap="selectCity" data-idx="4">
 					<iron-image src="../../images/main/kr_citylist_rome.png" style="width:100px; height:100px;"></iron-image>
 					<div class="title">Rome</div>
 				</div>
 			</div>
 			<div class="cityWrapper">
-				<div class="citybox" on-tap="selectCity5">
+				<div class="citybox" on-tap="selectCity" data-idx="5">
 					<iron-image src="../../images/main/kr_citylist_istanbul.png" style="width:100px; height:100px;"></iron-image>
 					<div class="title">Istanbul</div>
 				</div>
-				<div class="citybox" on-tap="selectCity6">
+				<div class="citybox" on-tap="selectCity" data-idx="6">
 					<iron-image src="../../images/main/kr_citylist_prague.png" style="width:100px; height:100px;"></iron-image>
 					<div class="title">Prague</div>
 				</div>
@@ -72,29 +72,10 @@
 			];
 		},		
 
-	    selectCity1: function() {
-	    	this.fireSelectCity(1);
-	    },
-
-	    selectCity2: function() {
-	    	this.fireSelectCity(2);
-	    },
-
-	    selectCity3: function() {
-	    	this.fireSelectCity(3);
-	    },
-
-	    selectCity4: function() {
-	    	this.fireSelectCity(4);
-	    },
-
-	    selectCity5: function() {
-	    	this.fireSelectCity(5);
-	    },
-
-	    selectCity6: function() {
-	    	this.fireSelectCity(6);
-	    },
+	    selectCity: function(e) {
+	    	var idx = e.currentTarget.getAttribute("data-idx");	    	
+	    	this.fireSelectCity(idx);
+	    },	   
 
 	    fireSelectCity: function(numIdx) {	    	
 	    	var strName = this.cityNames[numIdx].name;	    	

@@ -56,14 +56,15 @@
 		<div class="vertical-section">			
 
 			<template is="dom-repeat" items="[[schedules]]" as="schedule">
-				<h2><span>{{computeDate(schedule.startDate)}}</span> ~ <span>{{computeDate(schedule.finishDate)}}</span> : <span>{{computeCityname(schedule.selCityIdx)}}</span></h2>
-				<span>[[schedule.__firebaseKey__]]</span>
+				<h2><span>{{computeDate(schedule.startDate)}}</span> ~ <span>{{computeDate(schedule.finishDate)}}</span> : <span>{{computeCityname(schedule.selCityIdx)}}</span></h2>				
 				<div class="travelBox">
 					<iron-image src="[[schedule.userpic]]" style="width:100px; height:100px;"></iron-image>
 					<div class="name">[[schedule.username]]</div>
-					<paper-fab id="btnRequest" on-tap="request" data-key="[[schedule.__firebaseKey__]]" icon="arrow-forward"></paper-fab>
-				</div>
-			</template>			
+					<paper-fab id="btnRequest" on-tap="request"  data-key$="{{schedule.__firebaseKey__}}" icon="arrow-forward"></paper-fab>
+				</div>				
+			</template>	
+
+			
 		</div>
 		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
 		<paper-date-picker-dialog id="datePicker" date="2015/8/8" on-value-changed="dateValueChanged"></paper-date-picker-dialog>
@@ -138,8 +139,9 @@
 		},
 
 		request: function(e) {
-			console.log("c:"+e.target.getAttribute("data-key"));
+			var schedule_id = e.currentTarget.getAttribute("data-key");
 			var data = {
+				schedule_id: schedule_id
 
 			};
 			
