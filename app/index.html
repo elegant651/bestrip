@@ -94,7 +94,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <span>My Schedule</span>
               </a>              
 
-              <a data-route="users" href="/users">
+              <!-- <a data-route="users" href="/users">
                 <iron-icon icon="info"></iron-icon>
                 <span>Users</span>
               </a>
@@ -102,7 +102,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <a data-route="contact" href="/contact">
                 <iron-icon icon="mail"></iron-icon>
                 <span>Contact</span>
-              </a>
+              </a> -->
           </paper-menu>
       </div>
       <paper-header-panel main mode="waterfall-tall">
@@ -148,7 +148,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
 
             <section data-route="register">
-                <register-schedule id="registerSchedule" userid="{{userid}}"></register-schedule>
+                <register-schedule id="registerSchedule" user="{{user}}"></register-schedule>
             </section>
 
             <section data-route="search">
@@ -197,7 +197,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </iron-pages>
         </div>
 
-        <login-dialog id="loginDlog" userid="{{userid}}"></login-dialog>
+        <login-dialog id="loginDlog" user="{{user}}"></login-dialog>
       </paper-header-panel>
     </paper-drawer-panel>
 

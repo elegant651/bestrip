@@ -58,18 +58,13 @@
 			user: {
 	        	type: Object,
 	        	value: null,
-	        	observer: '_userChanged'
+	        	observer: '_userChanged',
+	        	notify: true
 	      	},
 
 	      	statusKnown: {
 	        	type: Boolean
-	      	},
-
-	      	userid: {
-	      		type: String,
-	      		value: null,
-	      		notify: true
-	      	}
+	      	}	      	
 		},
 
 		behaviors: [
@@ -118,10 +113,9 @@
 	    },
 
 	    _userChanged: function() {
-	    	if (this.statusKnown && this.user) {
-	    		console.log("logging in :"+this.user.uid);
-
-	    		this.userid = this.user.uid;
+	    	if (this.statusKnown && this.user) {	    		
+	    		console.log("logging in :"+this.user.uid+"/"+this.user.facebook.displayName+"/"+this.user.facebook.cachedUserProfile.link+"/"+this.user.facebook.cachedUserProfile.picture.data.url);
+	    		
 	    		
 	    		this.fire('login-complete', {userid: this.user.uid}, {bubbles: true});	    		
 	    		this.close();

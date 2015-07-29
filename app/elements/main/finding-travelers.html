@@ -29,6 +29,11 @@
 	          location="https://flamingo365.firebaseio.com/schedules"
 	          data="{{schedules}}"></firebase-collection>
 
+	    <firebase-collection	  
+				id="fcRequests"        
+	          location="https://flamingo365.firebaseio.com/requests"
+	          ></firebase-collection>
+
 		<paper-material elevation="1">
 			<div class="searchWrapper">
 				<div class="vertical-section">
@@ -51,11 +56,12 @@
 		<div class="vertical-section">			
 
 			<template is="dom-repeat" items="[[schedules]]" as="schedule">
-				<h2>6.26 - London<span>{{computeCityname(schedule.selCityIdx)}}</span></h2>
+				<h2><span>{{computeDate(schedule.startDate)}}</span> ~ <span>{{computeDate(schedule.finishDate)}}</span> : <span>{{computeCityname(schedule.selCityIdx)}}</span></h2>
+				<span>[[schedule.__firebaseKey__]]</span>
 				<div class="travelBox">
-					<iron-image src="../../images/touch/apple-touch-icon.png" style="width:100px; height:100px;"></iron-image>
-					<div class="name">[[schedule.userid]]</div>
-					<paper-fab id="btnRequest" on-tap="request" icon="arrow-forward"></paper-fab>
+					<iron-image src="[[schedule.userpic]]" style="width:100px; height:100px;"></iron-image>
+					<div class="name">[[schedule.username]]</div>
+					<paper-fab id="btnRequest" on-tap="request" data-key="[[schedule.__firebaseKey__]]" icon="arrow-forward"></paper-fab>
 				</div>
 			</template>			
 		</div>
@@ -70,6 +76,18 @@
 		properties: {
 			dlogType: Number
 		},
+
+		ready: function() {
+			this.cityNames = [	
+				{name: 'All', idx: 0},			
+				{name: 'London', idx: 1},
+				{name: 'Paris', idx: 2},
+				{name: 'Berlin', idx: 3},
+				{name: 'Rome', idx: 4},
+				{name: 'Istanbul', idx: 5},
+				{name: 'Prague', idx: 6}
+			];
+		},		
 
 		showCityDlog: function() {			
 			this.$.cityDlog.toggle();
@@ -106,8 +124,25 @@
 			this.$.btnSelCity.innerHTML = strName;
 		},
 
-		computeCityname: function(cityIdx) {
-			console.log("c:"+cityIdx);
+		computeDate: function(date){
+			var year = Intl.DateTimeFormat(this.locale, { year: 'numeric' }).format(date);
+			var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
+			var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
+			
+			var strDate = year+" "+month+" "+day;	
+			return strDate;
+		},
+
+		computeCityname: function(cityIdx) {		
+			return this.cityNames[cityIdx].name;
+		},
+
+		request: function(e) {
+			console.log("c:"+e.target.getAttribute("data-key"));
+			var data = {
+
+			};
+			
 		}
 	});
 </script>

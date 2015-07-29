@@ -24,7 +24,9 @@
 				id="fcSchedules"        
 	          location="https://flamingo365.firebaseio.com/schedules"
 	          data="{{schedules}}"></firebase-collection>
-		<div>{{userid}}</div>
+		<div class="vertical-section">
+			<h3>{{user.facebook.displayName}}</h3>
+		</div>
 		<div class="vertical-section">
 			<h2>City</h2>
 			<paper-button id="btnSelCity" raised data-dialog="dlogCity" on-tap="showCityDlog">Select City<paper-button>	
@@ -52,7 +54,7 @@
 			<paper-input id="ipContact" label="phone number or facebook" maxlength="50" value="{{contact}}"></paper-input>
 		</div>
 		<div class="vertical-section">
-			<paper-button id="btnRegister" raised disabled$="{{checkData(userid, selCityIdx, startDate, finishDate, contact)}}" on-tap="register" class="colorful ripple"><iron-icon icon="check"></iron-icon>Register</paper-button>
+			<paper-button id="btnRegister" raised disabled$="{{checkData(user, selCityIdx, startDate, finishDate, contact)}}" on-tap="register" class="colorful ripple"><iron-icon icon="check"></iron-icon>Register</paper-button>
 		</div>
 		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
 		
@@ -63,9 +65,10 @@
 		is: "register-schedule",
 
 		properties: {
-			userid: {
-				type: String,
-				value: null				
+			user: {
+				type: Object,
+				value: null,
+				observer: '_userChanged'				
 			},
 
 			dlogType: Number,
@@ -88,6 +91,10 @@
 				type: String,
 				value: null
 			}			
+		},		
+
+		_userChanged: function() {
+			this.contact = this.user.facebook.cachedUserProfile.link;	
 		},		
 
 		showCityDlog: function() {						
@@ -127,8 +134,8 @@
 			this.$.btnSelCity.innerHTML = strName;
 		},
 
-		checkData: function(userid, selCityIdx, startDate, finishDate, contact) {			
-			if(this.userid==null){
+		checkData: function(user, selCityIdx, startDate, finishDate, contact) {			
+			if(this.user==null){
 				return true;
 			}
 			if(this.selCityIdx==-1){
@@ -149,7 +156,10 @@
 
 		register: function() {
 			var data = {
-				userid: this.userid,
+				userid: this.user.uid,
+				username: this.user.facebook.displayName,
+				userlink: this.user.facebook.cachedUserProfile.link,
+				userpic: this.user.facebook.cachedUserProfile.picture.data.url,
 				selCityIdx: this.selCityIdx,
 				startDate: this.startDate,
 				finishDate: this.finishDate,
