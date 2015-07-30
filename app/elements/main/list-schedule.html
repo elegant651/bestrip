@@ -42,26 +42,30 @@
 		}
 	</style>
 	<template>
+		 <firebase-collection	  
+				id="fcRequests"        
+	          location="https://flamingo365.firebaseio.com/requests"
+	          data="{{requests}}"
+	          ></firebase-collection>
+		
 		<div class="vertical-section">
 			
-		</div>
-		<div class="vertical-section">
-			<!-- <template is="dom-repeat" items="[[travels]]" as="travel"> -->				
-
+			<template is="dom-repeat" items="[[requests]]" as="request">				
+			
 				<!-- Type2 : request message -->
 				<div class="list-element">
-					<div class="title">6.26 - London</div>
+					<div class="title">[[request.schedule_title]]</div>
 					<div class="listWrapper">
 						<div class="usersWrapper">
 							<div class="userbox">
-								<iron-image src="../../images/touch/apple-touch-icon.png" style="width:100px; height:100px;"></iron-image>
-								<div class="username">UserName1</div>
+								<iron-image src="[[request.userpic]]" style="width:100px; height:100px;"></iron-image>
+								<div class="name">[[request.username]]</div>
 							</div>
 
-							<div class="userbox">
+							<!-- <div class="userbox">
 								<iron-image src="../../images/touch/apple-touch-icon.png" style="width:100px; height:100px;"></iron-image>
 								<div class="username">UserName2</div>
-							</div>
+							</div> -->
 						</div>
 
 						<div class="buttons">
@@ -70,7 +74,7 @@
 						</div>
 					</div>
 				</div>
-			<!-- </template>			 -->
+			</template>			
 		</div>
 	</template>
 </dom-module>
@@ -80,6 +84,10 @@
 
 		properties: {
 
+		},
+
+		ready: function() {
+			console.log("ready");
 		},
 
 		accept: function() {
