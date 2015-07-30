@@ -26,6 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     // imports are loaded and elements have been registered
     var registerSchedule = document.querySelector("#registerSchedule");
+    var findingTravelers = document.querySelector("#findingTravelers");
     var btnLogin = document.querySelector('#btnLogin');
     var loginDlog = document.querySelector('#loginDlog');
     var paperDlog = document.querySelector('#paperDlog');
@@ -39,6 +40,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      
     btnLogin.addEventListener('click', function() {
         loginDlog.toggle();
+    });
+
+    findingTravelers.addEventListener('show-dialog', function(e) {
+        paperDlog.toggle();
+        paperDlog.querySelector("#content").innerHTML = e.detail.content;
     });
     
     registerSchedule.addEventListener('show-dialog', function(e) {

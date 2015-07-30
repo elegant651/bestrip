@@ -94,7 +94,9 @@
 		},		
 
 		_userChanged: function() {
-			this.contact = this.user.facebook.cachedUserProfile.link;	
+			if(this.user!=null){
+				this.contact = this.user.facebook.cachedUserProfile.link;	
+			}			
 		},		
 
 		showCityDlog: function() {						
@@ -163,7 +165,8 @@
 				selCityIdx: this.selCityIdx,
 				startDate: this.startDate,
 				finishDate: this.finishDate,
-				contact: this.contact
+				contact: this.contact,
+				created_at: new Date().getTime()				
 			};
 			this.$.fcSchedules.add(data);
 			this.fire('show-dialog', {content: "Registration has completed."});

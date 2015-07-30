@@ -60,7 +60,7 @@
 				<div class="travelBox">
 					<iron-image src="[[schedule.userpic]]" style="width:100px; height:100px;"></iron-image>
 					<div class="name">[[schedule.username]]</div>
-					<paper-fab id="btnRequest" on-tap="request"  data-key$="{{schedule.__firebaseKey__}}" icon="arrow-forward"></paper-fab>
+					<paper-fab id="btnRequest" disabled$="{{checkData(user)}}" on-tap="request"  data-key$="{{schedule.__firebaseKey__}}" icon="arrow-forward"></paper-fab>
 				</div>				
 			</template>	
 
@@ -75,7 +75,12 @@
 		is: "finding-travelers",
 
 		properties: {
-			dlogType: Number
+			dlogType: Number,
+
+			user: {
+				type: Object,
+				value: null
+			}
 		},
 
 		ready: function() {
@@ -138,13 +143,27 @@
 			return this.cityNames[cityIdx].name;
 		},
 
-		request: function(e) {
+		checkData: function(user) {
+			if(this.user==null){
+				return true;
+			}
+
+			return false;
+		},
+
+		request: function(e) {			
 			var schedule_id = e.currentTarget.getAttribute("data-key");
 			var data = {
-				schedule_id: schedule_id
-
+				schedule_id: schedule_id,
+				userid: this.user.uid,
+				username: this.user.facebook.displayName,
+				userlink: this.user.facebook.cachedUserProfile.link,
+				userpic: this.user.facebook.cachedUserProfile.picture.data.url,
+				status: 0,
+				created_at: new Date().getTime()				
 			};
-			
+			this.$.fcRequests.add(data);
+			this.fire('show-dialog', {content: "Request has sent."});
 		}
 	});
 </script>
