@@ -166,7 +166,8 @@
 				startDate: this.startDate,
 				finishDate: this.finishDate,
 				contact: this.contact,
-				created_at: new Date().getTime()				
+				created_at: new Date().getTime(),
+				status: 0				
 			};
 			this.$.fcSchedules.add(data);
 			this.fire('show-dialog', {content: "Registration has completed."});

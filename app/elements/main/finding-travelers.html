@@ -60,7 +60,7 @@
 				<div class="travelBox">
 					<iron-image src="[[schedule.userpic]]" style="width:100px; height:100px;"></iron-image>
 					<div class="name">[[schedule.username]]</div>
-					<paper-fab id="btnRequest" disabled$="{{checkData(user)}}" on-tap="request"  data-key$="{{schedule.__firebaseKey__}}" data-startdate$="{{computeDate(schedule.startDate)}}" data-finishdate$="{{computeDate(schedule.finishDate)}}" data-cityname$="{{computeCityname(schedule.selCityIdx)}}" icon="arrow-forward"></paper-fab>
+					<paper-fab id="btnRequest" disabled$="{{checkData(user)}}" on-tap="request" data-key$="{{schedule.__firebaseKey__}}" data-startdate$="{{computeDate(schedule.startDate)}}" data-finishdate$="{{computeDate(schedule.finishDate)}}" data-cityname$="{{computeCityname(schedule.selCityIdx)}}" icon="arrow-forward"></paper-fab>
 				</div>				
 			</template>	
 

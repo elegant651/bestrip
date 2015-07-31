@@ -41,12 +41,24 @@
 
 		}
 	</style>
-	<template>
+	<template>		
 		 <firebase-collection	  
-				id="fcRequests"        
+			  id="fcRequests"        
 	          location="https://flamingo365.firebaseio.com/requests"
 	          data="{{requests}}"
 	          ></firebase-collection>
+
+	     <firebase-collection
+	     	id="fcSchedule"
+	     	location="{{scheduleTarget}}"
+	     	></firebase-collection>
+
+	     <firebase-collection
+	     	location="{{requestTarget}}"
+	     	data="{{requestData}}"
+	     	>
+	     </firebase-document>
+	     	     
 		
 		<div class="vertical-section">
 			
@@ -61,16 +73,11 @@
 								<iron-image src="[[request.userpic]]" style="width:100px; height:100px;"></iron-image>
 								<div class="name">[[request.username]]</div>
 							</div>
-
-							<!-- <div class="userbox">
-								<iron-image src="../../images/touch/apple-touch-icon.png" style="width:100px; height:100px;"></iron-image>
-								<div class="username">UserName2</div>
-							</div> -->
 						</div>
 
 						<div class="buttons">
-							<paper-fab id="btnAccept" on-tap="accept" icon="check"></paper-fab>
-							<paper-fab id="btnRefuse" on-tap="refuse" icon="close"></paper-fab>			
+							<paper-fab id="btnAccept" on-tap="accept" data-key$="{{request.__firebaseKey__}}" data-scheduleid$="{{request.schedule_id}}" icon="check"></paper-fab>
+							<paper-fab id="btnRefuse" on-tap="refuse" data-key$="{{request.__firebaseKey__}}" data-scheduleid$="{{request.schedule_id}}" icon="close"></paper-fab>			
 						</div>
 					</div>
 				</div>
@@ -83,19 +90,54 @@
 		is: "list-schedule",
 
 		properties: {
+			requestId: Number,
+			scheduleId: Number,
 
+			requestTarget: {
+				type: String,
+				computed: 'computeRequestTarget(requestId)'
+			},
+
+			scheduleTarget: {
+				type: String,
+				computed: 'computeScheduleTarget(scheduleId)'
+			},
+
+			user: {
+				type: Object,
+				value: null
+			}
 		},
 
-		ready: function() {
-			console.log("ready");
+		computeRequestTarget: function(requestId) {
+			return "https://flamingo365.firebaseio.com/requests/"+requestId;
 		},
 
-		accept: function() {
-
+		computeScheduleTarget: function(scheduleId) {
+			return "https://flamingo365.firebaseio.com/schedules/"+scheduleId+"/users";
 		},
 
-		refuse: function() {
+		accept: function(e) {
+			this.requestId = e.currentTarget.getAttribute("data-key");			
+			if(this.requestId!=null){
+				this.requestData.status = 1;
+				this.notifyPath('requestData.status', this.requestData.status);
 
+				//push user data in schedule				
+				
+
+				this.fire('show-dialog', {content: "The task has completed."});
+			}						
+		},
+
+		refuse: function(e) {
+			this.requestId = e.currentTarget.getAttribute("data-key");			
+			if(this.requestId!=null){
+				this.requestData.status = 2;
+				this.notifyPath('requestData.status', this.requestData.status);
+
+				this.fire('show-dialog', {content: "The task has completed."});
+			}			
 		}
 	});
 </script>

@@ -30,15 +30,15 @@
 	</style>
 	<template>
 		<div class="vertical-section">
-			<!-- <template is="dom-repeat" items="[[schedules]]" as="schedule"> --> 
+			<template is="dom-repeat" items="[[schedules]]" as="schedule"> 
 				
 				<div class="list-element">					
-					<div class="title">6.26 - London</div>
+					<h2><span>{{computeDate(schedule.startDate)}}</span> ~ <span>{{computeDate(schedule.finishDate)}}</span> : <span>{{computeCityname(schedule.selCityIdx)}}</span></h2>
 					<div class="listWrapper">
 						<div class="usersWrapper">
 							<div class="userbox">
-								<iron-image src="../../images/touch/apple-touch-icon.png" style="width:100px; height:100px;"></iron-image>
-								<div class="username">UserName1</div>
+								<iron-image src="[[schedule.userpic]]" style="width:100px; height:100px;"></iron-image>
+								<div class="username">[[schedule.username]]</div>
 							</div>
 
 							<div class="userbox">
@@ -54,7 +54,7 @@
 						</div>
 					</div>
 				</div>
-			<!-- </template> -->
+			</template>
 		</div>
 	</template>
 </dom-module>
