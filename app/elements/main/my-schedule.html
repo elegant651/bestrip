@@ -29,6 +29,11 @@
 		}
 	</style>
 	<template>
+		<firebase-collection	  
+				id="fcSchedules"        
+	          location="https://flamingo365.firebaseio.com/schedules"
+	          data="{{schedules}}"></firebase-collection>
+		
 		<div class="vertical-section">
 			<template is="dom-repeat" items="[[schedules]]" as="schedule"> 
 				
