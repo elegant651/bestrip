@@ -53,7 +53,7 @@
 	     	location="{{scheduleTarget}}"
 	     	></firebase-collection>
 
-	     <firebase-collection
+	     <firebase-document
 	     	location="{{requestTarget}}"
 	     	data="{{requestData}}"
 	     	>
@@ -76,8 +76,11 @@
 						</div>
 
 						<div class="buttons">
-							<paper-fab id="btnAccept" on-tap="accept" data-key$="{{request.__firebaseKey__}}" data-scheduleid$="{{request.schedule_id}}" icon="check"></paper-fab>
-							<paper-fab id="btnRefuse" on-tap="refuse" data-key$="{{request.__firebaseKey__}}" data-scheduleid$="{{request.schedule_id}}" icon="close"></paper-fab>			
+							<paper-fab id="btnAccept" on-tap="accept" data-key$="{{request.__firebaseKey__}}" data-scheduleid$="{{request.schedule_id}}"
+								data-userid$="{{request.userid}}" data-userlink$="{{request.userlink}}"
+								data-username$="{{request.username}}" data-userpic$="{{request.userpic}}"
+							 	icon="check"></paper-fab>
+							<paper-fab id="btnRefuse" on-tap="refuse" data-key$="{{request.__firebaseKey__}}" icon="close"></paper-fab>			
 						</div>
 					</div>
 				</div>
@@ -114,17 +117,25 @@
 		},
 
 		computeScheduleTarget: function(scheduleId) {
-			return "https://flamingo365.firebaseio.com/schedules/"+scheduleId+"/users";
+			return "https://flamingo365.firebaseio.com/schedules/"+scheduleId+"/req_users";
 		},
 
 		accept: function(e) {
-			this.requestId = e.currentTarget.getAttribute("data-key");			
-			if(this.requestId!=null){
+			this.requestId = e.currentTarget.getAttribute("data-key");	
+			this.scheduleId = e.currentTarget.getAttribute("data-scheduleid");					
+
+			if(this.requestId!=null && this.scheduleId!=null){
 				this.requestData.status = 1;
 				this.notifyPath('requestData.status', this.requestData.status);
 
-				//push user data in schedule				
-				
+				//push user data in schedule								
+				var data = {
+					userid: e.currentTarget.getAttribute("data-userid"),
+					username: e.currentTarget.getAttribute("data-username"),
+					userlink: e.currentTarget.getAttribute("data-userlink"),
+					userpic: e.currentTarget.getAttribute("data-userpic")
+				};
+				this.$.fcSchedule.add(data);
 
 				this.fire('show-dialog', {content: "The task has completed."});
 			}						
