@@ -56,11 +56,12 @@
 		<div class="vertical-section">			
 
 			<template is="dom-repeat" items="[[schedules]]" as="schedule">
-				<h2><span>{{computeDate(schedule.startDate)}}</span> ~ <span>{{computeDate(schedule.finishDate)}}</span> : <span>{{computeCityname(schedule.selCityIdx)}}</span></h2>				
+				<h2>{{schedule.schedule_title}}</h2>				
 				<div class="travelBox">
 					<iron-image src="[[schedule.userpic]]" style="width:100px; height:100px;"></iron-image>
 					<div class="name">[[schedule.username]]</div>
-					<paper-fab id="btnRequest" disabled$="{{checkData(user)}}" on-tap="request" data-key$="{{schedule.__firebaseKey__}}" data-startdate$="{{computeDate(schedule.startDate)}}" data-finishdate$="{{computeDate(schedule.finishDate)}}" data-cityname$="{{computeCityname(schedule.selCityIdx)}}" icon="arrow-forward"></paper-fab>
+					<paper-fab id="btnRequest" disabled$="{{checkData(user)}}" on-tap="request" data-key$="{{schedule.__firebaseKey__}}" data-scheduleuserid$="{{schedule.userid}}"
+					 data-scheduletitle$="{{schedule.schedule_title}}" icon="arrow-forward"></paper-fab>
 				</div>				
 			</template>	
 
@@ -82,18 +83,6 @@
 				value: null
 			}
 		},
-
-		ready: function() {
-			this.cityNames = [	
-				{name: 'All', idx: 0},			
-				{name: 'London', idx: 1},
-				{name: 'Paris', idx: 2},
-				{name: 'Berlin', idx: 3},
-				{name: 'Rome', idx: 4},
-				{name: 'Istanbul', idx: 5},
-				{name: 'Prague', idx: 6}
-			];
-		},		
 
 		showCityDlog: function() {			
 			this.$.cityDlog.toggle();
@@ -128,20 +117,7 @@
 			this.selCityIdx = e.detail.idx;
 			var strName = e.detail.name;
 			this.$.btnSelCity.innerHTML = strName;
-		},
-
-		computeDate: function(date){
-			var year = Intl.DateTimeFormat(this.locale, { year: 'numeric' }).format(date);
-			var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
-			var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
-			
-			var strDate = year+" "+month+" "+day;	
-			return strDate;
-		},
-
-		computeCityname: function(cityIdx) {		
-			return this.cityNames[cityIdx].name;
-		},
+		},		
 
 		checkData: function(user) {
 			if(this.user==null){
@@ -153,11 +129,13 @@
 
 		request: function(e) {			
 			var schedule_id = e.currentTarget.getAttribute("data-key");
-			var schedule_title = e.currentTarget.getAttribute("data-startdate") + " ~ " + e.currentTarget.getAttribute("data-finishdate") + " : " + e.currentTarget.getAttribute("data-cityname");
+			var schedule_title = e.currentTarget.getAttribute("data-scheduletitle");
+			var schedule_userid = e.currentTarget.getAttribute("data-scheduleuserid");
 
 			var data = {
 				schedule_id: schedule_id,
 				schedule_title: schedule_title,
+				schedule_userid: schedule_userid,
 				userid: this.user.uid,
 				username: this.user.facebook.displayName,
 				userlink: this.user.facebook.cachedUserProfile.link,

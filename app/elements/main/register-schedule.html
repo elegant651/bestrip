@@ -93,6 +93,18 @@
 			}			
 		},		
 
+		ready: function() {
+			this.cityNames = [	
+				{name: 'All', idx: 0},			
+				{name: 'London', idx: 1},
+				{name: 'Paris', idx: 2},
+				{name: 'Berlin', idx: 3},
+				{name: 'Rome', idx: 4},
+				{name: 'Istanbul', idx: 5},
+				{name: 'Prague', idx: 6}
+			];
+		},		
+
 		_userChanged: function() {
 			if(this.user!=null){
 				this.contact = this.user.facebook.cachedUserProfile.link;	
@@ -134,7 +146,7 @@
 			this.selCityIdx = e.detail.idx;
 			var strName = e.detail.name;
 			this.$.btnSelCity.innerHTML = strName;
-		},
+		},		
 
 		checkData: function(user, selCityIdx, startDate, finishDate, contact) {			
 			if(this.user==null){
@@ -157,6 +169,8 @@
 		},	
 
 		register: function() {
+			var schedule_title = this.$.piStartDate.getAttribute("value") + " ~ " + this.$.piFinishDate.getAttribute("value") + " : " + this.cityNames[this.selCityIdx].name;
+
 			var data = {
 				userid: this.user.uid,
 				username: this.user.facebook.displayName,
@@ -165,6 +179,7 @@
 				selCityIdx: this.selCityIdx,
 				startDate: this.startDate,
 				finishDate: this.finishDate,
+				schedule_title : schedule_title,
 				contact: this.contact,
 				created_at: new Date().getTime(),
 				status: 0				

@@ -45,7 +45,9 @@
 		 <firebase-collection	  
 			  id="fcRequests"        
 	          location="https://flamingo365.firebaseio.com/requests"
-	          data="{{requests}}"
+	          order-by-child="schedule_userid"
+	          equal-to="{{user.uid}}"
+	          data="{{requests}}"	          
 	          ></firebase-collection>
 
 	     <firebase-collection
@@ -76,7 +78,8 @@
 						</div>
 
 						<div class="buttons">
-							<paper-fab id="btnAccept" on-tap="accept" data-key$="{{request.__firebaseKey__}}" data-scheduleid$="{{request.schedule_id}}"
+							<paper-fab id="btnAccept" on-tap="accept" data-key$="{{request.__firebaseKey__}}" 
+								data-scheduleid$="{{request.schedule_id}}"
 								data-userid$="{{request.userid}}" data-userlink$="{{request.userlink}}"
 								data-username$="{{request.username}}" data-userpic$="{{request.userpic}}"
 							 	icon="check"></paper-fab>
