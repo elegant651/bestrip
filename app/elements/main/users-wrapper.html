@@ -1,0 +1,32 @@
+
+<dom-module id="users-wrapper">
+	<style>
+
+	</style>
+	<template>
+		<firebase-collection
+	     	id="fcSchedule"
+	     	location="{{scheduleTarget}}"
+	     	></firebase-collection>
+
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: "users-wrapper",
+
+		properties: {
+			scheduleId: Number,
+
+			scheduleTarget: {
+				type: String,
+				computed: 'computeScheduleTarget(scheduleId)'
+			}
+		},
+
+
+		computeScheduleTarget: function(scheduleId) {
+			return "https://flamingo365.firebaseio.com/schedules/"+scheduleId+"/req_users";
+		}
+	});
+</script>

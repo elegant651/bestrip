@@ -77,26 +77,20 @@
 				
 				<div class="list-element">					
 					<h2>{{request.schedule_title}}</h2>
-					<!-- <div class="listWrapper">
+
+					<div class="listWrapper">
 						<div class="usersWrapper">
 							<div class="userbox">
-								<iron-image src="{{schedule.userpic}}" style="width:100px; height:100px;"></iron-image>
-								<div class="username">{{schedule.username}}</div>
-							</div>
-
-							<template is="dom-repeat" items="{{arrayify(schedule.req_users)}}" as="requser">
-								<div class="userbox">									
-									<iron-image src="{{requser.userpic}}" style="width:100px; height:100px;"></iron-image>
-									<div class="username">{{requser.username}}</div>
-								</div>
-							</template>
+								<iron-image src="{{request.schedule_userpic}}" style="width:100px; height:100px;"></iron-image>
+								<div class="username">{{request.schedule_username}}</div>
+							</div>							
 						</div>
 
-						<div class="buttons">
+						<!-- <div class="buttons">
 							<paper-fab id="btnInvite" on-tap="invite" icon="social:person-add"></paper-fab>
 							<a href="/contactinfo/123"><paper-fab id="btnComplete" on-tap="complete" icon="launch"></paper-fab></a>			
-						</div>
-					</div> -->
+						</div> -->
+					</div>
 				</div>
 			</template>
 		</div>
@@ -110,18 +104,16 @@
 		is: "my-schedule",
 
 		properties: {
-			scheduleId: Number,
-
 			user: {
 				type: Object,
 				value: null
-			}	
+			}			
 		},
 
 		arrayify: function(obj) { 
 			if(obj==null) return null;
 
 			return Object.keys(obj).map(function(k) { return obj[k]; });
-		}
+		}		
 	});
 </script>
