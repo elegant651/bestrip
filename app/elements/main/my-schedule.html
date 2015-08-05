@@ -42,6 +42,12 @@
 	    	order-by-child="userid" 
 	    	equal-to="{{user.uid}}"
 	    	data="{{requests}}"></firebase-collection>
+
+	    <firebase-document
+	     	location="{{scheduleTarget}}"
+	     	data="{{scheduleData}}"
+	     	>
+	     </firebase-document>
 		
 		<div class="vertical-section">
 			<template is="dom-repeat" items="{{schedules}}" as="schedule"> 
@@ -64,8 +70,11 @@
 						</div>
 
 						<div class="buttons">
-							<paper-fab id="btnInvite" on-tap="invite" icon="social:person-add"></paper-fab>
-							<a href="/contactinfo/123"><paper-fab id="btnComplete" on-tap="complete" icon="launch"></paper-fab></a>			
+							<!-- <paper-fab id="btnInvite" on-tap="invite" icon="social:person-add"></paper-fab> -->
+							<paper-button id="btnMakeTeam" raised on-tap="makeTeam" 
+							data-scheduleid$="{{schedule.__firebaseKey__}}"
+							hidden$="{{showMakeTeamButton(schedule.status)}}" class="colorful ripple"><iron-icon icon="check"></iron-icon>Make Team</paper-button>
+							<a href="/contactinfo/123"><paper-fab id="btnShowContact" hidden$="{{showContact(schedule.status)}}" icon="launch"></paper-fab></a>			
 						</div>
 					</div>
 				</div>
@@ -80,6 +89,7 @@
 
 					<div class="listWrapper">
 						<div class="usersWrapper">
+							<h3>Host</h3>
 							<div class="userbox">
 								<iron-image src="{{request.schedule_userpic}}" style="width:100px; height:100px;"></iron-image>
 								<div class="username">{{request.schedule_username}}</div>
@@ -104,16 +114,54 @@
 		is: "my-schedule",
 
 		properties: {
+			scheduleId: Number,
+
 			user: {
 				type: Object,
 				value: null
+			},
+
+			scheduleTarget: {
+				type: String,
+				computed: 'computeScheduleTarget(scheduleId)'
 			}			
+		},
+
+		computeScheduleTarget: function(scheduleId) {
+			return "https://flamingo365.firebaseio.com/schedules/"+scheduleId;
 		},
 
 		arrayify: function(obj) { 
 			if(obj==null) return null;
 
 			return Object.keys(obj).map(function(k) { return obj[k]; });
-		}		
+		},
+
+		showContact: function(status) {
+			if(status==0){
+				return true;
+			} else {
+				return false;
+			}
+		},
+
+		showMakeTeamButton: function(status) {
+			if(status==0){
+				return false;
+			} else {
+				return true;
+			}
+		},
+
+		makeTeam: function(e) {
+			this.scheduleId = e.currentTarget.getAttribute("data-scheduleid");
+
+			if(this.scheduleId!=null){
+				this.scheduleData.status = 1;
+				this.notifyPath('scheduleData.status', this.scheduleData.status);
+
+				this.fire('show-dialog', {content: "The task has completed."});
+			}
+		}
 	});
 </script>

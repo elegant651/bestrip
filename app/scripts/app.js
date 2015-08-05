@@ -28,9 +28,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var registerSchedule = document.querySelector("#registerSchedule");
     var findingTravelers = document.querySelector("#findingTravelers");
     var listSchedule = document.querySelector('#listSchedule');
+    var mySchedule = document.querySelector('#mySchedule');
     var btnLogin = document.querySelector('#btnLogin');
     var loginDlog = document.querySelector('#loginDlog');
     var paperDlog = document.querySelector('#paperDlog');
+
 
     loginDlog.addEventListener('login-complete', function(e) {                
         btnLogin.innerHTML = "LOG OUT";
@@ -54,6 +56,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     listSchedule.addEventListener('show-dialog', function(e) {
+        paperDlog.toggle();
+        paperDlog.querySelector("#content").innerHTML = e.detail.content;
+    });
+
+    mySchedule.addEventListener('show-dialog', function(e) {
         paperDlog.toggle();
         paperDlog.querySelector("#content").innerHTML = e.detail.content;
     });
