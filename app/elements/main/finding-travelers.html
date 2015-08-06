@@ -43,8 +43,7 @@
 				<div class="vertical-section">
 					<h2>Date</h2>
 					<div class="wrapperDate">
-						<paper-input id="piStartDate" label="Select Start Date" on-tap="showStartDateDlog"></paper-input>
-						<paper-input id="piFinishDate" label="Select Finish Date" on-tap="showFinishDateDlog"></paper-input>
+						<paper-input id="piPickDate" label="Select Date" on-tap="showDateDlog"></paper-input>
 					</div>				
 				</div>
 
@@ -77,12 +76,21 @@
 	Polymer({
 		is: "finding-travelers",
 
-		properties: {
-			dlogType: Number,
-
+		properties: {			
+			schedules: Object,
 			user: {
 				type: Object,
 				value: null
+			},
+
+			selCityIdx: {
+				type: Number,
+				value: -1
+			},
+
+			pickDate: {
+				type: Number,
+				value: -1
 			}
 		},
 
@@ -90,36 +98,48 @@
 			this.$.cityDlog.toggle();
 		},
 
-		showStartDateDlog: function() {
-			this.dlogType = 0;
+		showDateDlog: function() {			
 			this.$.datePicker.toggle();
 		},
 
-		showFinishDateDlog: function() {
-			this.dlogType = 1;
-			this.$.datePicker.toggle();
-		},
-
-		dateValueChanged: function() {
-			console.log("dateValueChanged:" + this.$.datePicker.value);			
+		dateValueChanged: function() {			
 			var date = this.$.datePicker.value;
 			var year = Intl.DateTimeFormat(this.locale, { year: 'numeric' }).format(date);
 			var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
 			var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
 			
 			var strDate = year+" "+month+" "+day;
-    		if(this.dlogType==0){
-    			this.$.piStartDate.setAttribute("value", strDate);
-    		} else {
-    			this.$.piFinishDate.setAttribute("value", strDate);
-    		}
+			this.$.piPickDate.setAttribute("value", strDate);
+			this.pickDate = date.getTime();    			    		
 		},
 
 		onSelectCity: function(e) {			
 			this.selCityIdx = e.detail.idx;
 			var strName = e.detail.name;
-			this.$.btnSelCity.innerHTML = strName;
+			this.$.btnSelCity.innerHTML = strName;			
 		},		
+
+		search: function() {
+			var selCityIdx = this.selCityIdx;
+			var pickDate = this.pickDate;
+			var that = this;
+			
+			if(selCityIdx!=-1 && pickDate!=-1){
+				var ref = new Firebase("https://flamingo365.firebaseio.com/schedules");								
+				ref.orderByChild("selCityIdx").equalTo(selCityIdx).on("value", function(querySnapshot) {					
+					// var objSchedule = new Object();				
+					querySnapshot.forEach(function(snapshot) {
+						if(snapshot.val().startDate <= pickDate && pickDate <= snapshot.val().finishDate){
+							// objSchedule = snapshot;							
+							that.schedules.push(snapshot);
+						}
+					});					
+					that.notifyPath('schedules', that.schedules);
+					console.log(that.schedules);
+				});
+				
+			}			
+		},
 
 		checkData: function(user) {
 			if(this.user==null){
