@@ -113,7 +113,8 @@
 	    },
 
 	    _userChanged: function() {
-	    	if (this.statusKnown && this.user) {	    		
+	    	if (this.statusKnown && this.user) {	   
+	    	console.log(this.user); 		
 	    		console.log("logging in :"+this.user.uid+"/"+this.user.facebook.displayName+"/"+this.user.facebook.cachedUserProfile.link+"/"+this.user.facebook.cachedUserProfile.picture.data.url);
 	    		
 	    		

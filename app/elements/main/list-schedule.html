@@ -71,10 +71,12 @@
 					<div class="title">[[request.schedule_title]]</div>
 					<div class="listWrapper">
 						<div class="usersWrapper">
-							<div class="userbox">
-								<iron-image src="[[request.userpic]]" style="width:100px; height:100px;"></iron-image>
-								<div class="name">[[request.username]]</div>
-							</div>
+							<a href="[[request.userlink]]" target="_blank">
+								<div class="userbox">
+									<iron-image src="[[request.userpic]]" style="width:100px; height:100px;"></iron-image>
+									<div class="name">[[request.username]]</div>
+								</div>
+							</a>
 						</div>
 
 						<div class="buttons">

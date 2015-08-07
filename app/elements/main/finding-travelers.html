@@ -127,13 +127,9 @@
 			if(selCityIdx!=-1 && pickDate!=-1){
 				var ref = new Firebase("https://flamingo365.firebaseio.com/schedules");								
 				ref.orderByChild("selCityIdx").equalTo(selCityIdx).on("value", function(querySnapshot) {					
-					// that.schedules.map(function(d){
-					// 	console.log("b:"+JSON.stringify(d));
-					// });
-					// var objSchedule = new Object();
+					
 					that.schedules = [];				
-					querySnapshot.forEach(function(snapshot) {
-						console.log("s:"+selCityIdx+"/"+pickDate);
+					querySnapshot.forEach(function(snapshot) {						
 						if(snapshot.val().startDate <= pickDate && pickDate <= snapshot.val().finishDate){
 							// objSchedule = snapshot;										
 							var sv = snapshot.val();							
@@ -141,11 +137,7 @@
 							// that.schedules.push(sv);
 							that.push('schedules', sv);
 						}
-					});					
-					// that.notifyPath('schedules', that.schedules);
-					// that.schedules.map(function(d){
-					// 	console.log("a:"+JSON.stringify(d));
-					// });					
+					});									
 				});
 				
 			}			
