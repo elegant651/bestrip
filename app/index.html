@@ -74,25 +74,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <span>Home</span>
               </a>
 
-              <a data-route="register" href="/register">
-                <iron-icon icon="info"></iron-icon>
-                <span>Register Schedule</span>
-              </a>
+              <template is="dom-if" if="{{user}}">
+                <a data-route="register" href="/register">
+                  <iron-icon icon="info"></iron-icon>
+                  <span>Register Schedule</span>
+                </a>
 
-              <a data-route="search" href="/search">
-                <iron-icon icon="info"></iron-icon>
-                <span>Finding Schedule</span>
-              </a>
+                <a data-route="search" href="/search">
+                  <iron-icon icon="info"></iron-icon>
+                  <span>Finding Schedule</span>
+                </a>
 
-              <a data-route="schedules" href="/schedules">
-                <iron-icon icon="info"></iron-icon>
-                <span>Listing Schedule</span>
-              </a>
+                <a data-route="schedules" href="/schedules">
+                  <iron-icon icon="info"></iron-icon>
+                  <span>Listing Schedule</span>
+                </a>
 
-              <a data-route="myschedule" href="/myschedule">
-                <iron-icon icon="info"></iron-icon>
-                <span>My Schedule</span>
-              </a>              
+                <a data-route="myschedule" href="/myschedule">
+                  <iron-icon icon="info"></iron-icon>
+                  <span>My Schedule</span>
+                </a>              
+              </template>
 
               <!-- <a data-route="users" href="/users">
                 <iron-icon icon="info"></iron-icon>
@@ -147,28 +149,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             </section>
 
-            <section data-route="register">
-                <register-schedule id="registerSchedule" user="{{user}}"></register-schedule>
-            </section>
+            <template is="dom-if" if="{{user}}">
+              <section data-route="register">
+                  <register-schedule id="registerSchedule" user="{{user}}"></register-schedule>
+              </section>
 
-            <section data-route="search">
-                <finding-travelers id="findingTravelers" user="{{user}}"></finding-travelers>
-            </section>
+              <section data-route="search">
+                  <finding-travelers id="findingTravelers" user="{{user}}"></finding-travelers>
+              </section>
 
-            <section data-route="schedules">              
-                <list-schedule id="listSchedule" user="{{user}}"></list-schedule>
-            </section>
+              <section data-route="schedules">              
+                  <list-schedule id="listSchedule" user="{{user}}"></list-schedule>
+              </section>
 
-            <section data-route="myschedule">
-                <my-schedule id="mySchedule" user="{{user}}"></my-schedule>
-            </section>
+              <section data-route="myschedule">
+                  <my-schedule id="mySchedule" user="{{user}}"></my-schedule>
+              </section>
 
-            <section data-route="contactinfo">
-              <paper-material elevation="1">
-                info number : <span>{{params.id}}</span>
-                <contact-info schedule-id="{{params.id}}"></contact-info>                
-              </paper-material>
-            </section>
+
+              <section data-route="contactinfo">
+                <paper-material elevation="1">
+                  info number : <span>{{params.id}}</span>
+                  <contact-info schedule-id="{{params.id}}"></contact-info>                
+                </paper-material>
+              </section>
+            </template>
 
             <section data-route="users">
               <paper-material elevation="1">
