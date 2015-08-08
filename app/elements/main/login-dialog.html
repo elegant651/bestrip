@@ -113,8 +113,15 @@
 	    },
 
 	    _userChanged: function() {
-	    	if (this.statusKnown && this.user) {	   
-	    	console.log(this.user); 		
+	    	if (this.statusKnown && this.user) {	   	    	
+	    		
+	    		var ref = new Firebase("https://flamingo365.firebaseio.com");	    			 
+				ref.child("users").child(this.user.uid).set({
+					provider: this.user.provider,
+					recent_at: new Date().getTime()					
+				});	    				    		
+
+
 	    		console.log("logging in :"+this.user.uid+"/"+this.user.facebook.displayName+"/"+this.user.facebook.cachedUserProfile.link+"/"+this.user.facebook.cachedUserProfile.picture.data.url);
 	    		
 	    		
