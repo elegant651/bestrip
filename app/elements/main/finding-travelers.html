@@ -33,43 +33,49 @@
 				id="fcRequests"        
 	          location="https://flamingo365.firebaseio.com/requests"
 	          ></firebase-collection>
+	    
+	    <div hidden$="{{isShow}}">
+			<paper-material elevation="1">
+				<div class="searchWrapper">
+					<div class="vertical-section">
+						<h2>City</h2>
+						<paper-button id="btnSelCity" data-dialog="dlogCity" on-tap="showCityDlog">Select City<paper-button>
+					</div>
+					<div class="vertical-section">
+						<h2>Date</h2>
+						<div class="wrapperDate">
+							<paper-input id="piPickDate" label="Select Date" on-tap="showDateDlog"></paper-input>
+						</div>				
+					</div>
 
-		<paper-material elevation="1">
-			<div class="searchWrapper">
-				<div class="vertical-section">
-					<h2>City</h2>
-					<paper-button id="btnSelCity" data-dialog="dlogCity" on-tap="showCityDlog">Select City<paper-button>
+					<paper-button id="btnSearch" raised on-tap="search" class="colorful ripple"><iron-icon icon="search"></iron-icon>Search</paper-button>				
 				</div>
-				<div class="vertical-section">
-					<h2>Date</h2>
-					<div class="wrapperDate">
-						<paper-input id="piPickDate" label="Select Date" on-tap="showDateDlog"></paper-input>
+			</paper-material>
+
+
+			<div class="vertical-section">			
+
+				<template is="dom-repeat" items="[[schedules]]" as="schedule">
+					<h2>{{schedule.schedule_title}}</h2>				
+					<div class="travelBox">
+						<iron-image src="[[schedule.userpic]]" style="width:100px; height:100px;"></iron-image>
+						<div class="name">[[schedule.username]]</div>
+						<paper-fab id="btnRequest" disabled$="{{checkData(user)}}" on-tap="request" data-key$="{{schedule.__firebaseKey__}}" data-schedule-userid$="{{schedule.userid}}"
+						data-schedule-userlink$="{{schedule.userlink}}" data-schedule-username$="{{schedule.username}}"
+						data-schedule-userpic$="{{schedule.userpic}}"
+						 data-schedule-title$="{{schedule.schedule_title}}" icon="arrow-forward"></paper-fab>
 					</div>				
-				</div>
-
-				<paper-button id="btnSearch" raised on-tap="search" class="colorful ripple"><iron-icon icon="search"></iron-icon>Search</paper-button>				
+				</template>				
 			</div>
-		</paper-material>
-
-
-		<div class="vertical-section">			
-
-			<template is="dom-repeat" items="[[schedules]]" as="schedule">
-				<h2>{{schedule.schedule_title}}</h2>				
-				<div class="travelBox">
-					<iron-image src="[[schedule.userpic]]" style="width:100px; height:100px;"></iron-image>
-					<div class="name">[[schedule.username]]</div>
-					<paper-fab id="btnRequest" disabled$="{{checkData(user)}}" on-tap="request" data-key$="{{schedule.__firebaseKey__}}" data-schedule-userid$="{{schedule.userid}}"
-					data-schedule-userlink$="{{schedule.userlink}}" data-schedule-username$="{{schedule.username}}"
-					data-schedule-userpic$="{{schedule.userpic}}"
-					 data-schedule-title$="{{schedule.schedule_title}}" icon="arrow-forward"></paper-fab>
-				</div>				
-			</template>	
-
-			
 		</div>
+
 		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
-		<paper-date-picker-dialog id="datePicker" date="2015/8/8" on-value-changed="dateValueChanged"></paper-date-picker-dialog>
+		<paper-date-picker-dialog id="datePicker" date="2015/8/8" on-value-changed="dateValueChanged"></paper-date-picker-dialog>		
+
+		<div hidden$="{{!isShow}}">			
+			<h2>To viewing this page, Go to register your schedule!!</h2>
+		</div>
+
 	</template>
 </dom-module>
 <script>
@@ -80,7 +86,8 @@
 			schedules: Object,
 			user: {
 				type: Object,
-				value: null
+				value: null,
+				observer: '_userChanged'
 			},
 
 			selCityIdx: {
@@ -91,7 +98,30 @@
 			pickDate: {
 				type: Number,
 				value: -1
+			},
+
+			isShow: {
+				type: Boolean,
+				value: false				
 			}
+		},
+
+		_userChanged: function() {
+			///check if user's status is 1
+			if(this.user){
+				var that = this;
+				var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    			 
+	    		ref.child(this.user.uid).on("value", function(snapshot) {
+	    			var userdata = snapshot.val();	    				    			    			
+	    			if(userdata.status==1){
+	    				that.isShow = false;    				
+	    			} else {
+	    				that.isShow = true;
+	    			}
+	    		}, function(error){
+	    			console.log("error:" + error.code);
+	    		});	    		
+			}			
 		},
 
 		showCityDlog: function() {			

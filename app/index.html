@@ -67,7 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <span class="paper-font-title">Menu</span>
         </paper-toolbar>
 
-        <!-- Drawer Content -->
+        <!-- Drawer Content -->          
           <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
               <a data-route="home" href="/">
                 <iron-icon icon="home"></iron-icon>
@@ -149,7 +149,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             </section>
 
-            <template is="dom-if" if="{{user}}">
+          
               <section data-route="register">
                   <register-schedule id="registerSchedule" user="{{user}}"></register-schedule>
               </section>
@@ -173,7 +173,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <contact-info schedule-id="{{params.id}}"></contact-info>                
                 </paper-material>
               </section>
-            </template>
 
             <section data-route="users">
               <paper-material elevation="1">
@@ -202,7 +201,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </iron-pages>
         </div>
 
-        <login-dialog id="loginDlog" user="{{user}}"></login-dialog>
+        <login-dialog id="loginDlog" user="{{user}}" isfindingenable="{{isfindingenable}}"></login-dialog>
       </paper-header-panel>
     </paper-drawer-panel>
 
@@ -231,6 +230,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>
   <!-- endbuild-->
+  <!-- google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-66119326-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+  <!-- end -->
 </body>
 
 </html>

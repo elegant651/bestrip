@@ -24,6 +24,13 @@
 				id="fcSchedules"        
 	          location="https://flamingo365.firebaseio.com/schedules"
 	          data="{{schedules}}"></firebase-collection>
+
+	    <firebase-document
+	     	location="{{userTarget}}"
+	     	data="{{userData}}"
+	     	>
+	     </firebase-document>
+
 		<div class="vertical-section">
 			<h3>{{user.facebook.displayName}}</h3>
 		</div>
@@ -71,6 +78,11 @@
 				observer: '_userChanged'				
 			},
 
+			userTarget: {
+				type: String,
+				computed: 'computeUserTarget(user.uid)'
+			},
+
 			dlogType: Number,
 			selCityIdx: {
 				type: Number,
@@ -90,7 +102,7 @@
 			contact: {
 				type: String,
 				value: null
-			}			
+			}
 		},		
 
 		ready: function() {
@@ -111,8 +123,12 @@
 			}			
 		},		
 
+		computeUserTarget: function(userId) {			
+			return "https://flamingo365.firebaseio.com/users/"+userId;
+		},
+
 		showCityDlog: function() {						
-			this.$.cityDlog.toggle();			
+			this.$.cityDlog.toggle();					
 		},
 
 		showStartDateDlog: function() {
@@ -185,6 +201,12 @@
 				status: 0				
 			};
 			this.$.fcSchedules.add(data);
+
+			//changing user status data
+			this.userData.status = 1;
+			this.notifyPath('userData.status', this.userData.status);
+			this.isfindingdnable = true;
+
 			this.fire('show-dialog', {content: "Registration has completed."});
 		}
 	});
