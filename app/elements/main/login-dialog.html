@@ -18,6 +18,9 @@
 			cursor: pointer;
 		}
 	</style>
+
+	<link rel="import" type="css" href="../../bower_components/paper-dialog-behavior/paper-dialog-common.css">
+
 	<template>
 		<firebase-auth id="firebaseLogin" user="{{user}}" status-known="{{statusKnown}}" location="https://flamingo365.firebaseio.com" provider="{{provider}}" on-error="errorHandler" on-user-created="userSuccessHandler" on-password-changed="userSuccessHandler" on-password-reset="userSuccessHandler" on-user-removed="userSuccessHandler"></firebase-auth>
 
@@ -120,15 +123,18 @@
 	    		ref.child(this.user.uid).on("value", function(snapshot) {
 	    			var userdata = snapshot.val();	    				    			
 	    			status = userdata.status;
+
+	    			if(status!=1){
+	    				ref.child(this.user.uid).set({
+							provider: this.user.provider,
+							recent_at: new Date().getTime(),
+							status: status 					
+						});	    				    						
+	    			}	    			
 	    		}, function(error){
 	    			console.log("error:" + error.code);
 	    		});
-
-				ref.child(this.user.uid).set({
-					provider: this.user.provider,
-					recent_at: new Date().getTime(),
-					status: status 					
-				});	    				    						
+				
 
 	    		console.log("logging in :"+this.user.uid+"/"+this.user.facebook.displayName+"/"+this.user.facebook.cachedUserProfile.link+"/"+this.user.facebook.cachedUserProfile.picture.data.url);
 	    		
