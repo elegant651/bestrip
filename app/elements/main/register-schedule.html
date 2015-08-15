@@ -16,6 +16,7 @@
 
 		#btnRegister {
 			margin-top: 20px;
+			background: rgb(233, 84, 46);
 		}
 		
 	</style>
@@ -35,7 +36,7 @@
 			<h3>{{user.facebook.displayName}}</h3>
 		</div>
 		<div class="vertical-section">
-			<h2>City</h2>
+			<h2>Destination</h2>
 			<paper-button id="btnSelCity" raised data-dialog="dlogCity" on-tap="showCityDlog">Select City<paper-button>	
 		</div>
 		<div class="vertical-section">
@@ -58,12 +59,15 @@
 		</div>
 		<div class="vertical-section">
 			<h2>Contact</h2>
-			<paper-input id="ipContact" label="phone number or facebook" maxlength="50" value="{{contact}}"></paper-input>
+			<paper-input id="ipContact" label="facebook" maxlength="50" value="{{contact}}"></paper-input>
+			<paper-input id="ipPhoneNum" label="phone" maxlength="20" value="{{phone}}"></paper-input>
+			<paper-radio-button id="prPrivacy" on-tap="showPrivacy">Privacy Policy</paper-radio-button>
 		</div>
 		<div class="vertical-section">
-			<paper-button id="btnRegister" raised disabled$="{{checkData(user, selCityIdx, startDate, finishDate, contact)}}" on-tap="register" class="colorful ripple"><iron-icon icon="check"></iron-icon>Register</paper-button>
+			<paper-button id="btnRegister" raised disabled$="{{checkData(user, selCityIdx, startDate, finishDate, contact, phone)}}" on-tap="register" class="colorful ripple"><iron-icon icon="check"></iron-icon>Register</paper-button>
 		</div>
 		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
+		<privacy-dialog id="privacyDlog"></privacy-dialog>
 		
 	</template>
 </dom-module>
@@ -100,6 +104,11 @@
 			},
 
 			contact: {
+				type: String,
+				value: null
+			},
+
+			phone: {
 				type: String,
 				value: null
 			}
@@ -148,7 +157,7 @@
 			var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
 			var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
 			
-			var strDate = year+" "+month+" "+day;			
+			var strDate = year+" "+month+" "+day;
     		if(this.dlogType==0){
     			this.$.piStartDate.setAttribute("value", strDate);
     			this.startDate = date.getTime();    			
@@ -164,7 +173,11 @@
 			this.$.btnSelCity.innerHTML = strName;
 		},		
 
-		checkData: function(user, selCityIdx, startDate, finishDate, contact) {			
+		showPrivacy: function() {
+			this.$.privacyDlog.toggle();
+		},
+
+		checkData: function(user, selCityIdx, startDate, finishDate, contact, phone) {			
 			if(this.user==null){
 				return true;
 			}
@@ -178,6 +191,9 @@
 				return true;
 			}
 			if(this.$.ipContact.value==null || this.$.ipContact.value===""){
+				return true;
+			}
+			if(this.$.ipPhoneNum.value==null || this.$.ipPhoneNum.value===""){
 				return true;
 			}
 
@@ -197,6 +213,7 @@
 				finishDate: this.finishDate,
 				schedule_title : schedule_title,
 				contact: this.contact,
+				phone: this.phone,
 				created_at: new Date().getTime(),
 				status: 0				
 			};
@@ -204,8 +221,12 @@
 
 			//changing user status data
 			this.userData.status = 1;
+			this.userData.phone = this.phone;
 			this.notifyPath('userData.status', this.userData.status);
+			this.notifyPath('userData.phone', this.userData.phone);
 			this.isfindingdnable = true;
+
+			//put phonenum in usertable			
 
 			this.fire('show-dialog', {content: "Registration has completed."});
 		}

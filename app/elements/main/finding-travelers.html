@@ -21,6 +21,10 @@
 			@apply(--layout-horizontal);	
 			@apply(--layout-justified);	
 		}
+
+		#btnRequest {
+			background: rgb(233, 84, 46);
+		}
 		
 	</style>
 	<template>
@@ -156,8 +160,7 @@
 			
 			if(selCityIdx!=-1 && pickDate!=-1){
 				var ref = new Firebase("https://flamingo365.firebaseio.com/schedules");								
-				ref.orderByChild("selCityIdx").equalTo(selCityIdx).on("value", function(querySnapshot) {					
-					
+				ref.orderByChild("selCityIdx").equalTo(selCityIdx).on("value", function(querySnapshot) {										
 					that.schedules = [];				
 					querySnapshot.forEach(function(snapshot) {						
 						if(snapshot.val().startDate <= pickDate && pickDate <= snapshot.val().finishDate){

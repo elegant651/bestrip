@@ -63,11 +63,15 @@
 								</div>
 							</a>
 
-							<template is="dom-repeat" items="{{arrayify(schedule.req_users)}}" as="requser">
+
+							<template is="dom-repeat" items="{{arrayify(schedule.req_users)}}" as="requser">						
 								<div class="userbox">									
-									<iron-image src="{{requser.userpic}}" style="width:100px; height:100px;"></iron-image>
-									<div class="username">{{requser.username}}</div>
-								</div>
+									<a href="[[requser.userlink]]" target="_blank">
+										<iron-image src="{{requser.userpic}}" style="width:100px; height:100px;"></iron-image>
+										<div class="username">{{requser.username}}</div>
+									</a>
+									<paper-button data-userid$="{{requser.userid}}"	on-tap="showContact" hidden$="{{showContact(schedule.status)}}" class="colorful ripple">Show Contact</paper-button>
+								</div>								
 							</template>
 						</div>
 
@@ -75,8 +79,11 @@
 							<!-- <paper-fab id="btnInvite" on-tap="invite" icon="social:person-add"></paper-fab> -->
 							<paper-button id="btnMakeTeam" raised on-tap="makeTeam" 
 							data-scheduleid$="{{schedule.__firebaseKey__}}"
-							hidden$="{{showMakeTeamButton(schedule.status)}}" class="colorful ripple"><iron-icon icon="check"></iron-icon>Make Team</paper-button>
-							<a href="/contactinfo/123"><paper-fab id="btnShowContact" hidden$="{{showContact(schedule.status)}}" icon="launch"></paper-fab></a>			
+							hidden$="{{showMakeTeamButton(schedule.status)}}" class="colorful ripple"><iron-icon icon="check"></iron-icon>Complete Team</paper-button>
+							
+							<!-- <a href="{{computeContactSrc(schedule.__firebaseKey__)}}">
+								<paper-fab id="btnShowContact" hidden$="{{showContact(schedule.status)}}" icon="launch"></paper-fab>
+							</a>			 -->
 						</div>
 					</div>
 				</div>
@@ -110,7 +117,7 @@
 		</div>
 
 
-
+		<contact-dialog id="contactDlog" userid="{{selUserId}}"></contact-dialog>
 	</template>
 </dom-module>
 <script>
@@ -128,11 +135,17 @@
 			scheduleTarget: {
 				type: String,
 				computed: 'computeScheduleTarget(scheduleId)'
-			}			
+			},
+
+			selUserId: String			
 		},
 
 		computeScheduleTarget: function(scheduleId) {
 			return "https://flamingo365.firebaseio.com/schedules/"+scheduleId;
+		},
+
+		computeContactSrc: function(scheduleId){
+			return "/contactinfo/"+scheduleId;
 		},
 
 		arrayify: function(obj) { 
@@ -165,6 +178,14 @@
 				this.notifyPath('scheduleData.status', this.scheduleData.status);
 
 				this.fire('show-dialog', {content: "The task has completed."});
+			}
+		},
+
+		showContact: function(e) {
+			this.selUserId = e.currentTarget.getAttribute("data-userid");
+
+			if(this.selUserId!=null) {
+				this.$.contactDlog.toggle();
 			}
 		}
 	});

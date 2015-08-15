@@ -18,3 +18,7 @@ body {
 	max-width: 200px;
 	max-height: 200px;
 }
+
+#mainToolbar {
+	background: rgb(233, 84, 46);
+}

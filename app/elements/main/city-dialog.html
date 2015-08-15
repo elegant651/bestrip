@@ -1,23 +1,31 @@
 <dom-module id="city-dialog">
 	<style>
 		:host {
-			width: 600px;
+			width: 400px;
 			height: 300px;
 			max-height: 300px;
+			margin: 10px;
 			background: rgb(255,255,255);			
 		}		
 
 		.cityWrapper {
 			width: 100%;
 			@apply(--layout-horizontal);
+			background: rgb(255,255,255);			
 		}
 
 		.citybox {
 			cursor: pointer;
 		}
+
+		.title {
+			font-size: 13px;
+			font-weight: bold;
+			margin-left: 15px;	
+		}
 	</style>
-	<template>
-		
+	<link rel="import" type="css" href="../../bower_components/paper-dialog-behavior/paper-dialog-common.css">
+	<template>		
 			<div class="cityWrapper">
 				<div class="citybox" on-tap="selectCity" data-idx="1">
 					<iron-image src="../../images/main/kr_citylist_london.png" style="width:100px; height:100px;"></iron-image>
@@ -32,18 +40,26 @@
 					<div class="title">Berlin</div>
 				</div>
 				<div class="citybox" on-tap="selectCity" data-idx="4">
-					<iron-image src="../../images/main/kr_citylist_rome.png" style="width:100px; height:100px;"></iron-image>
-					<div class="title">Rome</div>
+					<iron-image src="../../images/main/kr_citylist_munich.png" style="width:100px; height:100px;"></iron-image>
+					<div class="title">Munich</div>
 				</div>
 			</div>
 			<div class="cityWrapper">
+				<div class="citybox" on-tap="selectCity" data-idx="5">
+					<iron-image src="../../images/main/kr_citylist_rome.png" style="width:100px; height:100px;"></iron-image>
+					<div class="title">Rome</div>
+				</div>
 				<div class="citybox" on-tap="selectCity" data-idx="5">
 					<iron-image src="../../images/main/kr_citylist_istanbul.png" style="width:100px; height:100px;"></iron-image>
 					<div class="title">Istanbul</div>
 				</div>
 				<div class="citybox" on-tap="selectCity" data-idx="6">
 					<iron-image src="../../images/main/kr_citylist_prague.png" style="width:100px; height:100px;"></iron-image>
-					<div class="title">Prague</div>
+					<div class="title">Prague</div>					
+				</div>
+				<div class="citybox" on-tap="selectCity" data-idx="5">
+					<iron-image src="../../images/main/kr_citylist_barcelona.png" style="width:100px; height:100px;"></iron-image>
+					<div class="title">Barcelona</div>
 				</div>
 			</div>		
 	</template>
@@ -66,9 +82,11 @@
 				{name: 'London', idx: 1},
 				{name: 'Paris', idx: 2},
 				{name: 'Berlin', idx: 3},
-				{name: 'Rome', idx: 4},
-				{name: 'Istanbul', idx: 5},
-				{name: 'Prague', idx: 6}
+				{name: 'Munich', idx: 4},
+				{name: 'Rome', idx: 5},
+				{name: 'Istanbul', idx: 6},
+				{name: 'Prague', idx: 7},
+				{name: 'Barcelona', idx: 8}
 			];
 		},		
 
