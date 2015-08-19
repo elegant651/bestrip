@@ -20,5 +20,7 @@ body {
 }
 
 #mainToolbar {
-	background: rgb(233, 84, 46);
+	background-image: url("../images/main/img1_100.jpg");
+	background-color: rgb(233, 84, 46);
+	background-size: cover;
 }
