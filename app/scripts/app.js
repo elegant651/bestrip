@@ -24,6 +24,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.addEventListener('dom-change', function() {
     console.log('Our app is ready to rock!');
 
+    document.querySelector('#mainToolbar').style.pointerEvents = "none";
+
     // imports are loaded and elements have been registered
     var registerSchedule = document.querySelector("#registerSchedule");
     var findingTravelers = document.querySelector("#findingTravelers");
@@ -72,9 +74,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
   });
 
-  var drawerPanel = document.querySelector('#paperDrawerPanel');      
   // Close drawer after menu item is selected if drawerPanel is narrow
   app.onMenuSelect = function() {    
+    var drawerPanel = document.querySelector('#paperDrawerPanel');    
     if (drawerPanel.narrow) {
       drawerPanel.closeDrawer();
     }

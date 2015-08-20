@@ -107,7 +107,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </a> -->
           </paper-menu>
       </div>
-      <paper-header-panel main mode="waterfall-tall">
+      <paper-header-panel main mode="cover">
 
         <!-- Main Toolbar -->
         <paper-toolbar id="mainToolbar">
@@ -119,10 +119,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <!-- Application name -->
           <div class="middle paper-font-display2 app-name">Flamingo</div>
-
-          <!-- Application sub title -->
-          <div class="bottom title"></div>
-
+          
+          <div class="middle headerWrapper">
+            <div class="title">Romantic trip with new companies</div>
+            <div class="subtitle">Find your worldwide travel companion</div>
+          </div>
         </paper-toolbar>
 
         <!-- Main Content -->
@@ -130,23 +131,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
             <section data-route="home">
-              <paper-material elevation="1">
-                 
-                <!-- <firebase-login></firebase-login> -->
-                <!-- <firebase-data></firebase-data>                 -->                
-                <!-- <list-schedule></list-schedule> -->
+              <div id="homeWrapper">
+                <paper-material elevation="1">
+                   
+                  <!-- <firebase-login></firebase-login> -->
+                  <!-- <firebase-data></firebase-data>                 -->                
+                  <!-- <list-schedule></list-schedule> -->
 
-                <p class="paper-font-subhead">You now have:</p>
-                <my-list></my-list>
+                  <p class="paper-font-subhead">You now have:</p>
+                  <my-list></my-list>
 
-                <p class="paper-font-body2">Looking for more Web App layouts? Check out our <a href="https://github.com/PolymerElements/app-layout-templates">layouts</a> collection. You can also <a href="http://polymerelements.github.io/app-layout-templates/">preview</a> them live.</p> -->
-              </paper-material>              
+                  <p class="paper-font-body2">Looking for more Web App layouts? Check out our <a href="https://github.com/PolymerElements/app-layout-templates">layouts</a> collection. You can also <a href="http://polymerelements.github.io/app-layout-templates/">preview</a> them live.</p> -->
+                </paper-material>              
 
-              <paper-material elevation="1">
-                <p class="paper-font-body2">This is another card.</p>
+                <paper-material elevation="1">
+                  <p class="paper-font-body2">This is another card.</p>
 
-              </paper-material>              
-
+                </paper-material>              
+              </div>
             </section>
 
           
