@@ -22,11 +22,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Listen for template bound event to know when bindings
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
-    console.log('Our app is ready to rock!');
+    console.log('Our app is ready to rock!');    
 
-    document.querySelector('#mainToolbar').style.pointerEvents = "none";
 
     // imports are loaded and elements have been registered
+    var paperDrawerPanel = document.querySelector('#paperDrawerPanel');
     var registerSchedule = document.querySelector("#registerSchedule");
     var findingTravelers = document.querySelector("#findingTravelers");
     var listSchedule = document.querySelector('#listSchedule');
@@ -36,8 +36,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var paperDlog = document.querySelector('#paperDlog');
 
 
+    document.querySelector('#btnFacebook').addEventListener('click', function() {
+      loginDlog.toggle();
+    });
+
     loginDlog.addEventListener('login-complete', function(e) {                
         btnLogin.innerHTML = "LOG OUT";
+
+        paperDrawerPanel.setAttribute("drawer-width", "240px");
+        document.querySelector('#drawerWrap').removeAttribute("hidden");
     });
     loginDlog.addEventListener('logout-complete', function(e) {
         btnLogin.innerHTML = "LOG IN";

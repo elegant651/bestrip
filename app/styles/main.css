@@ -27,6 +27,12 @@ body {
 	height: 600px;
 }
 
+#btnLogin {
+	position: fixed;
+	right: 10px;
+	top: 10px;
+}
+
 .headerWrapper {
 	color: #fff;
 	margin-top: 520px;
@@ -43,8 +49,11 @@ body {
 	margin-bottom: 27px;	
 }
 
-.headerWrapper #btnFacebook {
-
+#btnFacebook {
+	position: fixed;
+	top: 400px;
+	left: 500px;
+	cursor: pointer;
 }
 
 #homeWrapper {

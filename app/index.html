@@ -60,7 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template is="dom-bind" id="app">
 
     <paper-drawer-panel id="paperDrawerPanel" drawer-width="0px">
-      <div drawer hidden>
+      <div id="drawerWrap" drawer hidden>
 
         <!-- Drawer Toolbar -->
         <paper-toolbar id="drawerToolbar">
@@ -114,8 +114,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
           <span class="flex"></span>
 
-          <!-- Toolbar icons -->          
-          <paper-button id="btnLogin" raised>Log In</paper-button> 
+          <!-- Toolbar icons -->                    
 
           <!-- Application name -->
           <div class="middle paper-font-display2 app-name">Flamingo</div>
@@ -123,15 +122,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="middle headerWrapper">
             <div class="title1">Romantic trip with new companies</div>
             <div class="title2">Find your worldwide travel companion</div>
-            <iron-image id="btnFacebook" src="../../images/main/facebook.png"></iron-image>
+           
           </div>
-        </paper-toolbar>
+        </paper-toolbar>       
+
+        <paper-button id="btnLogin" raised>Log In</paper-button> 
 
         <!-- Main Content -->
         <div class="content">
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
             <section data-route="home">
+              <iron-image id="btnFacebook" src="../../images/main/facebook.png"></iron-image>
               <div id="homeWrapper">
                 <paper-material elevation="1">
                   <iron-image src="../../images/main/text.png"></iron-image>
