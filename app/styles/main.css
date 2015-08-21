@@ -30,3 +30,25 @@ body {
 #homeWrapper {
 	margin-top: 600px;
 }
+
+.contactWrapper {
+	background-image: url("../images/main/img3_100.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;	
+	height: 460px;
+	text-align: center;
+	color: #fff;
+}
+.contactWrapper .ctitle1 {
+	padding-top: 92px;
+	font-size: 40px;
+}
+.contactWrapper .ctitle2 {
+	padding-top: 59px;
+	padding-bottom: 50px;
+	font-size: 24px;
+}
+.contactWrapper .buttons img{
+	margin: 15px;
+}
+
