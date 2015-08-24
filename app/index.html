@@ -57,10 +57,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <body unresolved class="fullbleed layout vertical">
   <span id="browser-sync-binding"></span>  
-  <template is="dom-bind" id="app">    
-    <div id="user-binding">{{user}}</div>
-    <paper-drawer-panel id="paperDrawerPanel" drawer-width="0px">
-      <template is="dom-if" if="{{user}}">
+  <template is="dom-bind" id="app">        
+    <paper-drawer-panel id="paperDrawerPanel" drawer-width="240px">      
         <div id="drawerWrap" drawer>
 
           <!-- Drawer Toolbar -->
@@ -95,8 +93,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <span>My Travels</span>
                   </a>                            
             </paper-menu>
-        </div>
-      </template>
+        </div>      
 
       <paper-header-panel main mode="cover">
 
@@ -117,7 +114,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
         </paper-toolbar>       
 
-        <iron-image id="btnLogin" src="../../images/main/login.png" hidden$="{{!user}}"></iron-image>
+        <iron-image id="btnLogin" src="../../images/main/login.png"></iron-image>
         <!-- <paper-button id="btnLogin" raised>Log In</paper-button>  -->
 
         <!-- Main Content -->
@@ -176,31 +173,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   info number : <span>{{params.id}}</span>
                   <contact-info schedule-id="{{params.id}}"></contact-info>                
                 </paper-material>
-              </section>
-
-            <section data-route="users">
-              <paper-material elevation="1">
-                <h2 class="paper-font-display2">Users</h2>
-                <p>This is the users section</p>
-                <a href="/users/Rob">Rob</a>
-              </paper-material>
-            </section>
-
-            <section data-route="user-info">
-              <paper-material elevation="1">
-                <h2 class="paper-font-display2">
-                User:<span>{{params.name}}</span>
-                </h2>
-                <div>This is <span>{{params.name}}</span>'s section</div>
-              </paper-material>
-            </section>
-
-            <section data-route="contact">
-              <paper-material elevation="1">
-                <h2 class="paper-font-display2">Contact</h2>
-                <p>This is the contact section</p>
-              </paper-material>
-            </section>
+              </section>           
 
           </iron-pages>
         </div>
