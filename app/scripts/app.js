@@ -17,14 +17,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   app.displayInstalledToast = function() {
     document.querySelector('#caching-complete').show();
-  };
+  };  
 
   // Listen for template bound event to know when bindings
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
     console.log('Our app is ready to rock!');    
-
-
+    
     // imports are loaded and elements have been registered
     var paperDrawerPanel = document.querySelector('#paperDrawerPanel');
     var registerSchedule = document.querySelector("#registerSchedule");
@@ -43,8 +42,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     loginDlog.addEventListener('login-complete', function(e) {                
         btnLogin.innerHTML = "LOG OUT";
 
-        paperDrawerPanel.setAttribute("drawer-width", "240px");
-        document.querySelector('#drawerWrap').removeAttribute("hidden");
+        paperDrawerPanel.setAttribute("drawer-width", "240px");      
+        document.querySelector('#btnLogin').removeAttribute('hidden');
+        document.querySelector('#btnFacebook').setAttribute('hidden');        
     });
     loginDlog.addEventListener('logout-complete', function(e) {
         btnLogin.innerHTML = "LOG IN";
@@ -78,7 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
-    
+      // document.querySelector('#user-binding').innerHTML);
   });
 
   // Close drawer after menu item is selected if drawerPanel is narrow

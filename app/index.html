@@ -56,57 +56,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </head>
 
 <body unresolved class="fullbleed layout vertical">
-  <span id="browser-sync-binding"></span>
-  <template is="dom-bind" id="app">
-
+  <span id="browser-sync-binding"></span>  
+  <template is="dom-bind" id="app">    
+    <div id="user-binding">{{user}}</div>
     <paper-drawer-panel id="paperDrawerPanel" drawer-width="0px">
-      <div id="drawerWrap" drawer hidden>
+      <template is="dom-if" if="{{user}}">
+        <div id="drawerWrap" drawer>
 
-        <!-- Drawer Toolbar -->
-        <paper-toolbar id="drawerToolbar">
-          <span class="paper-font-title">Menu</span>
-        </paper-toolbar>
+          <!-- Drawer Toolbar -->
+          <paper-toolbar id="drawerToolbar">
+            <span class="paper-font-title">Menu</span>
+          </paper-toolbar>
 
-        <!-- Drawer Content -->          
-          <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
-              <a data-route="home" href="/">
-                <iron-icon icon="home"></iron-icon>
-                <span>Home</span>
-              </a>
+          <!-- Drawer Content -->          
+            <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
+                <!-- <a data-route="home" href="/">
+                  <iron-icon icon="home"></iron-icon>
+                  <span>Home</span>
+                </a> -->
+                
+                  <a data-route="register" href="/register">
+                    <iron-icon icon="social:person"></iron-icon>
+                    <span>Register Calendar</span>
+                  </a>
 
-              <template is="dom-if" if="{{user}}">
-                <a data-route="register" href="/register">
-                  <iron-icon icon="social:person"></iron-icon>
-                  <span>Register Calendar</span>
-                </a>
+                  <a data-route="search" href="/search">
+                    <iron-icon icon="social:public"></iron-icon>
+                    <span>Searching Schedule</span>
+                  </a>
 
-                <a data-route="search" href="/search">
-                  <iron-icon icon="social:public"></iron-icon>
-                  <span>Searching Schedule</span>
-                </a>
+                  <a data-route="schedules" href="/schedules">
+                    <iron-icon icon="social:notifications"></iron-icon>
+                    <span>Real Time</span>
+                  </a>
 
-                <a data-route="schedules" href="/schedules">
-                  <iron-icon icon="social:notifications"></iron-icon>
-                  <span>Real Time</span>
-                </a>
+                  <a data-route="myschedule" href="/myschedule">
+                    <iron-icon icon="icons:supervisor-account"></iron-icon>
+                    <span>My Travels</span>
+                  </a>                            
+            </paper-menu>
+        </div>
+      </template>
 
-                <a data-route="myschedule" href="/myschedule">
-                  <iron-icon icon="icons:supervisor-account"></iron-icon>
-                  <span>My Travels</span>
-                </a>              
-              </template>
-
-              <!-- <a data-route="users" href="/users">
-                <iron-icon icon="info"></iron-icon>
-                <span>Users</span>
-              </a>
-
-              <a data-route="contact" href="/contact">
-                <iron-icon icon="mail"></iron-icon>
-                <span>Contact</span>
-              </a> -->
-          </paper-menu>
-      </div>
       <paper-header-panel main mode="cover">
 
         <!-- Main Toolbar -->
@@ -126,7 +117,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
         </paper-toolbar>       
 
-        <iron-image id="btnLogin" src="../../images/main/login.png" hidden></iron-image>
+        <iron-image id="btnLogin" src="../../images/main/login.png" hidden$="{{!user}}"></iron-image>
         <!-- <paper-button id="btnLogin" raised>Log In</paper-button>  -->
 
         <!-- Main Content -->
