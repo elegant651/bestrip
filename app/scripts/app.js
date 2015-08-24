@@ -47,7 +47,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     loginDlog.addEventListener('logout-complete', function(e) {
         btnLogin.innerHTML = "LOG IN";
 
-        page.redirect('/');
+        location.href='/';
     });    
      
     btnLogin.addEventListener('click', function() {

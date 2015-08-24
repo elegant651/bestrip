@@ -18,16 +18,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var initDrawer = function() {
         document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "240px");
         document.querySelector('#drawerWrap').removeAttribute('hidden');
+        document.querySelector('#mainToolbar').className = 'nolanding';
+        document.querySelector('#headerPanel').setAttribute('mode', 'waterfall-tall');        
+        document.querySelector('.headerWrapper').setAttribute('hidden', '');        
     };
 
     page('/', function () {
       app.route = 'home';
       document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "0px");
       document.querySelector('#drawerWrap').setAttribute('hidden', '');
+      document.querySelector('#mainToolbar').className = 'landing';
+      document.querySelector('#headerPanel').setAttribute('mode', 'cover');      
+      document.querySelector('.headerWrapper').removeAttribute('hidden');
     });
 
     page('/register', function () {
-      initDrawer();
+      initDrawer();      
 
       app.route = 'register';            
     });

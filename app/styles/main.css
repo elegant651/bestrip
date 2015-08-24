@@ -20,11 +20,19 @@ body {
 }
 
 #mainToolbar {
+	
+}
+
+#mainToolbar.landing {
 	background-image: url("../images/main/img1_100.jpg");
 	background-color: rgb(233, 84, 46);
 	background-size: cover;
 	background-repeat: no-repeat;	
-	height: 600px;
+	height: 600px;	
+}
+
+#mainToolbar.nolanding {
+	background-color: rgb(233, 84, 46);
 }
 
 #btnLogin {
