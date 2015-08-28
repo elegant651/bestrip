@@ -64,7 +64,7 @@
 		
 		<div class="vertical-section">
 			
-			<template is="dom-repeat" items="[[requests]]" as="request">				
+			<template is="dom-repeat" items="[[requests]]" filter="filterStatus" as="request">				
 			
 				<!-- Type2 : request message -->
 				<div class="list-element">
@@ -115,6 +115,10 @@
 				type: Object,
 				value: null
 			}
+		},
+
+		filterStatus: function(item) {
+			return item.status == 0;
 		},
 
 		computeRequestTarget: function(requestId) {

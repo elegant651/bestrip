@@ -73,6 +73,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         paperDlog.toggle();
         paperDlog.querySelector("#content").innerHTML = e.detail.content;
     });
+
+    paperDlog.addEventListener('click', function() {        
+        page.redirect('/register');
+    });
   });
 
   // See https://github.com/Polymer/polymer/issues/1381
