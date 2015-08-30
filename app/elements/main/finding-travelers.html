@@ -22,9 +22,17 @@
 			@apply(--layout-justified);	
 		}
 
+		#rgTheme {
+			width: 350px;			
+		}
+
+		#rgTheme paper-radio-button {
+			color: #fff;
+		}
+
 		#btnRequest {
 			background: rgb(233, 84, 46);
-		}
+		}		
 		
 	</style>
 	<template>
@@ -38,7 +46,7 @@
 	          location="https://flamingo365.firebaseio.com/requests"
 	          ></firebase-collection>
 	    
-	    <div hidden$="{{isShow}}">
+	    <div>
 			<paper-material elevation="1">
 				<div class="searchWrapper">
 					<div class="vertical-section">
@@ -51,6 +59,14 @@
 							<paper-input id="piPickDate" label="Select Date" on-tap="showDateDlog"></paper-input>
 						</div>				
 					</div>
+
+					<paper-radio-group id="rgTheme" selected="{{themeSel}}">
+						<paper-radio-button name="all"><iron-image src="../../images/main/theme_all.png"></iron-image>"</paper-radio-button>
+						<paper-radio-button name="transport"><iron-image src="../../images/main/theme_transport.png"></iron-image>"</paper-radio-button>
+						<paper-radio-button name="stay"><iron-image src="../../images/main/theme_stay.png"></iron-image>"</paper-radio-button>
+						<paper-radio-button name="food"><iron-image src="../../images/main/theme_food.png"></iron-image>"</paper-radio-button>
+						<paper-radio-button name="sightsee"><iron-image src="../../images/main/theme_sightsee.png"></iron-image>"</paper-radio-button>
+					</paper-radio-group>
 
 					<paper-button id="btnSearch" raised on-tap="search" class="colorful ripple"><iron-icon icon="search"></iron-icon>Search</paper-button>				
 				</div>
@@ -76,9 +92,9 @@
 		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
 		<paper-date-picker-dialog id="datePicker" date="2015/8/8" on-value-changed="dateValueChanged"></paper-date-picker-dialog>		
 
-		<div hidden$="{{!isShow}}">			
+		<!-- <div hidden$="{{!isShow}}">			
 			<h2>To viewing this page, Go to register your schedule!!</h2>
-		</div>
+		</div> -->
 
 	</template>
 </dom-module>
@@ -107,11 +123,16 @@
 			isShow: {
 				type: Boolean,
 				value: false				
+			},
+
+			themeIdx: {
+				type: Number,
+				value: 0
 			}
 		},
 
-		filterStatus: function(item) {
-			return item.status == 0;
+		filterStatus: function(item) {			
+			return item.status == 0 && item.themeIdx == this.themeIdx;
 		},
 
 		_userChanged: function() {
@@ -142,6 +163,7 @@
 
 		dateValueChanged: function() {			
 			var date = this.$.datePicker.value;
+			this.locale = 'en-US';
 			var year = Intl.DateTimeFormat(this.locale, { year: 'numeric' }).format(date);
 			var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
 			var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
@@ -158,6 +180,19 @@
 		},		
 
 		search: function() {
+			var theme = this.$.rgTheme.selected;			
+			if(theme === "transport"){
+				this.themeIdx = 1;
+			} else if(theme === "stay"){
+				this.themeIdx = 2;
+			} else if(theme === "food"){
+				this.themeIdx = 3;
+			} else if(theme === "sightsee"){
+				this.themeIdx = 4;
+			} else {
+				this.themeIdx = 0;
+			}
+
 			var selCityIdx = this.selCityIdx;
 			var pickDate = this.pickDate;
 			var that = this;
@@ -176,6 +211,7 @@
 						}
 					});									
 				});
+				
 				
 			}			
 		},
@@ -211,7 +247,7 @@
 				created_at: new Date().getTime()				
 			};
 			this.$.fcRequests.add(data);
-			this.fire('show-dialog', {content: "Request has sent."});
+			this.fire('show-dialog', {content: "Request has sent.",url: "/search"});
 		}
 	});
 </script>

@@ -181,7 +181,7 @@
 				this.scheduleData.status = 1;
 				this.notifyPath('scheduleData.status', this.scheduleData.status);
 
-				this.fire('show-dialog', {content: "The task has completed."});
+				this.fire('show-dialog', {content: "The task has completed.", url: "/myschedule"});
 			}
 		},
 

@@ -61,7 +61,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     registerSchedule.addEventListener('show-dialog', function(e) {
         paperDlog.toggle();
-        paperDlog.querySelector("#content").innerHTML = e.detail.content;
+        paperDlog.querySelector("#content").innerHTML = e.detail.content;        
     });
 
     listSchedule.addEventListener('show-dialog', function(e) {
@@ -71,11 +71,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     mySchedule.addEventListener('show-dialog', function(e) {
         paperDlog.toggle();
-        paperDlog.querySelector("#content").innerHTML = e.detail.content;
+        paperDlog.querySelector("#content").innerHTML = e.detail.content;        
     });
 
     paperDlog.addEventListener('click', function() {        
-        page.redirect('/register');
+        console.log("redirect");        
+        page.redirect('/register');        
     });
   });
 

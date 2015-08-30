@@ -146,7 +146,7 @@
 				};
 				this.$.fcSchedule.add(data);
 
-				this.fire('show-dialog', {content: "The task has completed."});
+				this.fire('show-dialog', {content: "The task has completed.", url: "/schedules"});
 			}						
 		},
 
@@ -156,7 +156,7 @@
 				this.requestData.status = 2;
 				this.notifyPath('requestData.status', this.requestData.status);
 
-				this.fire('show-dialog', {content: "The task has completed."});
+				this.fire('show-dialog', {content: "The task has completed.", url: "/schedules"});
 			}			
 		}
 	});

@@ -51,11 +51,11 @@
 		<div class="vertical-section">
 			<h2>Theme</h2>
 			<paper-radio-group id="rgTheme" selected="all">
-				<paper-radio-button name="all">All</paper-radio-button>
-				<paper-radio-button name="transport">Transport</paper-radio-button>
-				<paper-radio-button name="stay">Stay</paper-radio-button>
-				<paper-radio-button name="food">Food</paper-radio-button>
-				<paper-radio-button name="sightsee">Sightsee</paper-radio-button>
+				<paper-radio-button name="all"><iron-image src="../../images/main/theme_all.png"></iron-image>All</paper-radio-button>
+				<paper-radio-button name="transport"><iron-image src="../../images/main/theme_transport.png"></iron-image>Transport</paper-radio-button>
+				<paper-radio-button name="stay"><iron-image src="../../images/main/theme_stay.png"></iron-image>Stay</paper-radio-button>
+				<paper-radio-button name="food"><iron-image src="../../images/main/theme_food.png"></iron-image>Food</paper-radio-button>
+				<paper-radio-button name="sightsee"><iron-image src="../../images/main/theme_sightsee.png"></iron-image>Sightsee</paper-radio-button>
 			</paper-radio-group>
 		</div>
 		<div class="vertical-section">
@@ -124,8 +124,19 @@
 				{name: 'Rome', idx: 4},
 				{name: 'Istanbul', idx: 5},
 				{name: 'Prague', idx: 6}
-			];
+			];			
 		},		
+
+		initialize: function() {
+			this.$.btnSelCity.innerHTML = "Select City";
+			this.selCityIdx = -1;
+			this.startDate = -1;
+			this.finishDate = -1;			
+			this.phone = null;
+			this.$.piStartDate.setAttribute("value", "");
+			this.$.piFinishDate.setAttribute("value", "");
+			this.$.rgTheme.selected = "all";
+		},
 
 		_userChanged: function() {
 			if(this.user!=null){
@@ -138,12 +149,12 @@
 		},
 
 		showCityDlog: function() {						
-			this.$.cityDlog.toggle();					
+			this.$.cityDlog.toggle();												
 		},
 
 		showStartDateDlog: function() {
 			this.dlogType = 0;
-			this.$.datePicker.toggle();
+			this.$.datePicker.toggle();			
 		},
 
 		showFinishDateDlog: function() {
@@ -153,6 +164,7 @@
 
 		dateValueChanged: function() {
 			console.log("dateValueChanged:" + this.$.datePicker.value);			
+			this.locale = 'en-US';
 			var date = this.$.datePicker.value;
 			var year = Intl.DateTimeFormat(this.locale, { year: 'numeric' }).format(date);
 			var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
@@ -201,8 +213,7 @@
 			return false;
 		},	
 
-		register: function() {
-			console.log(this.$.rgTheme.selected);
+		register: function() {			
 			var theme = this.$.rgTheme.selected;
 			var themeIdx = 0;
 			if(theme === "transport"){
@@ -241,9 +252,11 @@
 			this.notifyPath('userData.phone', this.userData.phone);
 			this.isfindingdnable = true;
 
-			//put phonenum in usertable			
+			//put phonenum in usertable						
+			this.fire('show-dialog', {content: "Registration has completed.", url: "/register"});		
 
-			this.fire('show-dialog', {content: "Registration has completed."});
-		}
+			//initialize
+			this.initialize();
+		}		
 	});
 </script>
