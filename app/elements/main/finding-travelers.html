@@ -60,7 +60,7 @@
 						</div>				
 					</div>
 
-					<paper-radio-group id="rgTheme" selected="{{themeSel}}">
+					<paper-radio-group id="rgTheme" selected="all">
 						<paper-radio-button name="all"><iron-image src="../../images/main/theme_all.png"></iron-image>"</paper-radio-button>
 						<paper-radio-button name="transport"><iron-image src="../../images/main/theme_transport.png"></iron-image>"</paper-radio-button>
 						<paper-radio-button name="stay"><iron-image src="../../images/main/theme_stay.png"></iron-image>"</paper-radio-button>
@@ -80,7 +80,7 @@
 					<div class="travelBox">
 						<iron-image src="[[schedule.userpic]]" style="width:100px; height:100px;"></iron-image>
 						<div class="name">[[schedule.username]]</div>
-						<paper-fab id="btnRequest" disabled$="{{checkData(user)}}" on-tap="request" data-key$="{{schedule.__firebaseKey__}}" data-schedule-userid$="{{schedule.userid}}"
+						<paper-fab id="btnRequest" disabled$="{{checkData(schedule.userid)}}" on-tap="request" data-key$="{{schedule.__firebaseKey__}}" data-schedule-userid$="{{schedule.userid}}"
 						data-schedule-userlink$="{{schedule.userlink}}" data-schedule-username$="{{schedule.username}}"
 						data-schedule-userpic$="{{schedule.userpic}}"
 						 data-schedule-title$="{{schedule.schedule_title}}" icon="arrow-forward"></paper-fab>
@@ -132,25 +132,29 @@
 		},
 
 		filterStatus: function(item) {			
-			return item.status == 0 && item.themeIdx == this.themeIdx;
+			if(this.themeIdx==0){
+				return item.status == 0;
+			} else {
+				return item.status == 0 && item.themeIdx == this.themeIdx;
+			}			
 		},
 
 		_userChanged: function() {
 			///check if user's status is 1
-			if(this.user){
-				var that = this;
-				var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    			 
-	    		ref.child(this.user.uid).on("value", function(snapshot) {
-	    			var userdata = snapshot.val();	    				    			    			
-	    			if(userdata.status==1){
-	    				that.isShow = false;    				
-	    			} else {
-	    				that.isShow = true;
-	    			}
-	    		}, function(error){
-	    			console.log("error:" + error.code);
-	    		});	    		
-			}			
+			// if(this.user){
+			// 	var that = this;
+			// 	var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    			 
+	  //   		ref.child(this.user.uid).on("value", function(snapshot) {
+	  //   			var userdata = snapshot.val();	    				    			    			
+	  //   			if(userdata.status==1){
+	  //   				that.isShow = false;    				
+	  //   			} else {
+	  //   				that.isShow = true;
+	  //   			}
+	  //   		}, function(error){
+	  //   			console.log("error:" + error.code);
+	  //   		});	    		
+			// }			
 		},
 
 		showCityDlog: function() {			
@@ -216,8 +220,9 @@
 			}			
 		},
 
-		checkData: function(user) {
-			if(this.user==null){  //|| this.user.uid==user.uid){
+		checkData: function(userid) {			
+			console.log(userid);
+			if(this.user==null || this.user.uid==userid){
 				return true;
 			}
 
