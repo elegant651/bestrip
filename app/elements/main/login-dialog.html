@@ -117,9 +117,14 @@
 
 	    _userChanged: function() {
 	    	if (this.statusKnown && this.user) {	   	    	
-	    			
-	    		var status = 0;    		
-	    		var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    			  					    	
+	    				    		
+	   //  		var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
+	   //  		ref.child(this.user.uid).set({
+				// 	provider: this.user.provider,
+				// 	recent_at: new Date().getTime(),
+				// 	status: status 					
+				// });	    	
+
 	    	// 	ref.child(this.user.uid).on("value", function(snapshot) {
 	    	// 		var userdata = snapshot.val();	    				    			
 	    	// 		if(userdata!=null){
@@ -135,13 +140,7 @@
 	    	// 		}	    			
 	    	// 	}, function(error){
 	    	// 		console.log("error:" + error.code);
-	    	// 	});
-				
-				ref.child(this.user.uid).set({
-					provider: this.user.provider,
-					recent_at: new Date().getTime(),
-					status: status 					
-				});	    				    						
+	    	// 	});									    						
 				
 
 	    		console.log("logging in :"+this.user.uid+"/"+this.user.facebook.displayName+"/"+this.user.facebook.cachedUserProfile.link+"/"+this.user.facebook.cachedUserProfile.picture.data.url);

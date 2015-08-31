@@ -132,7 +132,7 @@
 		},
 
 		ready: function() {
-			this.search();
+			this.search();			
 		},
 
 		filterStatus: function(item) {			
@@ -144,6 +144,7 @@
 		},
 
 		_userChanged: function() {
+			console.log("userChanged");
 			///check if user's status is 1
 			// if(this.user){
 			// 	var that = this;
@@ -230,8 +231,7 @@
 			}			
 		},
 
-		checkData: function(userid) {			
-			console.log(userid);
+		checkData: function(userid) {						
 			if(this.user==null || this.user.uid==userid){
 				return true;
 			}

@@ -25,13 +25,7 @@
 		<firebase-collection	  
 				id="fcSchedules"        
 	          location="https://flamingo365.firebaseio.com/schedules"
-	          data="{{schedules}}"></firebase-collection>
-
-	    <firebase-document
-	     	location="{{userTarget}}"
-	     	data="{{userData}}"
-	     	>
-	     </firebase-document>
+	          data="{{schedules}}"></firebase-collection>	    
 
 		<div class="vertical-section">
 			<h3>{{user.facebook.displayName}}</h3>
@@ -81,11 +75,6 @@
 				type: Object,
 				value: null,
 				observer: '_userChanged'				
-			},
-
-			userTarget: {
-				type: String,
-				computed: 'computeUserTarget(user.uid)'
 			},
 
 			dlogType: Number,
@@ -141,11 +130,7 @@
 			if(this.user!=null){
 				this.contact = this.user.facebook.cachedUserProfile.link;	
 			}			
-		},		
-
-		computeUserTarget: function(userId) {			
-			return "https://flamingo365.firebaseio.com/users/"+userId;
-		},
+		},				
 
 		showCityDlog: function() {						
 			this.$.cityDlog.toggle();												
@@ -245,11 +230,13 @@
 			this.$.fcSchedules.add(data);
 
 			//changing user status data
-			this.userData.status = 1;
-			this.userData.phone = this.phone;
-			this.notifyPath('userData.status', this.userData.status);
-			this.notifyPath('userData.phone', this.userData.phone);
-			this.isfindingdnable = true;
+			var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
+    		ref.child(this.user.uid).set({
+				provider: this.user.provider,
+				recent_at: new Date().getTime(),
+				status: 1,
+				phone: this.phone
+			});	    						
 
 			//put phonenum in usertable						
 			this.fire('show-dialog', {content: "Registration has completed.", url: "/register"});		
