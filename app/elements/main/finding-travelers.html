@@ -75,7 +75,7 @@
 
 			<div class="vertical-section">			
 
-				<template is="dom-repeat" items="[[schedules]]" filter="filterStatus" as="schedule">
+				<template is="dom-repeat" items="[[schedules]]" filter="filterStatus" sort="_sort" as="schedule">
 					<h2>{{schedule.schedule_title}}</h2>				
 					<div class="travelBox">
 						<iron-image src="[[schedule.userpic]]" style="width:100px; height:100px;"></iron-image>
@@ -143,9 +143,9 @@
 			}			
 		},
 
-		// _sort: function(a, b) {
-		// 	return a.startDate > b.startDate ? -1 : 1;
-		// },
+		_sort: function(a, b) {			
+			return a.startDate > b.startDate ? 1 : -1;
+		},
 
 		_userChanged: function() {
 			console.log("userChanged");

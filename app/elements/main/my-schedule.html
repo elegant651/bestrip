@@ -50,7 +50,7 @@
 	     </firebase-document>
 		
 		<div class="vertical-section">
-			<template is="dom-repeat" items="{{schedules}}" filter="filterOutdated" as="schedule"> 
+			<template is="dom-repeat" items="{{schedules}}" sort="_sort" filter="filterOutdated" as="schedule"> 
 				
 				<div class="list-element">					
 					<h2>{{schedule.schedule_title}}</h2>
@@ -140,6 +140,10 @@
 		},
 
 		ready: function() {			
+		},
+
+		_sort: function(a, b) {			
+			return a.startDate > b.startDate ? 1 : -1;
 		},
 
 		filterOutdated: function(item) {
