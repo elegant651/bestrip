@@ -80,7 +80,7 @@
 					<div class="travelBox">
 						<iron-image src="[[schedule.userpic]]" style="width:100px; height:100px;"></iron-image>
 						<div class="name">[[schedule.username]]</div>
-						<paper-fab id="btnRequest" disabled$="{{checkData(schedule.userid)}}" on-tap="request" data-key$="{{schedule.__firebaseKey__}}" data-schedule-userid$="{{schedule.userid}}"
+						<paper-fab id="btnRequest" on-tap="request" data-key$="{{schedule.__firebaseKey__}}" data-schedule-userid$="{{schedule.userid}}"
 						data-schedule-userlink$="{{schedule.userlink}}" data-schedule-username$="{{schedule.username}}"
 						data-schedule-userpic$="{{schedule.userpic}}"
 						 data-schedule-title$="{{schedule.schedule_title}}" icon="arrow-forward"></paper-fab>
@@ -243,13 +243,18 @@
 			return false;
 		},
 
-		request: function(e) {			
+		request: function(e) {						
 			var schedule_id = e.currentTarget.getAttribute("data-key");
 			var schedule_title = e.currentTarget.getAttribute("data-schedule-title");
 			var schedule_userid = e.currentTarget.getAttribute("data-schedule-userid");
 			var schedule_username = e.currentTarget.getAttribute("data-schedule-username");
 			var schedule_userlink = e.currentTarget.getAttribute("data-schedule-userlink");
 			var schedule_userpic = e.currentTarget.getAttribute("data-schedule-userpic");			
+
+			if(this.user==null || this.user.uid==schedule_userid){
+				alert("It's impossible to request its user");
+				return;
+			}
 
 			var data = {
 				schedule_id: schedule_id,
