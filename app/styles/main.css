@@ -70,6 +70,10 @@ body {
 	text-align: center;
 }
 
+.textWrapper {
+	width: 100%;
+}
+
 .contactWrapper {
 	background-image: url("../images/main/img3_100.jpg");
 	background-size: cover;
