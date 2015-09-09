@@ -90,7 +90,15 @@
 		</div>
 
 		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
-		<paper-date-picker-dialog id="datePicker" date="2015/8/8" on-value-changed="dateValueChanged"></paper-date-picker-dialog>		
+		<!-- <paper-date-picker-dialog id="datePicker" date="2015/8/8" on-value-changed="dateValueChanged"></paper-date-picker-dialog>		 -->
+
+		<paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
+	        <paper-date-picker id="datePicker" responsive-width="655px"></paper-date-picker>
+	        <div class="buttons">
+	          <paper-button dialog-dismiss>Cancel</paper-button>
+	          <paper-button dialog-confirm>OK</paper-button>
+	        </div>
+	      </paper-dialog>
 
 		<!-- <div hidden$="{{!isShow}}">			
 			<h2>To viewing this page, Go to register your schedule!!</h2>
@@ -171,11 +179,15 @@
 		},
 
 		showDateDlog: function() {			
-			this.$.datePicker.toggle();
+			this.$.dpDlog.toggle();
 		},
 
 		dateValueChanged: function() {			
-			var date = this.$.datePicker.value;
+			var date = this.$.datePicker.date;
+			if(this.$.datePicker.date==null){
+				return;
+			}
+			
 			this.locale = 'en-US';
 			var year = Intl.DateTimeFormat(this.locale, { year: 'numeric' }).format(date);
 			var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);

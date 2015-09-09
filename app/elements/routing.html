@@ -14,59 +14,60 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     // We use Page.js for routing. This is a Micro
     // client-side router inspired by the Express router
-    // More info: https://visionmedia.github.io/page.js/
-    var initDrawer = function() {
-        document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "240px");
-        document.querySelector('#drawerWrap').removeAttribute('hidden');
-        document.querySelector('#mainToolbar').className = 'nolanding';
-        document.querySelector('#headerPanel').setAttribute('mode', 'waterfall-tall');        
-        document.querySelector('.headerWrapper').setAttribute('hidden', '');        
-    };
+    // More info: https://visionmedia.github.io/page.js/    
 
-    page('/', function () {
-      app.route = 'home';
-      document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "0px");
-      document.querySelector('#drawerWrap').setAttribute('hidden', '');
-      document.querySelector('#mainToolbar').className = 'landing';
-      document.querySelector('#headerPanel').setAttribute('mode', 'cover');      
-      document.querySelector('.headerWrapper').removeAttribute('hidden');
-    });
+    // var initDrawer = function() {
+    //     document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "240px");
+    //     document.querySelector('#drawerWrap').removeAttribute('hidden');
+    //     document.querySelector('#mainToolbar').className = 'nolanding';
+    //     document.querySelector('#headerPanel').setAttribute('mode', 'waterfall-tall');        
+    //     document.querySelector('.headerWrapper').setAttribute('hidden', '');        
+    // };
 
-    page('/register', function () {
-      initDrawer();      
+    // page('/', function () {
+    //   app.route = 'home';
+    //   document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "0px");
+    //   document.querySelector('#drawerWrap').setAttribute('hidden', '');
+    //   document.querySelector('#mainToolbar').className = 'landing';
+    //   document.querySelector('#headerPanel').setAttribute('mode', 'cover');      
+    //   document.querySelector('.headerWrapper').removeAttribute('hidden');
+    // });
 
-      app.route = 'register';            
-    });
+    // page('/register', function () {
+    //   initDrawer();      
 
-    page('/search', function() {
-      app.route = 'search';
+    //   app.route = 'register';            
+    // });
 
-      initDrawer();
-    });
+    // page('/search', function() {
+    //   app.route = 'search';
 
-    page('/schedules', function() {
-      app.route = 'schedules';
+    //   initDrawer();
+    // });
 
-      initDrawer();
-    });    
+    // page('/schedules', function() {
+    //   app.route = 'schedules';
 
-    page('/myschedule', function() {
-      app.route = 'myschedule';
+    //   initDrawer();
+    // });    
 
-      initDrawer();
-    });
+    // page('/myschedule', function() {
+    //   app.route = 'myschedule';
 
-    page('/contactinfo/:id', function (data) {
-      app.route = 'contactinfo';
-      app.params = data.params;
+    //   initDrawer();
+    // });
 
-      initDrawer();
-    });  
+    // page('/contactinfo/:id', function (data) {
+    //   app.route = 'contactinfo';
+    //   app.params = data.params;
 
-    // add #! before urls
-    page({
-      hashbang: true
-    });    
+    //   initDrawer();
+    // });  
+
+    // // add #! before urls
+    // page({
+    //   hashbang: true
+    // });    
 
   });
 </script>

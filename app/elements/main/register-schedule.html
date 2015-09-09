@@ -40,7 +40,14 @@
 				<paper-input id="piStartDate" label="Select Start Date" on-tap="showStartDateDlog"></paper-input>
 				<paper-input id="piFinishDate" label="Select Finish Date" on-tap="showFinishDateDlog"></paper-input>
 			</div>
-			<paper-date-picker-dialog id="datePicker" date="2015/8/8" on-value-changed="dateValueChanged"></paper-date-picker-dialog>
+			<!-- <paper-date-picker-dialog id="datePicker" date="2015/8/8" on-value-changed="dateValueChanged"></paper-date-picker-dialog> -->
+			<paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
+		        <paper-date-picker id="datePicker" responsive-width="655px"></paper-date-picker>
+		        <div class="buttons">
+		          <paper-button dialog-dismiss>Cancel</paper-button>
+		          <paper-button dialog-confirm>OK</paper-button>
+		        </div>
+		      </paper-dialog>
 		</div>
 		<div class="vertical-section">
 			<h2>Theme</h2>
@@ -62,8 +69,7 @@
 			<paper-button id="btnRegister" raised disabled$="{{checkData(user, selCityIdx, startDate, finishDate, contact, phone)}}" on-tap="register" class="colorful ripple"><iron-icon icon="check"></iron-icon>Register</paper-button>
 		</div>
 		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
-		<privacy-dialog id="privacyDlog"></privacy-dialog>
-		
+		<privacy-dialog id="privacyDlog"></privacy-dialog>				
 	</template>
 </dom-module>
 <script>
@@ -134,22 +140,28 @@
 
 		showCityDlog: function() {						
 			this.$.cityDlog.toggle();												
-		},
+		},        
 
 		showStartDateDlog: function() {
 			this.dlogType = 0;
-			this.$.datePicker.toggle();			
+			// this.$.datePicker.toggle();			
+			this.$.dpDlog.toggle();
 		},
 
 		showFinishDateDlog: function() {
 			this.dlogType = 1;
-			this.$.datePicker.toggle();
+			// this.$.datePicker.toggle();
+			this.$.dpDlog.toggle();
 		},		
 
 		dateValueChanged: function() {
-			console.log("dateValueChanged:" + this.$.datePicker.value);			
+			console.log("dateValueChanged:" + this.$.datePicker.date);		
+			if(this.$.datePicker.date==null){
+				return;
+			}
+
 			this.locale = 'en-US';
-			var date = this.$.datePicker.value;
+			var date = this.$.datePicker.date;
 			var year = Intl.DateTimeFormat(this.locale, { year: 'numeric' }).format(date);
 			var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
 			var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);

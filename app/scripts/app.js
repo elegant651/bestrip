@@ -22,7 +22,62 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Listen for template bound event to know when bindings
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
-    console.log('Our app is ready to rock!');        
+    console.log('Our app is ready to rock!');    
+
+    /// routing ///
+    var initDrawer = function() {
+        document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "240px");
+        document.querySelector('#drawerWrap').removeAttribute('hidden');
+        document.querySelector('#mainToolbar').className = 'nolanding';
+        document.querySelector('#headerPanel').setAttribute('mode', 'waterfall-tall');        
+        document.querySelector('.headerWrapper').setAttribute('hidden', '');        
+    };
+
+    page('/', function () {
+      app.route = 'home';
+      document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "0px");
+      document.querySelector('#drawerWrap').setAttribute('hidden', '');
+      document.querySelector('#mainToolbar').className = 'landing';
+      document.querySelector('#headerPanel').setAttribute('mode', 'cover');      
+      document.querySelector('.headerWrapper').removeAttribute('hidden');
+    });
+
+    page('/register', function () {
+      initDrawer();      
+
+      app.route = 'register';            
+    });
+
+    page('/search', function() {
+      app.route = 'search';
+
+      initDrawer();
+    });
+
+    page('/schedules', function() {
+      app.route = 'schedules';
+
+      initDrawer();
+    });    
+
+    page('/myschedule', function() {
+      app.route = 'myschedule';
+
+      initDrawer();
+    });
+
+    page('/contactinfo/:id', function (data) {
+      app.route = 'contactinfo';
+      app.params = data.params;
+
+      initDrawer();
+    });  
+
+    // add #! before urls
+    page({
+      hashbang: true
+    });    
+    //////routing end ////
 
     // imports are loaded and elements have been registered
     var paperDrawerPanel = document.querySelector('#paperDrawerPanel');
