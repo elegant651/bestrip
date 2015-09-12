@@ -57,6 +57,10 @@ body {
 	margin-bottom: 27px;	
 }
 
+.content {
+	width: 100%;
+}
+
 #btnFacebook {
 	position: fixed;
 	top: 400px;
@@ -66,12 +70,18 @@ body {
 }
 
 #homeWrapper {
+	width: 100%;
 	margin-top: 600px;
 	text-align: center;
 }
 
 .textWrapper {
 	width: 100%;
+}
+
+.textWrapper .imgText {
+	width: 100%;
+	max-width: 100%;
 }
 
 .contactWrapper {
