@@ -115,7 +115,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-toolbar>       
 
         <!-- <iron-image id="btnLogin" src="../../images/main/login.png"></iron-image> -->
-        <paper-button id="btnLogin" raised>Log In</paper-button> 
+        <template is="dom-if" if="{{queryMatches}}">
+          <paper-button id="btnLogin" raised>Log In</paper-button> 
+        </template>
 
         <!-- Main Content -->
         <div class="content">
@@ -204,6 +206,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
         </div>
       </paper-dialog>
+
+      <iron-media-query query="(min-width: 600px)" query-matches="{{queryMatches}}"></iron-media-query>
   </template>
 
   <!-- build:js scripts/app.js -->

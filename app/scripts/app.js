@@ -35,7 +35,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     page('/', function () {
       app.route = 'home';
-      document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "0px");
+      document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "0px");      
       document.querySelector('#drawerWrap').setAttribute('hidden', '');
       document.querySelector('#mainToolbar').className = 'landing';
       document.querySelector('#headerPanel').setAttribute('mode', 'cover');      
