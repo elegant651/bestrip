@@ -30,7 +30,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         document.querySelector('#drawerWrap').removeAttribute('hidden');
         document.querySelector('#mainToolbar').className = 'nolanding';
         document.querySelector('#headerPanel').setAttribute('mode', 'waterfall-tall');        
-        document.querySelector('.headerWrapper').setAttribute('hidden', '');        
+        if(document.querySelector('.headerWrapper')!=null){
+          document.querySelector('.headerWrapper').setAttribute('hidden', '');        
+        }
+        if(document.querySelector('.motitle')!=null){
+          document.querySelector('.motitle').setAttribute('hidden', '');
+        }
     };
 
     page('/', function () {
@@ -39,7 +44,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.querySelector('#drawerWrap').setAttribute('hidden', '');
       document.querySelector('#mainToolbar').className = 'landing';
       document.querySelector('#headerPanel').setAttribute('mode', 'cover');      
-      document.querySelector('.headerWrapper').removeAttribute('hidden');
+      if(document.querySelector('.headerWrapper')!=null){
+        document.querySelector('.headerWrapper').removeAttribute('hidden');
+      }      
+      if(document.querySelector('.motitle')!=null){
+        document.querySelector('.motitle').removeAttribute('hidden');
+      }
     });
 
     page('/register', function () {
@@ -94,20 +104,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       loginDlog.toggle();
     });
 
-    loginDlog.addEventListener('login-complete', function(e) {                
-        btnLogin.innerHTML = "LOG OUT";                        
+    loginDlog.addEventListener('login-complete', function(e) { 
+        if(btnLogin!=null){
+          btnLogin.innerHTML = "LOG OUT";                        
+        }
 
         page.redirect('/register');
     });
     loginDlog.addEventListener('logout-complete', function(e) {
-        btnLogin.innerHTML = "LOG IN";
+        if(btnLogin!=null){
+          btnLogin.innerHTML = "LOG IN";
+        }
 
         location.href='/';
     });    
-     
-    btnLogin.addEventListener('click', function() {
-        loginDlog.toggle();
-    });
+    
+    if(btnLogin!=null){ 
+      btnLogin.addEventListener('click', function() {
+          loginDlog.toggle();
+      });
+    }
 
     findingTravelers.addEventListener('show-dialog', function(e) {
         paperDlog.toggle();

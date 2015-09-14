@@ -106,12 +106,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <!-- Application name -->
           <div class="middle paper-font-display2 app-name" style="margin-top: 25px;"><iron-image src="../../images/main/logo.png"></iron-image></div>
-          
-          <div class="middle headerWrapper">
-            <div class="title1">Meet your soulmate at strange place</div>
-            <div class="title2">Find your worldwide travel companion at once!</div>
-           
-          </div>
+        
+        <!-- for mobile web -->        
+          <template is="dom-if" if="{{!queryMatches}}">
+            <div class="motitle">Meet your soulmate at strange place</div>
+          </template>
+        <!-- -->
+
+          <template is="dom-if" if="{{queryMatches}}">
+            <div class="middle headerWrapper">
+              <div class="title1">Meet your soulmate at strange place</div>
+              <div class="title2">Find your worldwide travel companion at once!</div>         
+            </div>
+          </template>
         </paper-toolbar>       
 
         <!-- <iron-image id="btnLogin" src="../../images/main/login.png"></iron-image> -->
@@ -124,36 +131,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
             <section data-route="home">
-              <iron-image id="btnFacebook" src="../../images/main/facebook.png"></iron-image>
+              <iron-image id="btnFacebook" src="../../images/main/facebook.png"></iron-image>             
               <div id="homeWrapper">
-                <paper-material elevation="1">
-                  <div class="textWrapper">
-                    <iron-image class="imgText" src="../../images/main/text.png"></iron-image>
-                  </div>
-                  <div class="contactWrapper">
-                    <div class="ctitle1">READY TO TRAVEL WITH FLAMINGO?</div>
-                    <div class="ctitle2">
-                      Join our WEB/APP to be among the first to try the new service. <br />
-                      You will get a new travel friend, exciting experience <br />
-                      and the top discounts offered by FLAMINGO.
-                    </div>
-                    <div class="buttons">
-                      <a href="https://admin.typeform.com/form/593459/fields" target="_blank"><iron-image src="../../images/main/contact.png"></iron-image></a>
-                      <a href="https://admin.typeform.com/form/593074/fields/" target="_blank"><iron-image src="../../images/main/report.png"></iron-image></a>
-                    </div>
-                  </div>
-                </paper-material>              
+                <template is="dom-if" if="{{queryMatches}}">
+                  <paper-material elevation="1">                  
+                    <div class="textWrapper">
+                      <iron-image class="imgText" src="../../images/main/text.png"></iron-image>
+                    </div>                  
+                    <div class="contactWrapper">
+                      <div class="ctitle1">READY TO TRAVEL WITH FLAMINGO?</div>
+                      <div class="ctitle2">
+                        Join our WEB/APP to be among the first to try the new service. <br />
+                        You will get a new travel friend, exciting experience <br />
+                        and the top discounts offered by FLAMINGO.
+                      </div>                    
+                      <div class="buttons">
+                        <a href="https://admin.typeform.com/form/593459/fields" target="_blank"><iron-image src="../../images/main/contact.png"></iron-image></a>
+                        <a href="https://admin.typeform.com/form/593074/fields/" target="_blank"><iron-image src="../../images/main/report.png"></iron-image></a>
+                      </div>                    
+                    </div>                  
+                  </paper-material>              
+                </template>
 
                 <paper-material elevation="1">                   
                   <div class="footer">
                     The Social Travel Network <br />
                     ⓒ2015 FLAMINGO All rights reserved.
                   </div>
-                </paper-material>              
-                
+                </paper-material>                              
               </div>
             </section>
-
           
               <section data-route="register">
                   <register-schedule id="registerSchedule" user="{{user}}"></register-schedule>

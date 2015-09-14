@@ -42,6 +42,13 @@ body {
 	cursor: pointer;
 }
 
+.motitle {
+	color: #fff;
+	font-size: 40px;
+	margin-top: 330px;
+	margin-left: 0px;
+}
+
 .headerWrapper {
 	color: #fff;
 	margin-top: 520px;	
