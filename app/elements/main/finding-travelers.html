@@ -6,7 +6,7 @@
 		}
 
 		.searchWrapper .vertical-section {
-			display: inline-block;
+			display: inline-block;			
 		}
 
 		#btnSelCity {
@@ -35,8 +35,7 @@
         	background-color: #ddd;
       	}		
 
-      	#rgTheme {
-      		height: 160px;
+      	#rgTheme {      		
       		overflow: scroll;
       		margin: 15px;
       	}
@@ -81,13 +80,8 @@
 					</div>
 
 					<div class="vertical-section">
-						<iron-selector id="rgTheme" selected="0">						
-							<div><iron-image src="../../images/main/theme_all.png"></iron-image></div>
-							<div><iron-image src="../../images/main/theme_transport.png"></iron-image></div>
-							<div><iron-image src="../../images/main/theme_stay.png"></iron-image></div>
-							<div><iron-image src="../../images/main/theme_food.png"></iron-image></div>
-							<div><iron-image src="../../images/main/theme_sightsee.png"></iron-image></div>
-						</iron-selector>
+						<h2>Activity</h2>
+						<paper-button id="btnSelActivity" data-dialog="dlogActivity" on-tap="showActivityDlog">Select</paper-button>
 					</div>
 					
 					<!-- <paper-radio-group id="rgTheme" selected="all">
@@ -122,6 +116,7 @@
 		</div>
 
 		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
+		<activity-dialog id="activityDlog" on-select-activity="onSelectActivity"></activity-dialog>
 		<!-- <paper-date-picker-dialog id="datePicker" date="2015/8/8" on-value-changed="dateValueChanged"></paper-date-picker-dialog>		 -->
 
 		<paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
@@ -153,7 +148,7 @@
 			selCityIdx: {
 				type: Number,
 				value: -1
-			},
+			},			
 
 			pickDate: {
 				type: Number,
@@ -214,6 +209,10 @@
 			this.$.dpDlog.toggle();
 		},
 
+		showActivityDlog: function() {
+			this.$.activityDlog.toggle();
+		},
+
 		dateValueChanged: function() {			
 			var date = this.$.datePicker.date;
 			if(this.$.datePicker.date==null){
@@ -236,9 +235,14 @@
 			this.$.btnSelCity.innerHTML = strName;			
 		},		
 
-		search: function() {
-			this.themeIdx = this.$.rgTheme.selected;						
+		onSelectActivity: function(e) {
+			this.themeIdx = e.detail.idx;
+			var strName = e.detail.name;
+			this.$.btnSelActivity.innerHTML = strName;
+		},
 
+		search: function() {				
+			console.log(this.themeIdx);		
 			var selCityIdx = this.selCityIdx;
 			var pickDate = this.pickDate;
 			var that = this;
