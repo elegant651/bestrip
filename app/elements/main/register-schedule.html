@@ -10,6 +10,10 @@
 			margin-right: 20px;
 		}
 
+		#dpDlog .buttons{
+			
+		}
+
 		paper-button.colorful {
 			background: #4285f4;
       		color: #fff;
@@ -41,13 +45,13 @@
 				<paper-input id="piStartDate" label="Select Start Date" on-tap="showStartDateDlog"></paper-input>
 				<paper-input id="piFinishDate" label="Select Finish Date" on-tap="showFinishDateDlog"></paper-input>
 			</div>
-			<!-- <paper-date-picker-dialog id="datePicker" date="2015/8/8" on-value-changed="dateValueChanged"></paper-date-picker-dialog> -->
+			
 			<paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
-		        <paper-date-picker id="datePicker" responsive-width="655px"></paper-date-picker>
-		        <div class="buttons">
+				<div class="buttons">
 		          <paper-button dialog-dismiss>Cancel</paper-button>
 		          <paper-button dialog-confirm>OK</paper-button>
 		        </div>
+		        <paper-date-picker id="datePicker" responsive-width="655px"></paper-date-picker>      
 		      </paper-dialog>
 		</div>
 		<div class="vertical-section">

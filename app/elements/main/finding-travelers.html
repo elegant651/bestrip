@@ -116,15 +116,14 @@
 		</div>
 
 		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
-		<activity-dialog id="activityDlog" on-select-activity="onSelectActivity"></activity-dialog>
-		<!-- <paper-date-picker-dialog id="datePicker" date="2015/8/8" on-value-changed="dateValueChanged"></paper-date-picker-dialog>		 -->
+		<activity-dialog id="activityDlog" on-select-activity="onSelectActivity"></activity-dialog>		
 
 		<paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
-	        <paper-date-picker id="datePicker" responsive-width="655px"></paper-date-picker>
-	        <div class="buttons">
+			<div class="buttons">
 	          <paper-button dialog-dismiss>Cancel</paper-button>
 	          <paper-button dialog-confirm>OK</paper-button>
 	        </div>
+	        <paper-date-picker id="datePicker" responsive-width="655px"></paper-date-picker>	        
 	      </paper-dialog>
 
 		<!-- <div hidden$="{{!isShow}}">			

@@ -33,7 +33,7 @@ body {
 
 #mainToolbar.nolanding {
 	background-color: rgb(233, 84, 46);
-	height: 130px;
+/*	height: 130px;*/
 }
 
 #btnLogin {
