@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 <dom-module id="register-schedule">
 	<style>		
@@ -25,7 +28,7 @@
 			background: rgb(233, 84, 46);
 		}
 		
-	</style>
+	</style>	
 	<template>		
 		<firebase-collection	  
 				id="fcSchedules"        
@@ -38,21 +41,23 @@
 		<div class="vertical-section">
 			<h2>Destination</h2>
 			<paper-button id="btnSelCity" raised data-dialog="dlogCity" on-tap="showCityDlog">Select City<paper-button>	
-		</div>
+		</div>		
 		<div class="vertical-section">
 			<h2>Date</h2>			
 			<div class="wrapperDate">
-				<paper-input id="piStartDate" label="Select Start Date" on-tap="showStartDateDlog"></paper-input>
-				<paper-input id="piFinishDate" label="Select Finish Date" on-tap="showFinishDateDlog"></paper-input>
+				<!-- <paper-input id="piStartDate" label="Select Start Date" on-tap="showStartDateDlog"></paper-input>
+				<paper-input id="piFinishDate" label="Select Finish Date" on-tap="showFinishDateDlog"></paper-input> -->
+				<input type="text" id="piStartDate" value="Select Start Date">
+				<input type="text" id="piFinishDate" value="Select Finish Date">
 			</div>
 			
-			<paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
+			<!-- <paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
 				<div class="buttons">
 		          <paper-button dialog-dismiss>Cancel</paper-button>
 		          <paper-button dialog-confirm>OK</paper-button>
 		        </div>
 		        <paper-date-picker id="datePicker" responsive-width="655px"></paper-date-picker>      
-		      </paper-dialog>
+		      </paper-dialog> -->
 		</div>
 		<div class="vertical-section">
 			<h2>Theme</h2>
@@ -71,7 +76,7 @@
 			<paper-radio-button id="prPrivacy" on-tap="showPrivacy">Privacy Policy</paper-radio-button>
 		</div>
 		<div class="vertical-section">
-			<paper-button id="btnRegister" raised disabled$="{{checkData(user, selCityIdx, startDate, finishDate, contact, phone)}}" on-tap="register" class="colorful ripple"><iron-icon icon="check"></iron-icon>Register</paper-button>
+			<paper-button id="btnRegister" raised disabled$="{{checkData(user, selCityIdx, isPickStartDate, isPickFinishDate, contact, phone)}}" on-tap="register" class="colorful ripple"><iron-icon icon="check"></iron-icon>Register</paper-button>
 		</div>
 		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
 		<privacy-dialog id="privacyDlog"></privacy-dialog>				
@@ -94,14 +99,14 @@
 				value: -1
 			},
 
-			startDate: {
-				type: Number,
-				value: -1
+			isPickStartDate: {
+				type: Boolean,
+				value: false
 			},
 
-			finishDate: {
-				type: Number,
-				value: -1
+			isPickFinishDate: {
+				type: Boolean,
+				value: false
 			},
 
 			contact: {
@@ -125,15 +130,29 @@
 				{name: 'Istanbul', idx: 5},
 				{name: 'Prague', idx: 6}
 			];			
+
+			var that = this;
+			$(function() {
+		    	$("#piStartDate").datepicker({
+		    		onSelect: function(dateText, inst) {
+		    			that.isPickStartDate = true;
+		    		}
+		    	});
+		    	$("#piFinishDate").datepicker({
+		    		onSelect: function(dateText, inst) {
+		    			that.isPickFinishDate = true;
+		    		}
+		    	});
+		  	});
 		},		
 
 		initialize: function() {
 			this.$.btnSelCity.innerHTML = "Select City";
 			this.selCityIdx = -1;
 			this.startDate = -1;
-			this.finishDate = -1;						
-			this.$.piStartDate.setAttribute("value", "");
-			this.$.piFinishDate.setAttribute("value", "");
+			this.finishDate = -1;	
+			$("#piStartDate").val("Select Start Date");
+			$("#piFinishDate").val("Select Finish Date");			
 			this.$.rgTheme.selected = "all";
 		},
 
@@ -147,39 +166,39 @@
 			this.$.cityDlog.toggle();												
 		},        
 
-		showStartDateDlog: function() {
-			this.dlogType = 0;
-			// this.$.datePicker.toggle();			
-			this.$.dpDlog.toggle();
-		},
+		// showStartDateDlog: function() {
+		// 	this.dlogType = 0;
+		// 	// this.$.datePicker.toggle();			
+		// 	this.$.dpDlog.toggle();
+		// },
 
-		showFinishDateDlog: function() {
-			this.dlogType = 1;
-			// this.$.datePicker.toggle();
-			this.$.dpDlog.toggle();
-		},		
+		// showFinishDateDlog: function() {
+		// 	this.dlogType = 1;
+		// 	// this.$.datePicker.toggle();
+		// 	this.$.dpDlog.toggle();
+		// },		
 
-		dateValueChanged: function() {
-			console.log("dateValueChanged:" + this.$.datePicker.date);		
-			if(this.$.datePicker.date==null){
-				return;
-			}
+		// dateValueChanged: function() {
+		// 	console.log("dateValueChanged:" + this.$.datePicker.date);		
+		// 	if(this.$.datePicker.date==null){
+		// 		return;
+		// 	}
 
-			this.locale = 'en-US';
-			var date = this.$.datePicker.date;
-			var year = Intl.DateTimeFormat(this.locale, { year: 'numeric' }).format(date);
-			var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
-			var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
+		// 	this.locale = 'en-US';
+		// 	var date = this.$.datePicker.date;
+		// 	var year = Intl.DateTimeFormat(this.locale, { year: 'numeric' }).format(date);
+		// 	var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
+		// 	var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
 			
-			var strDate = year+" "+month+" "+day;
-    		if(this.dlogType==0){
-    			this.$.piStartDate.setAttribute("value", strDate);
-    			this.startDate = date.getTime();    			
-    		} else {
-    			this.$.piFinishDate.setAttribute("value", strDate);
-    			this.finishDate = date.getTime();
-    		}
-		},
+		// 	var strDate = year+" "+month+" "+day;
+  //   		if(this.dlogType==0){
+  //   			this.$.piStartDate.setAttribute("value", strDate);
+  //   			this.startDate = date.getTime();    			
+  //   		} else {
+  //   			this.$.piFinishDate.setAttribute("value", strDate);
+  //   			this.finishDate = date.getTime();
+  //   		}
+		// },
 
 		onSelectCity: function(e) {			
 			this.selCityIdx = e.detail.idx;
@@ -191,19 +210,20 @@
 			this.$.privacyDlog.toggle();
 		},
 
-		checkData: function(user, selCityIdx, startDate, finishDate, contact, phone) {			
+		checkData: function(user, selCityIdx, isPickStartDate, isPickFnishDate, contact, phone) {			
 			if(this.user==null){
 				return true;
 			}
 			if(this.selCityIdx==-1){
 				return true;
-			}
-			if(this.startDate==-1){
-				return true;				
-			}
-			if(this.finishDate==-1){
+			}						
+			if(this.isPickStartDate==false){
+				return true;
+			}			
+			if(this.isPickFinishDate==false){
 				return true;
 			}
+
 			if(this.$.ipContact.value==null || this.$.ipContact.value===""){
 				return true;
 			}
@@ -227,7 +247,7 @@
 				themeIdx = 4;
 			}
 
-			var schedule_title = this.$.piStartDate.getAttribute("value") + " ~ " + this.$.piFinishDate.getAttribute("value") + " : " + this.cityNames[this.selCityIdx].name;
+			var schedule_title = $("#piStartDate").val() + " ~ " + $("#piFinishDate").val() + " : " + this.cityNames[this.selCityIdx].name;						
 
 			var data = {
 				userid: this.user.uid,
@@ -236,8 +256,8 @@
 				userpic: this.user.facebook.cachedUserProfile.picture.data.url,
 				selCityIdx: this.selCityIdx,
 				themeIdx: themeIdx,
-				startDate: this.startDate,
-				finishDate: this.finishDate,
+				startDate: $("#piStartDate").datepicker("getDate").getTime(),		
+				finishDate: $("#piFinishDate").datepicker("getDate").getTime(),
 				schedule_title : schedule_title,
 				contact: this.contact,
 				phone: this.phone,

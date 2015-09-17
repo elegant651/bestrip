@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 <dom-module id="finding-travelers">
 	<style>
@@ -75,7 +78,8 @@
 					<div class="vertical-section">
 						<h2>Date</h2>
 						<div class="wrapperDate">
-							<paper-input id="piPickDate" label="Select" on-tap="showDateDlog"></paper-input>
+							<!-- <paper-input id="piPickDate" label="Select" on-tap="showDateDlog"></paper-input> -->
+							<input type="text" id="piPickDate" value="Select">
 						</div>				
 					</div>
 
@@ -117,7 +121,7 @@
 
 		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
 		<activity-dialog id="activityDlog" on-select-activity="onSelectActivity"></activity-dialog>		
-
+<!-- 
 		<paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
 			<div class="buttons">
 	          <paper-button dialog-dismiss>Cancel</paper-button>
@@ -125,7 +129,7 @@
 	        </div>
 	        <paper-date-picker id="datePicker" responsive-width="655px"></paper-date-picker>	        
 	      </paper-dialog>
-
+ -->
 		<!-- <div hidden$="{{!isShow}}">			
 			<h2>To viewing this page, Go to register your schedule!!</h2>
 		</div> -->
@@ -149,9 +153,9 @@
 				value: -1
 			},			
 
-			pickDate: {
-				type: Number,
-				value: -1
+			isPickDate: {
+				type: Boolean,
+				value: false
 			},
 
 			isShow: {
@@ -166,6 +170,15 @@
 		},
 
 		ready: function() {
+			var that = this;
+			$(function() {
+		    	$("#piPickDate").datepicker({
+		    		onSelect: function(dateText, inst) {
+		    			that.isPickDate = true;
+		    		}
+		    	});		    	
+		  	});
+
 			this.search();			
 		},
 
@@ -212,21 +225,21 @@
 			this.$.activityDlog.toggle();
 		},
 
-		dateValueChanged: function() {			
-			var date = this.$.datePicker.date;
-			if(this.$.datePicker.date==null){
-				return;
-			}
+		// dateValueChanged: function() {			
+		// 	var date = this.$.datePicker.date;
+		// 	if(this.$.datePicker.date==null){
+		// 		return;
+		// 	}
 			
-			this.locale = 'en-US';
-			var year = Intl.DateTimeFormat(this.locale, { year: 'numeric' }).format(date);
-			var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
-			var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
+		// 	this.locale = 'en-US';
+		// 	var year = Intl.DateTimeFormat(this.locale, { year: 'numeric' }).format(date);
+		// 	var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
+		// 	var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
 			
-			var strDate = year+" "+month+" "+day;
-			this.$.piPickDate.setAttribute("value", strDate);
-			this.pickDate = date.getTime();    			    		
-		},
+		// 	var strDate = year+" "+month+" "+day;
+		// 	this.$.piPickDate.setAttribute("value", strDate);
+		// 	this.pickDate = date.getTime();    			    		
+		// },
 
 		onSelectCity: function(e) {			
 			this.selCityIdx = e.detail.idx;
@@ -240,10 +253,14 @@
 			this.$.btnSelActivity.innerHTML = strName;
 		},
 
-		search: function() {				
-			console.log(this.themeIdx);		
+		search: function() {							
 			var selCityIdx = this.selCityIdx;
-			var pickDate = this.pickDate;
+			// var pickDate = this.pickDate;
+
+			var pickDate = -1;			
+			if(this.isPickDate){
+				pickDate = $("#piPickDate").datepicker("getDate").getTime();
+			}
 			var that = this;
 			
 			var ref = new Firebase("https://flamingo365.firebaseio.com/schedules");					
