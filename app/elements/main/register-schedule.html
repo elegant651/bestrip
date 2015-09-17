@@ -1,6 +1,6 @@
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
 
 <dom-module id="register-schedule">
 	<style>		
@@ -45,19 +45,19 @@
 		<div class="vertical-section">
 			<h2>Date</h2>			
 			<div class="wrapperDate">
-				<!-- <paper-input id="piStartDate" label="Select Start Date" on-tap="showStartDateDlog"></paper-input>
-				<paper-input id="piFinishDate" label="Select Finish Date" on-tap="showFinishDateDlog"></paper-input> -->
-				<input type="text" id="piStartDate" value="Select Start Date">
-				<input type="text" id="piFinishDate" value="Select Finish Date">
+				<paper-input id="piStartDate" label="Select Start Date" on-tap="showStartDateDlog"></paper-input>
+				<paper-input id="piFinishDate" label="Select Finish Date" on-tap="showFinishDateDlog"></paper-input>
+				<!-- <input type="text" id="piStartDate" value="Select Start Date">
+				<input type="text" id="piFinishDate" value="Select Finish Date"> -->
 			</div>
 			
-			<!-- <paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
+			<paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
 				<div class="buttons">
 		          <paper-button dialog-dismiss>Cancel</paper-button>
 		          <paper-button dialog-confirm>OK</paper-button>
 		        </div>
 		        <paper-date-picker id="datePicker" responsive-width="655px"></paper-date-picker>      
-		      </paper-dialog> -->
+		      </paper-dialog>
 		</div>
 		<div class="vertical-section">
 			<h2>Theme</h2>
@@ -99,15 +99,25 @@
 				value: -1
 			},
 
-			isPickStartDate: {
-				type: Boolean,
-				value: false
+			startDate: {
+				type: Number,
+				value: -1
 			},
 
-			isPickFinishDate: {
-				type: Boolean,
-				value: false
+			finishDate: {
+				type: Number,
+				value: -1
 			},
+
+			// isPickStartDate: {
+			// 	type: Boolean,
+			// 	value: false
+			// },
+
+			// isPickFinishDate: {
+			// 	type: Boolean,
+			// 	value: false
+			// },
 
 			contact: {
 				type: String,
@@ -132,18 +142,24 @@
 			];			
 
 			var that = this;
-			$(function() {
-		    	$("#piStartDate").datepicker({
-		    		onSelect: function(dateText, inst) {
-		    			that.isPickStartDate = true;
-		    		}
-		    	});
-		    	$("#piFinishDate").datepicker({
-		    		onSelect: function(dateText, inst) {
-		    			that.isPickFinishDate = true;
-		    		}
-		    	});
+			this.$.datePicker.addEventListener("click", function() {
+		  		that.$.dpDlog.toggle();
+		  		that.dateValueChanged();
 		  	});
+		  	
+			// $(function() {
+		 //    	$("#piStartDate").datepicker({
+		 //    		onSelect: function(dateText, inst) {
+		 //    			that.isPickStartDate = true;
+		 //    		}
+		 //    	});
+		 //    	$("#piFinishDate").datepicker({
+		 //    		onSelect: function(dateText, inst) {
+		 //    			that.isPickFinishDate = true;
+		 //    		}
+		 //    	});
+		 //  	});
+		  	
 		},		
 
 		initialize: function() {
@@ -151,8 +167,8 @@
 			this.selCityIdx = -1;
 			this.startDate = -1;
 			this.finishDate = -1;	
-			$("#piStartDate").val("Select Start Date");
-			$("#piFinishDate").val("Select Finish Date");			
+			this.$.piStartDate.setAttribute("value", "Select Start Date");
+			this.$.piFinishDate.setAttribute("value", "Select Finish Date");
 			this.$.rgTheme.selected = "all";
 		},
 
@@ -166,39 +182,36 @@
 			this.$.cityDlog.toggle();												
 		},        
 
-		// showStartDateDlog: function() {
-		// 	this.dlogType = 0;
-		// 	// this.$.datePicker.toggle();			
-		// 	this.$.dpDlog.toggle();
-		// },
+		showStartDateDlog: function() {
+			this.dlogType = 0;					
+			this.$.dpDlog.toggle();
+		},
 
-		// showFinishDateDlog: function() {
-		// 	this.dlogType = 1;
-		// 	// this.$.datePicker.toggle();
-		// 	this.$.dpDlog.toggle();
-		// },		
+		showFinishDateDlog: function() {
+			this.dlogType = 1;			
+			this.$.dpDlog.toggle();
+		},		
 
-		// dateValueChanged: function() {
-		// 	console.log("dateValueChanged:" + this.$.datePicker.date);		
-		// 	if(this.$.datePicker.date==null){
-		// 		return;
-		// 	}
+		dateValueChanged: function() {			
+			if(this.$.datePicker.date==null){
+				return;
+			}
 
-		// 	this.locale = 'en-US';
-		// 	var date = this.$.datePicker.date;
-		// 	var year = Intl.DateTimeFormat(this.locale, { year: 'numeric' }).format(date);
-		// 	var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
-		// 	var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
+			this.locale = 'en-US';
+			var date = this.$.datePicker.date;
+			var year = Intl.DateTimeFormat(this.locale, { year: 'numeric' }).format(date);
+			var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
+			var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
 			
-		// 	var strDate = year+" "+month+" "+day;
-  //   		if(this.dlogType==0){
-  //   			this.$.piStartDate.setAttribute("value", strDate);
-  //   			this.startDate = date.getTime();    			
-  //   		} else {
-  //   			this.$.piFinishDate.setAttribute("value", strDate);
-  //   			this.finishDate = date.getTime();
-  //   		}
-		// },
+			var strDate = year+" "+month+" "+day;
+    		if(this.dlogType==0){
+    			this.$.piStartDate.setAttribute("value", strDate);
+    			this.startDate = date.getTime();    			
+    		} else {
+    			this.$.piFinishDate.setAttribute("value", strDate);
+    			this.finishDate = date.getTime();
+    		}
+		},
 
 		onSelectCity: function(e) {			
 			this.selCityIdx = e.detail.idx;
@@ -210,17 +223,17 @@
 			this.$.privacyDlog.toggle();
 		},
 
-		checkData: function(user, selCityIdx, isPickStartDate, isPickFnishDate, contact, phone) {			
+		checkData: function(user, selCityIdx, startDate, finishDate, contact, phone) {			
 			if(this.user==null){
 				return true;
 			}
 			if(this.selCityIdx==-1){
 				return true;
 			}						
-			if(this.isPickStartDate==false){
+			if(this.startDate==-1){
 				return true;
 			}			
-			if(this.isPickFinishDate==false){
+			if(this.finishDate==-1){
 				return true;
 			}
 
@@ -247,7 +260,7 @@
 				themeIdx = 4;
 			}
 
-			var schedule_title = $("#piStartDate").val() + " ~ " + $("#piFinishDate").val() + " : " + this.cityNames[this.selCityIdx].name;						
+			var schedule_title = this.$.piStartDate.getAttribute("value") + " ~ " + this.$.piFinishDate.getAttribute("value") + " : " + this.cityNames[this.selCityIdx].name;						
 
 			var data = {
 				userid: this.user.uid,
@@ -256,8 +269,8 @@
 				userpic: this.user.facebook.cachedUserProfile.picture.data.url,
 				selCityIdx: this.selCityIdx,
 				themeIdx: themeIdx,
-				startDate: $("#piStartDate").datepicker("getDate").getTime(),		
-				finishDate: $("#piFinishDate").datepicker("getDate").getTime(),
+				startDate: this.startDate,		
+				finishDate: this.finishDate,
 				schedule_title : schedule_title,
 				contact: this.contact,
 				phone: this.phone,
