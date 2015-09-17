@@ -1,6 +1,3 @@
-<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
 
 <dom-module id="finding-travelers">
 	<style>
@@ -153,11 +150,6 @@
 				value: -1
 			},			
 
-			// isPickDate: {
-			// 	type: Boolean,
-			// 	value: false
-			// },
-
 			pickDate: {
 				type: Number,
 				value: -1
@@ -175,15 +167,7 @@
 		},
 
 		ready: function() {
-			// var that = this;
-			// $(function() {
-		 //    	$("#piPickDate").datepicker({
-		 //    		onSelect: function(dateText, inst) {
-		 //    			that.isPickDate = true;
-		 //    		}
-		 //    	});		    	
-		 //  	});
-
+	
 			var that = this;
 			this.$.datePicker.addEventListener("click", function() {
 		  		that.$.dpDlog.toggle();
