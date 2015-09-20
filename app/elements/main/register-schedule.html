@@ -131,12 +131,11 @@
 				{name: 'Prague', idx: 6}
 			];			
 
-			var that = this;
-			this.$.datePicker.addEventListener("click", function() {
-		  		that.$.dpDlog.toggle();
-		  		that.dateValueChanged();
-		  	});
-		  	
+			// var that = this;
+			// this.$.datePicker.addEventListener("click", function() {
+		 //  		that.$.dpDlog.close();
+		 //  		that.dateValueChanged();
+		 //  	});		  	
 		},		
 
 		initialize: function() {
@@ -144,8 +143,8 @@
 			this.selCityIdx = -1;
 			this.startDate = -1;
 			this.finishDate = -1;	
-			this.$.piStartDate.setAttribute("value", "Select Start Date");
-			this.$.piFinishDate.setAttribute("value", "Select Finish Date");
+			this.$.piStartDate.value = "Select Start Date";  
+			this.$.piFinishDate.value = "Select Finish Date"; 
 			this.$.rgTheme.selected = "all";
 		},
 
@@ -181,11 +180,12 @@
 			var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
 			
 			var strDate = year+" "+month+" "+day;
+			console.log(strDate);
     		if(this.dlogType==0){
-    			this.$.piStartDate.setAttribute("value", strDate);
+    			this.$.piStartDate.value = strDate;  
     			this.startDate = date.getTime();    			
     		} else {
-    			this.$.piFinishDate.setAttribute("value", strDate);
+    			this.$.piFinishDate.value = strDate;
     			this.finishDate = date.getTime();
     		}
 		},

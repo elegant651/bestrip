@@ -3,20 +3,27 @@
 	<style>
 		.searchWrapper {
 			/*@apply(--layout-horizontal);*/
+			width: 100%;
 		}
 
 		.searchWrapper .vertical-section {
-			display: inline-block;			
+			float: left;			
+		}		
+
+		.clear {
+			clear: both;
 		}
 
 		#btnSelCity {
 			width: 150px;
+			margin-top: 15px;
+			margin-left: -30px;
 		}
 
-		.wrapperDate {
-			@apply(--layout-horizontal);			
+		#btnSelActivity {
+			margin-top: 15px;
 		}
-
+		
 		.wrapperDate paper-input {
 			margin-right: 20px;			
 		}
@@ -64,8 +71,7 @@
 				id="fcRequests"        
 	          location="https://flamingo365.firebaseio.com/requests"
 	          ></firebase-collection>
-	    
-	    <div>
+	    	    
 			<paper-material elevation="1">
 				<div class="searchWrapper">
 					<div class="vertical-section">
@@ -74,24 +80,16 @@
 					</div>
 					<div class="vertical-section">
 						<h2>Date</h2>
-						<div class="wrapperDate">
-							<paper-input id="piPickDate" label="Select" on-tap="showDateDlog"></paper-input>
-							<!-- <input type="text" id="piPickDate" value="Select"> -->
-						</div>				
+						
+						<paper-input id="piPickDate" label="Select" on-tap="showDateDlog"></paper-input>
+						<!-- <input type="text" id="piPickDate" value="Select"> -->						
 					</div>
 
 					<div class="vertical-section">
 						<h2>Activity</h2>
 						<paper-button id="btnSelActivity" data-dialog="dlogActivity" on-tap="showActivityDlog">Select</paper-button>
 					</div>
-					
-					<!-- <paper-radio-group id="rgTheme" selected="all">
-						<paper-radio-button name="all"><iron-image src="../../images/main/theme_all.png"></iron-image>"</paper-radio-button>
-						<paper-radio-button name="transport"><iron-image src="../../images/main/theme_transport.png"></iron-image>"</paper-radio-button>
-						<paper-radio-button name="stay"><iron-image src="../../images/main/theme_stay.png"></iron-image>"</paper-radio-button>
-						<paper-radio-button name="food"><iron-image src="../../images/main/theme_food.png"></iron-image>"</paper-radio-button>
-						<paper-radio-button name="sightsee"><iron-image src="../../images/main/theme_sightsee.png"></iron-image>"</paper-radio-button>
-					</paper-radio-group> -->
+							
 
 					<div class="vertical-section">
 						<paper-button id="btnSearch" raised on-tap="search" class="colorful ripple"><iron-icon icon="search"></iron-icon>Search</paper-button>				
@@ -99,6 +97,7 @@
 				</div>
 			</paper-material>
 
+			<div class="clear"></div>
 
 			<div class="vertical-section">			
 
@@ -114,7 +113,7 @@
 					</div>				
 				</template>				
 			</div>
-		</div>
+		</div>		
 
 		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
 		<activity-dialog id="activityDlog" on-select-activity="onSelectActivity"></activity-dialog>		
@@ -168,11 +167,11 @@
 
 		ready: function() {
 	
-			var that = this;
-			this.$.datePicker.addEventListener("click", function() {
-		  		that.$.dpDlog.toggle();
-		  		that.dateValueChanged();
-		  	});
+			// var that = this;
+			// this.$.datePicker.addEventListener("click", function() {
+		 //  		that.$.dpDlog.toggle();
+		 //  		that.dateValueChanged();
+		 //  	});
 
 			this.search();			
 		},
@@ -232,7 +231,7 @@
 			var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
 			
 			var strDate = year+" "+month+" "+day;
-			this.$.piPickDate.setAttribute("value", strDate);
+			this.$.piPickDate.value = strDate;
 			this.pickDate = date.getTime();    			    		
 		},
 

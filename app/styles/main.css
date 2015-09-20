@@ -19,6 +19,12 @@ body {
 	max-height: 200px;
 }
 
+#drawerList .newAlarm{
+	color: rgb(255,0,0);
+	background: rgba(3, 84, 46, 0.1);
+	/*visibility: hidden;*/
+}
+
 #mainToolbar {
 	
 }

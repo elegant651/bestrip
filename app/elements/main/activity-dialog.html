@@ -1,24 +1,33 @@
 <dom-module id="activity-dialog">
 	<style>
 		:host {
-			width: 200px;
+			width: 170px;
 			height: 300px;
 			max-height: 300px;
 			margin: 10px;			
 			overflow: scroll;	
 		}				
 		
+		iron-selector .trow {
+			margin-left: 50px;			
+		}
+
+		iron-selector .title {			
+			margin-bottom: 10px;
+			font-weight: bold;
+			font-size: 15px;
+		}
 		
 	</style>
 	<link rel="import" type="css" href="../../bower_components/paper-dialog-behavior/paper-dialog-common.css">
 
 	<template>		
 		<iron-selector id="rgTheme" selected="{{selectedIdx}}">						
-			<div><iron-image src="../../images/main/theme_all.png"></iron-image><div>All</div></div>
-			<div><iron-image src="../../images/main/theme_transport.png"></iron-image><div>Transport</div></div>
-			<div><iron-image src="../../images/main/theme_stay.png"></iron-image><div>Stay</div></div>
-			<div><iron-image src="../../images/main/theme_food.png"></iron-image><div>Food</div></div>
-			<div><iron-image src="../../images/main/theme_sightsee.png"></iron-image><div>Sightsee</div></div>
+			<div class="trow"><iron-image src="../../images/main/theme_all.png"></iron-image><div class="title">All</div></div>
+			<div class="trow"><iron-image src="../../images/main/theme_transport.png"></iron-image><div class="title">Transport</div></div>
+			<div class="trow"><iron-image src="../../images/main/theme_stay.png"></iron-image><div class="title">Stay</div></div>
+			<div class="trow"><iron-image src="../../images/main/theme_food.png"></iron-image><div class="title">Food</div></div>
+			<div class="trow"><iron-image src="../../images/main/theme_sightsee.png"></iron-image><div class="title">Sightsee</div></div>
 		</iron-selector>			
 	</template>
 </dom-module>

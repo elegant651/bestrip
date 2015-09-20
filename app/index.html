@@ -67,7 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </paper-toolbar>
 
           <!-- Drawer Content -->          
-            <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
+            <paper-menu id="drawerList" class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
                 <!-- <a data-route="home" href="/">
                   <iron-icon icon="home"></iron-icon>
                   <span>Home</span>
@@ -85,7 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                   <a data-route="schedules" href="/schedules">
                     <iron-icon icon="social:notifications"></iron-icon>
-                    <span>Real Time</span>
+                    <span>Real Time <span class="newAlarm">New</span></span>
                   </a>
 
                   <a data-route="myschedule" href="/myschedule">
