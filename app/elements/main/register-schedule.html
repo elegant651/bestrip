@@ -79,7 +79,7 @@
 			<paper-button id="btnRegister" raised disabled$="{{checkData(user, selCityIdx, isPickStartDate, isPickFinishDate, contact, phone)}}" on-tap="register" class="colorful ripple"><iron-icon icon="check"></iron-icon>Register</paper-button>
 		</div>
 		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
-		<privacy-dialog id="privacyDlog"></privacy-dialog>				
+		<privacy-dialog id="privacyDlog" on-tap="hidePrivacy"></privacy-dialog>				
 	</template>
 </dom-module>
 <script>
@@ -131,10 +131,12 @@
 				{name: 'London', idx: 1},
 				{name: 'Paris', idx: 2},
 				{name: 'Berlin', idx: 3},
-				{name: 'Rome', idx: 4},
-				{name: 'Istanbul', idx: 5},
-				{name: 'Prague', idx: 6}
-			];								
+				{name: 'Munich', idx: 4},
+				{name: 'Rome', idx: 5},
+				{name: 'Istanbul', idx: 6},
+				{name: 'Prague', idx: 7},
+				{name: 'Barcelona', idx: 8}
+			];
 		},		
 
 		initialize: function() {
@@ -145,6 +147,9 @@
 			this.$.piStartDate.value = "Select Start Date";  
 			this.$.piFinishDate.value = "Select Finish Date"; 
 			this.$.rgTheme.selected = "all";
+			this.$.cityDlog.close();
+			this.$.dpDlog.close();
+			this.$.privacyDlog.close();
 		},
 
 		_userChanged: function() {
@@ -153,18 +158,18 @@
 			}			
 		},				
 
-		showCityDlog: function() {						
-			this.$.cityDlog.toggle();												
+		showCityDlog: function() {									
+			this.$.cityDlog.open();												
 		},        
 
 		showStartDateDlog: function() {
 			this.dlogType = 0;					
-			this.$.dpDlog.toggle();
+			this.$.dpDlog.open();
 		},
 
 		showFinishDateDlog: function() {
 			this.dlogType = 1;			
-			this.$.dpDlog.toggle();
+			this.$.dpDlog.open();
 		},		
 
 		_pickerDateChanged: function() {
@@ -203,7 +208,11 @@
 		},		
 
 		showPrivacy: function() {
-			this.$.privacyDlog.toggle();
+			this.$.privacyDlog.open();
+		},
+
+		hidePrivacy: function() {
+			this.$.privacyDlog.close();
 		},
 
 		checkData: function(user, selCityIdx, startDate, finishDate, contact, phone) {			

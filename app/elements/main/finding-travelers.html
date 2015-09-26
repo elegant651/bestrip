@@ -16,8 +16,7 @@
 
 		#btnSelCity {
 			width: 150px;
-			margin-top: 15px;
-			margin-left: -30px;
+			margin-top: 15px;			
 		}
 
 		#btnSelActivity {
@@ -212,15 +211,15 @@
 		},
 
 		showCityDlog: function() {			
-			this.$.cityDlog.toggle();
+			this.$.cityDlog.open();
 		},
 
 		showDateDlog: function() {			
-			this.$.dpDlog.toggle();
+			this.$.dpDlog.open();
 		},
 
 		showActivityDlog: function() {
-			this.$.activityDlog.toggle();
+			this.$.activityDlog.open();
 		},
 
 		_pickerDateChanged: function() {
@@ -239,7 +238,7 @@
 			var day = this.$.datePicker.dateFormat(date, 'D');
 			
 			var strDate = year+" "+month+" "+day;
-			
+
 			this.$.piPickDate.value = strDate;
 			this.pickDate = date.getTime();    			    		
 		},

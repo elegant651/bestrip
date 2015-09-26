@@ -29,13 +29,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "240px");
         document.querySelector('#drawerWrap').removeAttribute('hidden');
         document.querySelector('#mainToolbar').className = 'nolanding';
-        document.querySelector('#headerPanel').setAttribute('mode', 'waterfall-tall');        
-        if(document.querySelector('.headerWrapper')!=null){
-          document.querySelector('.headerWrapper').setAttribute('hidden', '');        
-        }
-        if(document.querySelector('.motitle')!=null){
-          document.querySelector('.motitle').setAttribute('hidden', '');
-        }
+        document.querySelector('#headerPanel').setAttribute('mode', 'waterfall-tall');   
+
+        document.querySelector('.titleWrap').setAttribute('hidden', '');             
     };
 
     page('/', function () {
@@ -44,12 +40,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.querySelector('#drawerWrap').setAttribute('hidden', '');
       document.querySelector('#mainToolbar').className = 'landing';
       document.querySelector('#headerPanel').setAttribute('mode', 'cover');      
-      if(document.querySelector('.headerWrapper')!=null){
-        document.querySelector('.headerWrapper').removeAttribute('hidden');
-      }      
-      if(document.querySelector('.motitle')!=null){
-        document.querySelector('.motitle').removeAttribute('hidden');
-      }
+      
+      document.querySelector('.titleWrap').removeAttribute('hidden');             
     });
 
     page('/register', function () {

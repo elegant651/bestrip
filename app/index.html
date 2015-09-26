@@ -114,18 +114,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <!-- Application name -->
           <div class="middle paper-font-display2 app-name" style="margin-top: 25px;"><iron-image src="../../images/main/logo.png"></iron-image></div>
         
-        <!-- for mobile web -->        
-          <template is="dom-if" if="{{!queryMatches}}">
-            <div class="motitle">Meet your soulmate at strange place</div>
-          </template>
-        <!-- -->
+          <div class="middle titleWrap">
+          <!-- for mobile web -->        
+            <template is="dom-if" if="{{!queryMatches}}">
+              <div class="motitle">Meet your soulmate at strange place</div>
+            </template>
+          <!-- -->
 
-          <template is="dom-if" if="{{queryMatches}}">
-            <div class="middle headerWrapper">
-              <div class="title1">Meet your soulmate at strange place</div>
-              <div class="title2">Find your worldwide travel companion at once!</div>         
-            </div>
-          </template>
+            <template is="dom-if" if="{{queryMatches}}">
+              <div class="middle headerWrapper">
+                <div class="title1">Meet your soulmate at strange place</div>
+                <div class="title2">Find your worldwide travel companion at once!</div>         
+              </div>
+            </template>
+          </div>
         </paper-toolbar>       
 
         <!-- <iron-image id="btnLogin" src="../../images/main/login.png"></iron-image> -->
@@ -157,15 +159,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <a href="https://admin.typeform.com/form/593074/fields/" target="_blank"><iron-image src="../../images/main/report.png"></iron-image></a>
                       </div>                    
                     </div>                  
-                  </paper-material>              
-                </template>
+                  </paper-material>                              
 
-                <paper-material elevation="1">                   
-                  <div class="footer">
-                    The Social Travel Network <br />
-                    ⓒ2015 FLAMINGO All rights reserved.
-                  </div>
-                </paper-material>                              
+                  <paper-material elevation="1">                   
+                    <div class="footer">
+                      The Social Travel Network <br />
+                      ⓒ2015 FLAMINGO All rights reserved.
+                    </div>
+                  </paper-material>                              
+                </template>
               </div>
             </section>
           
