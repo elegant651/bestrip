@@ -178,13 +178,15 @@
 			}
 
 			this.locale = 'en-US';
-			var date = this.$.datePicker.date;
-			var year = Intl.DateTimeFormat(this.locale, { year: 'numeric' }).format(date);
-			var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
-			var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
+			var date = this.$.datePicker.date;						
+
+			var year = this.$.datePicker.dateFormat(date, 'YYYY');
+			var month = this.$.datePicker.dateFormat(date, 'MMM');
+			var day = this.$.datePicker.dateFormat(date, 'D');
 			
 			var strDate = year+" "+month+" "+day;
 			console.log(strDate);
+			
     		if(this.dlogType==0){
     			this.$.piStartDate.value = strDate;  
     			this.startDate = date.getTime();    			

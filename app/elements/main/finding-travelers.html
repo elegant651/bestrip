@@ -193,7 +193,7 @@
 		},
 
 		_userChanged: function() {
-			console.log("userChanged");
+			
 			///check if user's status is 1
 			// if(this.user){
 			// 	var that = this;
@@ -233,13 +233,13 @@
 			if(this.$.datePicker.date==null){
 				return;
 			}
-			
-			this.locale = 'en-US';
-			var year = Intl.DateTimeFormat(this.locale, { year: 'numeric' }).format(date);
-			var month = Intl.DateTimeFormat(this.locale, { month: 'short' }).format(date);
-			var day = Intl.DateTimeFormat(this.locale, { day: 'numeric' }).format(date);
+						
+			var year = this.$.datePicker.dateFormat(date, 'YYYY');
+			var month = this.$.datePicker.dateFormat(date, 'MMM');
+			var day = this.$.datePicker.dateFormat(date, 'D');
 			
 			var strDate = year+" "+month+" "+day;
+			
 			this.$.piPickDate.value = strDate;
 			this.pickDate = date.getTime();    			    		
 		},
