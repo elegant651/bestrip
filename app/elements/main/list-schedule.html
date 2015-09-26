@@ -60,11 +60,17 @@
 	     	data="{{requestData}}"
 	     	>
 	     </firebase-document>
+
+	     <firebase-document
+	     	location="{{userTarget}}"
+	     	data="{{userData}}"
+	     	>
+	     </firebase-document>
 	     	     
 		
 		<div class="vertical-section">
 			
-			<template is="dom-repeat" items="[[requests]]" filter="filterStatus" as="request">				
+			<template id="t" is="dom-repeat" items="[[requests]]" filter="filterStatus" as="request">				
 			
 				<!-- Type2 : request message -->
 				<div class="list-element">
@@ -99,7 +105,12 @@
 
 		properties: {
 			requestId: Number,
-			scheduleId: Number,
+			scheduleId: Number,			
+
+			userData: {
+				type: Object,
+				observer: '_userDataChanged'
+			},
 
 			requestTarget: {
 				type: String,
@@ -111,10 +122,33 @@
 				computed: 'computeScheduleTarget(scheduleId)'
 			},
 
+			userTarget: {
+				type: String,
+				computed: 'computeUserTarget(user)'
+			},
+
 			user: {
 				type: Object,
-				value: null
+				value: null					
 			}
+		},
+
+		_userDataChanged: function() {			
+			if(this.userData.numRT!=this.requests.length){
+				console.log("differentRT");
+
+				var ref = new Firebase(this.userTarget);
+				ref.update({
+					"numRT": this.requests.length
+				});
+
+				this.userData.numRT = this.requests.length;
+		  		this.notifyPath('userData.numRT', this.userData.numRT);
+
+		  		this.fire('show-newflag');
+		 	} else {
+		 		this.fire('hide-newflag');
+		 	}
 		},
 
 		filterStatus: function(item) {
@@ -127,6 +161,12 @@
 
 		computeScheduleTarget: function(scheduleId) {
 			return "https://flamingo365.firebaseio.com/schedules/"+scheduleId+"/req_users";
+		},
+
+		computeUserTarget: function(user) {
+			if(user!=null){				
+				return "https://flamingo365.firebaseio.com/users/"+user.uid;
+			}			
 		},
 
 		accept: function(e) {

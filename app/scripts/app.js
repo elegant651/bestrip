@@ -22,7 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Listen for template bound event to know when bindings
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
-    console.log('Our app is ready to rock!');    
+    console.log('Our app is ready to rock!');        
 
     /// routing ///
     var initDrawer = function() {
@@ -31,7 +31,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         document.querySelector('#mainToolbar').className = 'nolanding';
         document.querySelector('#headerPanel').setAttribute('mode', 'waterfall-tall');   
 
-        document.querySelector('.titleWrap').setAttribute('hidden', '');             
+        document.querySelector('.titleWrap').setAttribute('hidden', '');          
+
+
     };
 
     page('/', function () {
@@ -130,6 +132,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     listSchedule.addEventListener('show-dialog', function(e) {
         paperDlog.toggle();
         paperDlog.querySelector("#content").innerHTML = e.detail.content;
+    });
+
+    listSchedule.addEventListener('show-newflag', function(e) {
+      document.querySelector('.menu_rt').querySelector('.newAlarm').removeAttribute('hidden');
+    }); 
+
+    listSchedule.addEventListener('hide-newflag', function(e) {
+      document.querySelector('.menu_rt').querySelector('.newAlarm').setAttribute('hidden', '');
     });
 
     mySchedule.addEventListener('show-dialog', function(e) {
