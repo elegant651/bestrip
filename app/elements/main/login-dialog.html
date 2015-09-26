@@ -116,6 +116,7 @@
 	    },
 
 	    _userChanged: function() {
+
 	    	if (this.statusKnown && this.user) {	   	    	
 	    				    		
 	   //  		var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
@@ -148,6 +149,12 @@
 	    		
 	    		this.fire('login-complete', {userid: this.user.uid}, {bubbles: true});	    		
 	    		this.close();
+	    	} else {	    		
+
+	    		if(window.location.hash!==""){
+	    			console.log("tt");
+	    			// location.href = "/";
+	    		}	    		
 	    	}
 	    }
 	});
