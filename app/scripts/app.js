@@ -147,6 +147,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         paperDlog.querySelector("#content").innerHTML = e.detail.content;        
     });
 
+    mySchedule.addEventListener('show-newflag', function(e) {
+      document.querySelector('.menu_mt').querySelector('.newAlarm').removeAttribute('hidden');
+    }); 
+
+    mySchedule.addEventListener('hide-newflag', function(e) {
+      document.querySelector('.menu_mt').querySelector('.newAlarm').setAttribute('hidden', '');
+    });     
+
     paperDlog.addEventListener('click', function() {        
         console.log("redirect");        
         page.redirect('/register');        

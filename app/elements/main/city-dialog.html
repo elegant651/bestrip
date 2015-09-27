@@ -36,7 +36,7 @@
 					<div class="title">Paris</div>
 				</div>
 			</div>
-			<div class="cityWrapper">
+			<div class="cityWrapper" on-mouseover="onHoverInfo" on-mouseout="onUnhoverInfo">
 				<div class="citybox" on-tap="selectCity" data-idx="3">
 					<iron-image src="../../images/main/kr_citylist_berlin.png" style="width:100px; height:100px;"></iron-image>
 					<div class="title">Berlin</div>
@@ -66,6 +66,8 @@
 					<div class="title">Barcelona</div>
 				</div>
 			</div>		
+			
+			<teleport-module id="tpDlog"></teleport-module>			
 	</template>
 </dom-module>
 <script>
@@ -92,7 +94,15 @@
 				{name: 'Prague', idx: 7},
 				{name: 'Barcelona', idx: 8}
 			];
-		},		
+		},	
+
+		onHoverInfo: function() {
+			this.$.tpDlog.toggle();
+		},
+
+		onUnhoverInfo: function() {
+			this.$.tpDlog.close();
+		},	
 
 	    selectCity: function(e) {
 	    	var idx = e.currentTarget.getAttribute("data-idx");	    	
