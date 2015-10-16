@@ -67,7 +67,7 @@
 				</div>
 			</div>		
 			
-			<teleport-module id="tpDlog"></teleport-module>			
+			<!-- <teleport-module id="tpDlog"></teleport-module>	 -->		
 	</template>
 </dom-module>
 <script>
@@ -96,13 +96,13 @@
 			];
 		},	
 
-		onHoverInfo: function() {
-			this.$.tpDlog.toggle();
-		},
+		// onHoverInfo: function() {
+		// 	this.$.tpDlog.toggle();
+		// },
 
-		onUnhoverInfo: function() {
-			this.$.tpDlog.close();
-		},	
+		// onUnhoverInfo: function() {
+		// 	this.$.tpDlog.close();
+		// },	
 
 	    selectCity: function(e) {
 	    	var idx = e.currentTarget.getAttribute("data-idx");	    	
