@@ -25,6 +25,14 @@
 		<firebase-auth id="firebaseLogin" user="{{user}}" status-known="{{statusKnown}}" location="https://flamingo365.firebaseio.com" provider="{{provider}}" on-error="errorHandler" on-user-created="userSuccessHandler" on-password-changed="userSuccessHandler" on-password-reset="userSuccessHandler" on-user-removed="userSuccessHandler"></firebase-auth>
 
 		<div class="vertical-section">
+			<input placeholder="email" value="{{email::input}}">
+      		<input placeholder="password" value="{{password::input}}">
+      		<div class="loginWrapper" on-tap="emailLogin" hidden$="{{computeLoginHidden(statusKnown, user)}}">
+      			<span>Email Login</span>
+      		</div>
+		</div>
+
+		<div class="vertical-section">
 			<div class="loginWrapper" on-tap="facebookLogin" hidden$="{{computeLoginHidden(statusKnown, user)}}">
 				<iron-image src="../../images/main/facebook_btn.png" style="width:100px; height:100px;"></iron-image>
 				<span>Facebook Login</span>
@@ -41,6 +49,13 @@
 	    	<h3>User ID:</h3>
 	    	<pre>{{user.uid}}</pre>	   -->  	
 		</div>
+
+		<div class="vertical-section">
+			<h3>Sign Up</h3>
+			<input placeholder="email" value="{{nemail::input}}">
+      		<input placeholder="password" value="{{npassword::input}}">
+      		<button on-tap="createUserHandler" disabled$="{{computeCreateUserDisabled(nemail, npassword)}}">Create user</button>
+		</div>
 	</template>
 </dom-module>
 <script>
@@ -54,6 +69,26 @@
 			},
 
 			message: {
+	        	type: String,
+	        	value: ''
+	      	},
+
+	      	email: {
+	        	type: String,
+	        	value: ''
+	      	},
+
+	      	password: {
+	        	type: String,
+	        	value: ''
+	      	},
+
+	      	nemail: {
+	        	type: String,
+	        	value: ''
+	      	},
+
+	      	npassword: {
 	        	type: String,
 	        	value: ''
 	      	},
@@ -73,6 +108,22 @@
 		behaviors: [
 	      Polymer.PaperDialogBehavior
 	    ],	    
+
+	    emailLogin: function() {
+	    	var params;
+
+	      	try {
+	        	params = JSON.parse(this.params);
+	      	} catch (e) {
+	       		params = null;
+	      	}
+	      	
+	        params = params || {};
+	        params.email = this.email;
+	        params.password = this.password;
+	      
+	      	this.$.firebaseLogin.login(params);
+	    },
 
 	    facebookLogin: function() {
 	    	var params = null;
@@ -95,6 +146,10 @@
 	      console.log(this.message);
 	    },
 
+	    createUserHandler: function(e) {
+	      this.$.firebaseLogin.createUser(this.nemail, this.npassword);
+	    },
+
 	    computeLoginHidden: function(statusKnown, user) {
 	      return !statusKnown || !!user;
 	    },
@@ -113,6 +168,10 @@
 	      }
 
 	      return 'Unknown (checking status...)';
+	    },
+
+	    computeCreateUserDisabled: function(email, password) {
+	      return !email || !password;
 	    },
 
 	    _userChanged: function() {
