@@ -46,7 +46,7 @@
 			<h2>Date</h2>			
 			<div class="wrapperDate">
 				<paper-input id="piStartDate" label="Select Start Date" on-tap="showStartDateDlog"></paper-input>
-				<paper-input id="piFinishDate" label="Select Finish Date" on-tap="showFinishDateDlog"></paper-input>
+				<!-- <paper-input id="piFinishDate" label="Select Finish Date" on-tap="showFinishDateDlog"></paper-input> -->
 			</div>
 			
 			<paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
@@ -102,10 +102,10 @@
 				value: -1
 			},
 
-			finishDate: {
-				type: Number,
-				value: -1
-			},
+			// finishDate: {
+			// 	type: Number,
+			// 	value: -1
+			// },
 
 			pickerDate: {
 				type: Number,
@@ -143,7 +143,7 @@
 			this.startDate = -1;
 			this.finishDate = -1;	
 			this.$.piStartDate.value = "Select Start Date";  
-			this.$.piFinishDate.value = "Select Finish Date"; 
+			// this.$.piFinishDate.value = "Select Finish Date"; 
 			this.$.rgTheme.selected = "all";
 			this.$.cityDlog.close();
 			this.$.dpDlog.close();
@@ -165,10 +165,10 @@
 			this.$.dpDlog.open();
 		},
 
-		showFinishDateDlog: function() {
-			this.dlogType = 1;			
-			this.$.dpDlog.open();
-		},		
+		// showFinishDateDlog: function() {
+		// 	this.dlogType = 1;			
+		// 	this.$.dpDlog.open();
+		// },		
 
 		_pickerDateChanged: function() {
 			this.$.dpDlog.close();
@@ -194,8 +194,8 @@
     			this.$.piStartDate.value = strDate;  
     			this.startDate = date.getTime();    			
     		} else {
-    			this.$.piFinishDate.value = strDate;
-    			this.finishDate = date.getTime();
+    			// this.$.piFinishDate.value = strDate;
+    			// this.finishDate = date.getTime();
     		}
 		},
 
@@ -223,9 +223,9 @@
 			if(this.startDate==-1){
 				return true;
 			}			
-			if(this.finishDate==-1){
-				return true;
-			}
+			// if(this.finishDate==-1){
+			// 	return true;
+			// }
 
 			if(this.$.ipContact.value==null || this.$.ipContact.value===""){
 				return true;
@@ -249,8 +249,10 @@
 			} else if(theme === "sightsee"){
 				themeIdx = 4;
 			}
-
-			var schedule_title = this.$.piStartDate.value + " ~ " + this.$.piFinishDate.value + " : " + this.cityNames[this.selCityIdx].name;						
+			
+			var startDateName = this.$.piStartDate.value;
+			var selCityName = this.cityNames[this.selCityIdx].name;
+			var schedule_title = startDateName + " : " + selCityName;
 
 			var data = {
 				userid: this.user.uid,
@@ -258,9 +260,10 @@
 				userlink: this.user.facebook.cachedUserProfile.link,
 				userpic: this.user.facebook.cachedUserProfile.picture.data.url,
 				selCityIdx: this.selCityIdx,
+				selCityName: this.selCityName,
 				themeIdx: themeIdx,
 				startDate: this.startDate,		
-				finishDate: this.finishDate,
+				startDateName: startDateName,
 				schedule_title : schedule_title,
 				contact: this.contact,
 				phone: this.phone,

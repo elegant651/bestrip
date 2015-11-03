@@ -53,7 +53,7 @@
 		<div class="vertical-section">
 			<h3>Sign Up</h3>
 			<input placeholder="email" value="{{nemail::input}}">
-      		<input placeholder="password" value="{{npassword::input}}">
+      		<input placeholder="password" type="password" value="{{npassword::input}}">
       		<button on-tap="createUserHandler" disabled$="{{computeCreateUserDisabled(nemail, npassword)}}">Create user</button>
 		</div>
 	</template>
@@ -182,25 +182,8 @@
 	   //  		ref.child(this.user.uid).set({
 				// 	provider: this.user.provider,
 				// 	recent_at: new Date().getTime(),
-				// 	status: status 					
-				// });	    	
-
-	    	// 	ref.child(this.user.uid).on("value", function(snapshot) {
-	    	// 		var userdata = snapshot.val();	    				    			
-	    	// 		if(userdata!=null){
-	    	// 			status = userdata.status;	    			
-	    	// 		}	    			
-
-	    	// 		if(status!=1){
-	    	// 			ref.child(this.user.uid).set({
-						// 	provider: this.user.provider,
-						// 	recent_at: new Date().getTime(),
-						// 	status: status 					
-						// });	    				    						
-	    	// 		}	    			
-	    	// 	}, function(error){
-	    	// 		console.log("error:" + error.code);
-	    	// 	});									    						
+				// 	status: 1 					
+				// });	    		    	
 				
 
 	    		console.log("logging in :"+this.user.uid+"/"+this.user.facebook.displayName+"/"+this.user.facebook.cachedUserProfile.link+"/"+this.user.facebook.cachedUserProfile.picture.data.url);

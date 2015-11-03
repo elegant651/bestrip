@@ -80,6 +80,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <span>Home</span>
                 </a> -->
                 
+                  <a data-route="signup" href="/signup">
+                    <span>SignUp</span>
+                  </a>
+
                   <a data-route="register" href="/register">
                     <iron-icon icon="social:person"></iron-icon>
                     <span>Register Calendar</span>
@@ -171,8 +175,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </div>
             </section>
           
+            <section data-route="signup">
+                <sign-up></sign-up>
+            </section>
+
               <section data-route="register">
-                  <register-schedule id="registerSchedule" user="{{user}}"></register-schedule>                 
+                  <register-schedule id="registerSchedule" user="{{user}}"></register-schedule>                                 
               </section>
 
               <section data-route="search">

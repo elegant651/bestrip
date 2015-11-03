@@ -1,0 +1,63 @@
+
+<dom-module id="sign-up">
+	<style>
+		.field {
+			@apply(--layout-horizontal);
+		}
+	</style>
+	<template>
+		<div class="field">
+			<h2>Gender</h2>
+			<paper-radio-group id="rgGender" selected="male">
+				<paper-radio-button name="male">Male</paper-radio-button>
+				<paper-radio-button name="male">Female</paper-radio-button>
+			</paper-radio-group>
+		</div>
+		<div class="field">
+			<h2>Name</h2>
+			<paper-input id="piUserName" value="{{username}}" label="ex) William"></paper-input>
+		</div>
+		<div class="field">
+			<h2>E-mail</h2>
+			<paper-input id="piEmail" value="{{email}}" label="fly@flamingofly.com"></paper-input>
+		</div>
+		<div class="field">
+			<h2>Password</h2>
+			<paper-input id="piPassword" value="{{password}}" type="password" label="ex) 12345678"></paper-input>
+		</div>			
+		<div class="field">
+			<h2>Password Check</h2>
+			<paper-input id="piPasswordCheck" value="{{passwordCheck}}" type="password"></paper-input>
+		</div>			
+		<div class="field">
+			<h2>Birth Date</h2>
+			<input id="ipBirth" type="date">
+		</div>
+		<div class="field">
+			<h2>Nationality</h2>
+			<paper-input id="piNationality"></paper-input>
+		</div>
+		<div class="field">
+			<h2>Phone Number</h2>
+			<paper-input id="piPhone"></paper-input>
+		</div>
+		<paper-button id="btnSignup" on-tap="signup" raised class="colorful ripple">Sign Up</paper-button>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: "sign-up",
+
+		properties: {
+
+		},
+
+		ready: function() {
+
+		},
+
+		signup: function() {
+
+		}
+	});
+</script>

@@ -46,6 +46,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.querySelector('.titleWrap').removeAttribute('hidden');             
     });
 
+    page('/signup', function() {
+        initDrawer();
+
+        app.route = 'signup';
+    });
+
     page('/register', function () {
       initDrawer();      
 
