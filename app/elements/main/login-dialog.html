@@ -48,14 +48,7 @@
 
 	    	<h3>User ID:</h3>
 	    	<pre>{{user.uid}}</pre>	   -->  	
-		</div>
-
-		<div class="vertical-section">
-			<h3>Sign Up</h3>
-			<input placeholder="email" value="{{nemail::input}}">
-      		<input placeholder="password" type="password" value="{{npassword::input}}">
-      		<button on-tap="createUserHandler" disabled$="{{computeCreateUserDisabled(nemail, npassword)}}">Create user</button>
-		</div>
+		</div>	
 	</template>
 </dom-module>
 <script>
@@ -168,23 +161,11 @@
 	      }
 
 	      return 'Unknown (checking status...)';
-	    },
-
-	    computeCreateUserDisabled: function(email, password) {
-	      return !email || !password;
-	    },
+	    },	    
 
 	    _userChanged: function() {
 
-	    	if (this.statusKnown && this.user) {	   	    	
-	    				    		
-	   //  		var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
-	   //  		ref.child(this.user.uid).set({
-				// 	provider: this.user.provider,
-				// 	recent_at: new Date().getTime(),
-				// 	status: 1 					
-				// });	    		    	
-				
+	    	if (this.statusKnown && this.user) {	   	    		    				    	    		    			
 
 	    		console.log("logging in :"+this.user.uid+"/"+this.user.facebook.displayName+"/"+this.user.facebook.cachedUserProfile.link+"/"+this.user.facebook.cachedUserProfile.picture.data.url);
 	    		

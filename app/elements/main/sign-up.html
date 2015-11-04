@@ -10,11 +10,12 @@
 		}
 	</style>
 	<template>
+		<firebase-auth id="firebaseLogin" user="{{user}}" status-known="{{statusKnown}}" location="https://flamingo365.firebaseio.com" provider="{{provider}}" on-error="errorHandler" on-user-created="userSuccessHandler" on-password-changed="userSuccessHandler" on-password-reset="userSuccessHandler" on-user-removed="userSuccessHandler"></firebase-auth>
 		<div class="field">
 			<h2>Gender</h2>
 			<paper-radio-group id="rgGender" selected="male">
 				<paper-radio-button name="male">Male</paper-radio-button>
-				<paper-radio-button name="male">Female</paper-radio-button>
+				<paper-radio-button name="female">Female</paper-radio-button>
 			</paper-radio-group>
 		</div>
 		<div class="field">
@@ -46,7 +47,10 @@
 			<paper-input id="piCountryCode" type="number" label="country code (ex:82)" value="{{countryCode}}" required auto-validate></paper-input>
 			<paper-input id="piPhone" type="number" value="{{phone}}" required auto-validate></paper-input>
 		</div>
-		<paper-button id="btnSignup" on-tap="signup" disabled$="{{checkData(username, email, password, passwordCheck, birth, countryCode, phone)}}" raised class="colorful ripple">Sign Up</paper-button>
+		<div class="field">
+			<span>By continuing, you're confiming that you're read and agree to our terms and conditions and privacy policy</span>
+		</div>
+		<paper-button id="btnSignup" on-tap="signup" disabled$="{{!checkData(username, email, password, passwordCheck, birth, countryCode, phone)}}" raised class="colorful ripple">Sign Up</paper-button>
 	</template>
 </dom-module>
 <script>
@@ -54,6 +58,11 @@
 		is: "sign-up",
 
 		properties: {
+			gender: {
+				type: String,
+				value: 'male'
+			},
+
 			username: {
 	        	type: String,
 	        	value: ''
@@ -113,7 +122,20 @@
 		},
 
 		signup: function() {
-			
+			this.$.firebaseLogin.createUser(this.email, this.password);
+			var gender = this.$.rgGender.selected;			
+
+			var data = {
+				gender: gender,
+				username: this.username,
+				email: this.email,				
+				birth: this.birth,
+				countryCode: this.countryCode,
+				phone: this.phone
+			};
+
+			var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
+			ref.push(data);	  			
 		}
 	});
 </script>
