@@ -4,6 +4,10 @@
 		.field {
 			@apply(--layout-horizontal);
 		}
+
+		h2 {
+			margin-right: 20px;
+		}
 	</style>
 	<template>
 		<div class="field">
@@ -15,33 +19,34 @@
 		</div>
 		<div class="field">
 			<h2>Name</h2>
-			<paper-input id="piUserName" value="{{username}}" label="ex) William"></paper-input>
+			<paper-input id="piUserName" value="{{username}}" label="ex) William" required auto-validate></paper-input>
 		</div>
 		<div class="field">
 			<h2>E-mail</h2>
-			<paper-input id="piEmail" value="{{email}}" label="fly@flamingofly.com"></paper-input>
+			<paper-input id="piEmail" type="email" value="{{email}}" label="fly@flamingofly.com" error-message="check again email form" required auto-validate></paper-input>
 		</div>
 		<div class="field">
 			<h2>Password</h2>
-			<paper-input id="piPassword" value="{{password}}" type="password" label="ex) 12345678"></paper-input>
+			<paper-input id="piPassword" value="{{password}}" type="password" label="ex) 12345678" minlength="6" required auto-validate error-message="minimum 6 characters" char-counter></paper-input>
 		</div>			
 		<div class="field">
 			<h2>Password Check</h2>
-			<paper-input id="piPasswordCheck" value="{{passwordCheck}}" type="password"></paper-input>
+			<paper-input id="piPasswordCheck" value="{{passwordCheck}}" type="password" minlength="6" required auto-validate error-message="minimum 6 characters" char-counter></paper-input>
 		</div>			
 		<div class="field">
 			<h2>Birth Date</h2>
-			<input id="ipBirth" type="date">
+			<paper-input id="ipBirth" type="date" value="{{birth}}" required auto-validate></paper-input>
 		</div>
-		<div class="field">
+		<!-- <div class="field">
 			<h2>Nationality</h2>
 			<paper-input id="piNationality"></paper-input>
-		</div>
+		</div> -->
 		<div class="field">
 			<h2>Phone Number</h2>
-			<paper-input id="piPhone"></paper-input>
+			<paper-input id="piCountryCode" type="number" label="country code (ex:82)" value="{{countryCode}}" required auto-validate></paper-input>
+			<paper-input id="piPhone" type="number" value="{{phone}}" required auto-validate></paper-input>
 		</div>
-		<paper-button id="btnSignup" on-tap="signup" raised class="colorful ripple">Sign Up</paper-button>
+		<paper-button id="btnSignup" on-tap="signup" disabled$="{{checkData(username, email, password, passwordCheck, birth, countryCode, phone)}}" raised class="colorful ripple">Sign Up</paper-button>
 	</template>
 </dom-module>
 <script>
@@ -49,15 +54,66 @@
 		is: "sign-up",
 
 		properties: {
+			username: {
+	        	type: String,
+	        	value: ''
+	      	},
 
+			email: {
+	        	type: String,
+	        	value: ''
+	      	},	      	
+
+			password: {
+	        	type: String,
+	        	value: ''
+	      	},
+
+	      	passwordCheck: {
+	        	type: String,
+	        	value: ''
+	      	},
+
+	      	birth: {
+	      		type: String,
+	      		value: ''
+	      	},
+
+	      	countryCode: Number,
+
+	      	phone: Number
 		},
 
 		ready: function() {
 
 		},
 
-		signup: function() {
+		checkData: function(username, email, password, passwordCheck, birth, countryCode, phone) {			
+			if(this.username==''){
+				return true;
+			}
+			if(this.password=='' || this.passwordCheck==''){
+				return true;
+			}
+			if(this.password!==this.passwordCheck){
+				return true;
+			}
 
+			if(this.birth==''){
+				return true;
+			}
+			if(this.countryCode==null || this.countryCode==0){
+				return true;
+			}
+			if(this.phone==null || this.phone==0){
+				return true;
+			}
+
+			return false;
+		},
+
+		signup: function() {
+			
 		}
 	});
 </script>
