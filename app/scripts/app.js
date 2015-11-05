@@ -152,26 +152,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         paperDlog.querySelector("#content").innerHTML = e.detail.content;
     });
 
-    listSchedule.addEventListener('show-newflag', function(e) {
-      document.querySelector('.menu_rt').querySelector('.newAlarm').removeAttribute('hidden');
-    }); 
+    // listSchedule.addEventListener('show-newflag', function(e) {
+    //   document.querySelector('.menu_rt').querySelector('.newAlarm').removeAttribute('hidden');
+    // }); 
 
-    listSchedule.addEventListener('hide-newflag', function(e) {
-      document.querySelector('.menu_rt').querySelector('.newAlarm').setAttribute('hidden', '');
-    });
+    // listSchedule.addEventListener('hide-newflag', function(e) {
+    //   document.querySelector('.menu_rt').querySelector('.newAlarm').setAttribute('hidden', '');
+    // });
 
     mySchedule.addEventListener('show-dialog', function(e) {
         paperDlog.toggle();
         paperDlog.querySelector("#content").innerHTML = e.detail.content;        
     });
 
-    mySchedule.addEventListener('show-newflag', function(e) {
-      document.querySelector('.menu_mt').querySelector('.newAlarm').removeAttribute('hidden');
-    }); 
+    // mySchedule.addEventListener('show-newflag', function(e) {
+    //   document.querySelector('.menu_mt').querySelector('.newAlarm').removeAttribute('hidden');
+    // }); 
 
-    mySchedule.addEventListener('hide-newflag', function(e) {
-      document.querySelector('.menu_mt').querySelector('.newAlarm').setAttribute('hidden', '');
-    });     
+    // mySchedule.addEventListener('hide-newflag', function(e) {
+    //   document.querySelector('.menu_mt').querySelector('.newAlarm').setAttribute('hidden', '');
+    // });     
 
     paperDlog.addEventListener('click', function() {        
         console.log("redirect");        

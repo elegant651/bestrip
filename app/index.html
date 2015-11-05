@@ -44,6 +44,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <!-- build:css styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
+  <link rel="import" href="my-custom-style.html">
   <!-- endbuild-->
 
   <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
@@ -58,20 +59,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   -->
 
   <!-- will be replaced with elements/elements.vulcanized.html -->
-  <link rel="import" href="elements/elements.html">
+  <link rel="import" href="elements/elements.html">  
   <!-- endreplace-->
 </head>
 
 <body class="fullbleed layout vertical">
   <span id="browser-sync-binding"></span>  
-  <template is="dom-bind" id="app">        
-    <paper-drawer-panel id="paperDrawerPanel" drawer-width="240px">      
-        <div id="drawerWrap" drawer>
+  <template is="dom-bind" id="app">            
 
+    <paper-drawer-panel id="paperDrawerPanel" drawer-width="240px">      
+        <div id="drawerWrap" drawer>          
           <!-- Drawer Toolbar -->
-          <paper-toolbar id="drawerToolbar">
-            <span class="paper-font-title">Menu</span>
-          </paper-toolbar>
+          <div id="drawerHeader">
+            <span class="paper-font-title">FLAMINGO</span>
+          </div>          
 
           <!-- Drawer Content -->          
             <paper-menu id="drawerList" class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
@@ -84,32 +85,46 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <span>SignUp</span>
                   </a>
 
-                  <a data-route="myprofile" href="/myprofile">
+                  <hr />
+
+                  <a data-route="profile" href="/myprofile">
                     <span>Profile</span>
+                    <div id="icProfile" class="icon"></div>
                   </a>
+
+                  <hr />
 
                   <a data-route="register" href="/register">
-                    <iron-icon icon="social:person"></iron-icon>
                     <span>Register</span>
+                    <div id="icRegister" class="icon"></div>                    
                   </a>
 
-                  <a data-route="search" href="/search">
-                    <iron-icon icon="social:public"></iron-icon>
+                  <hr />
+
+                  <a data-route="search" href="/search">                    
                     <span>Search</span>
+                    <div id="icSearch" class="icon"></div>                    
                   </a>
 
-                  <a data-route="schedules" href="/schedules">
-                    <iron-icon icon="social:notifications"></iron-icon>
-                    <span class="menu_rt">Notification <span class="newAlarm" hidden>New</span></span>
+                  <hr />
+
+                  <a data-route="schedules" href="/schedules">                    
+                    <span class="menu_rt">Notification <!-- <span class="newAlarm" hidden>New</span> --></span>
+                    <div id="icNotification" class="icon"></div>                    
                   </a>
 
-                  <a data-route="myschedule" href="/myschedule">
-                    <iron-icon icon="icons:supervisor-account"></iron-icon>
-                    <span class="menu_mt">My travelers <span class="newAlarm" hidden>New</span></span>
+                  <hr />
+
+                  <a data-route="myschedule" href="/myschedule">                    
+                    <span class="menu_mt">My travelers</span>
+                    <div id="icTravelers" class="icon"></div>                    
                   </a>                  
+
+                  <hr />
 
                   <a>
                     <span>Log out</span>
+                    <div id="icLogout" class="icon"></div>                    
                   </a>          
             </paper-menu>
         </div>      
