@@ -103,6 +103,7 @@
 	    ],	    
 
 	    emailLogin: function() {
+	    	this.provider = "password";
 	    	var params;
 
 	      	try {
@@ -119,6 +120,7 @@
 	    },
 
 	    facebookLogin: function() {
+	    	this.provider = "facebook";
 	    	var params = null;
 	    	this.$.firebaseLogin.login(params);
 	    },
@@ -137,10 +139,6 @@
 	    userSuccessHandler: function(e) {
 	      this.message = e.type + ' success!';
 	      console.log(this.message);
-	    },
-
-	    createUserHandler: function(e) {
-	      this.$.firebaseLogin.createUser(this.nemail, this.npassword);
 	    },
 
 	    computeLoginHidden: function(statusKnown, user) {
@@ -165,10 +163,45 @@
 
 	    _userChanged: function() {
 
-	    	if (this.statusKnown && this.user) {	   	    		    				    	    		    			
+	    	if (this.statusKnown && this.user) {	   	    		    				    	    		    				    		
+	    		if(this.provider=="facebook"){
+	    			console.log("logging in :"+this.user.uid+"/"+this.user.facebook.displayName+"/"+this.user.facebook.cachedUserProfile.link+"/"+this.user.facebook.cachedUserProfile.gender+"/"+this.user.facebook.cachedUserProfile.picture.data.url);
 
-	    		console.log("logging in :"+this.user.uid+"/"+this.user.facebook.displayName+"/"+this.user.facebook.cachedUserProfile.link+"/"+this.user.facebook.cachedUserProfile.picture.data.url);
-	    		
+	    			var that = this;
+	    			var ref = new Firebase("https://flamingo365.firebaseio.com/users");	  
+	    				    			
+
+	    			ref.once('value', function(snapshot) {
+	    				if(snapshot.hasChild(that.user.uid)){	    					
+	    					ref.child(that.user.uid).child("status").once('value', function(snapshot){
+			    				console.log("status:"+snapshot.val());
+			    				var status = snapshot.val();
+			    				if(status!=1){
+
+			    					// go to signup page
+			    					console.log("go to signup page with provider");
+			    				} 
+			    			});	    												
+	    				} else {
+	    					ref.child(that.user.uid).set({
+								provider: "facebook",
+								username: that.user.facebook.displayName,
+								gender: that.user.facebook.cachedUserProfile.gender,
+								picture: that.user.facebook.cachedUserProfile.picture.data.url,
+								link: that.user.facebook.cachedUserProfile.link,						
+								status: 0						
+							});	
+
+	    					/// go to signup page    	
+	    					console.log("go to signup page with provider");
+	    				}
+	    			});	    			
+
+	    		} else {
+
+
+	    		}	    		
+	    			    	
 	    		
 	    		this.fire('login-complete', {userid: this.user.uid}, {bubbles: true});	    		
 	    		this.close();
