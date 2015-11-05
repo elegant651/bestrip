@@ -135,13 +135,15 @@
 				{name: 'Prague', idx: 7},
 				{name: 'Barcelona', idx: 8}
 			];
+
+			this.initialize();
 		},		
 
 		initialize: function() {
 			this.$.btnSelCity.innerHTML = "Select City";
 			this.selCityIdx = -1;
 			this.startDate = -1;
-			this.finishDate = -1;	
+			// this.finishDate = -1;	
 			this.$.piStartDate.value = "Select Start Date";  
 			// this.$.piFinishDate.value = "Select Finish Date"; 
 			this.$.rgTheme.selected = "all";
@@ -273,15 +275,14 @@
 			this.$.fcSchedules.add(data);
 
 			//changing user status data
-			var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
-    		ref.child(this.user.uid).set({
-				provider: this.user.provider,
-				recent_at: new Date().getTime(),
-				status: 1,
-				phone: this.phone
-			});	    						
-
-			//put phonenum in usertable						
+			// var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
+   //  		ref.child(this.user.uid).set({
+			// 	provider: this.user.provider,
+			// 	recent_at: new Date().getTime(),
+			// 	status: 1,
+			// 	phone: this.phone
+			// });	    						
+			
 			this.fire('show-dialog', {content: "Registration has completed.", url: "/register"});		
 
 			//initialize

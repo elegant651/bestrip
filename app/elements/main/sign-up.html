@@ -10,7 +10,7 @@
 		}
 	</style>
 	<template>
-		<firebase-auth id="firebaseLogin" user="{{user}}" status-known="{{statusKnown}}" location="https://flamingo365.firebaseio.com" provider="{{provider}}" on-error="errorHandler" on-user-created="userSuccessHandler" on-password-changed="userSuccessHandler" on-password-reset="userSuccessHandler" on-user-removed="userSuccessHandler"></firebase-auth>
+		<firebase-auth id="firebaseLogin" status-known="{{statusKnown}}" location="https://flamingo365.firebaseio.com" provider="password" on-error="errorHandler" on-user-created="userSuccessHandler" on-password-changed="userSuccessHandler" on-password-reset="userSuccessHandler" on-user-removed="userSuccessHandler"></firebase-auth>
 		<div class="field">
 			<h2>Gender</h2>
 			<paper-radio-group id="rgGender" selected="male">
@@ -50,7 +50,7 @@
 		<div class="field">
 			<span>By continuing, you're confiming that you're read and agree to our terms and conditions and privacy policy</span>
 		</div>
-		<paper-button id="btnSignup" on-tap="signup" disabled$="{{!checkData(username, email, password, passwordCheck, birth, countryCode, phone)}}" raised class="colorful ripple">Sign Up</paper-button>
+		<paper-button id="btnSignup" on-tap="signup" disabled$="{{checkData(username, email, password, passwordCheck, birth, countryCode, phone)}}" raised class="colorful ripple">Sign Up</paper-button>
 	</template>
 </dom-module>
 <script>
@@ -58,6 +58,11 @@
 		is: "sign-up",
 
 		properties: {
+			message: {
+	        	type: String,
+	        	value: ''
+	      	},
+			
 			gender: {
 				type: String,
 				value: 'male'
@@ -97,6 +102,16 @@
 
 		},
 
+		initialize: function() {
+			this.username = "";
+			this.email = "";
+			this.password = "";
+			this.passwordCheck = "";
+			this.birth = "";
+			this.countryCode = 0;
+			this.phone = 0;
+		},
+
 		checkData: function(username, email, password, passwordCheck, birth, countryCode, phone) {			
 			if(this.username==''){
 				return true;
@@ -121,21 +136,42 @@
 			return false;
 		},
 
+		errorHandler: function(e) {
+	      this.message = 'Error: ' + e.detail.message;
+	      console.log(this.message);
+	    },
+
+	    userSuccessHandler: function(e) {
+	      this.message = e.type + ' success!';
+	      console.log(this.message);
+	    },
+
 		signup: function() {
+			if(this.email=='' || this.password==''){
+				return;
+			}
+
 			this.$.firebaseLogin.createUser(this.email, this.password);
 			var gender = this.$.rgGender.selected;			
 
 			var data = {
+				provider: 'password',
 				gender: gender,
 				username: this.username,
 				email: this.email,				
 				birth: this.birth,
 				countryCode: this.countryCode,
-				phone: this.phone
+				phone: this.phone,
+				created_at: new Date().getTime(),
+				status: 0
 			};
 
 			var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
 			ref.push(data);	  			
+
+			this.fire('show-dialog', {content: "Sign-up has completed.", url: "/register"});
+
+			this.initialize();
 		}
 	});
 </script>

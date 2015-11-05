@@ -30,7 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="Bestrip">
+  <meta name="application-name" content="Flamingo">
   <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
 
   <!-- Add to homescreen for Safari on iOS -->
@@ -84,6 +84,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <span>SignUp</span>
                   </a>
 
+                  <a data-route="myprofile" href="/myprofile">
+                    <span>Profile</span>
+                  </a>
+
                   <a data-route="register" href="/register">
                     <iron-icon icon="social:person"></iron-icon>
                     <span>Register</span>
@@ -102,7 +106,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <a data-route="myschedule" href="/myschedule">
                     <iron-icon icon="icons:supervisor-account"></iron-icon>
                     <span class="menu_mt">My travelers <span class="newAlarm" hidden>New</span></span>
-                  </a>                            
+                  </a>                  
+
+                  <a>
+                    <span>Log out</span>
+                  </a>          
             </paper-menu>
         </div>      
 
@@ -175,9 +183,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </div>
             </section>
           
-            <section data-route="signup">
-                <sign-up></sign-up>
-            </section>
+              <section data-route="signup">
+                 <sign-up id="signup"></sign-up>
+              </section>
+
+              <section data-route="profile">
+                <my-profile id="myprofile"></my-profile>
+              </section>
 
               <section data-route="register">
                   <register-schedule id="registerSchedule" user="{{user}}"></register-schedule>                                 
