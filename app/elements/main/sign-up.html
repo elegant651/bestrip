@@ -10,7 +10,32 @@
 		}
 	</style>
 	<template>
-		<!-- <firebase-auth id="firebaseLogin" user="{{user}}" status-known="{{statusKnown}}" location="https://flamingo365.firebaseio.com" provider="password" on-error="errorHandler" on-user-created="userSuccessHandler" on-password-changed="userSuccessHandler" on-password-reset="userSuccessHandler" on-user-removed="userSuccessHandler"></firebase-auth>-->
+		<firebase-document
+	     	location="{{userTarget}}"
+	     	data="{{userData}}"
+	     	>
+	     </firebase-document>
+		
+		<span>{{provider}} Sign-Up</span>
+
+		<div class="field">
+			<h2>Picture</h2>
+			<iron-image src="{{picture}}" style="width:150px; height:150px;"></iron-image>
+		</div>
+
+		<div class="field" hidden$="{{isFacebookMode(provider)}}">
+			<h2>E-mail</h2>
+			<paper-input id="piEmail" type="email" value="{{email}}" label="fly@flamingofly.com" error-message="check again email form" required auto-validate></paper-input>
+		</div>
+		<div class="field" hidden$="{{isFacebookMode(provider)}}">
+			<h2>Password</h2>
+			<paper-input id="piPassword" value="{{password}}" type="password" label="ex) 12345678" minlength="6" required auto-validate error-message="minimum 6 characters" char-counter maxlength="20"></paper-input>
+		</div>			
+		<div class="field" hidden$="{{isFacebookMode(provider)}}">
+			<h2>Password Check</h2>
+			<paper-input id="piPasswordCheck" value="{{passwordCheck}}" type="password" minlength="6" required auto-validate error-message="minimum 6 characters" char-counter maxlength="20"></paper-input>
+		</div>			
+
 		<div class="field">
 			<h2>Gender</h2>
 			<paper-radio-group id="rgGender" selected="male">
@@ -18,22 +43,11 @@
 				<paper-radio-button name="female">Female</paper-radio-button>
 			</paper-radio-group>
 		</div>
+
 		<div class="field">
 			<h2>Name</h2>
 			<paper-input id="piUserName" value="{{username}}" label="ex) William" required auto-validate maxlength="15"></paper-input>
-		</div>
-		<div class="field">
-			<h2>E-mail</h2>
-			<paper-input id="piEmail" type="email" value="{{email}}" label="fly@flamingofly.com" error-message="check again email form" required auto-validate></paper-input>
-		</div>
-		<div class="field">
-			<h2>Password</h2>
-			<paper-input id="piPassword" value="{{password}}" type="password" label="ex) 12345678" minlength="6" required auto-validate error-message="minimum 6 characters" char-counter maxlength="20"></paper-input>
-		</div>			
-		<div class="field">
-			<h2>Password Check</h2>
-			<paper-input id="piPasswordCheck" value="{{passwordCheck}}" type="password" minlength="6" required auto-validate error-message="minimum 6 characters" char-counter maxlength="20"></paper-input>
-		</div>			
+		</div>		
 		<div class="field">
 			<h2>Birth Date</h2>
 			<paper-input id="ipBirth" type="date" value="{{birth}}" required auto-validate></paper-input>
@@ -50,7 +64,7 @@
 		<div class="field">
 			<span>By continuing, you're confiming that you're read and agree to our terms and conditions and privacy policy</span>
 		</div>
-		<paper-button id="btnSignup" on-tap="signup" disabled$="{{checkData(username, email, password, passwordCheck, birth, countryCode, phone)}}" raised class="colorful ripple">Sign Up</paper-button>
+		<paper-button id="btnSignup" on-tap="signup" disabled$="{{checkData(provider, username, email, password, passwordCheck, birth, countryCode, phone)}}" raised class="colorful ripple">Sign Up</paper-button>
 	</template>
 </dom-module>
 <script>
@@ -61,7 +75,7 @@
 			provider: {
 	        	type: String,
 	        	value: 'password'
-	      	},
+	      	},	   
 
 			gender: {
 				type: String,
@@ -95,8 +109,21 @@
 
 	      	countryCode: Number,
 
-	      	phone: Number
-	      	
+	      	phone: Number,
+
+	      	picture: String,
+
+	      	link: String,
+
+	      	userTarget: {
+				type: String,
+				computed: 'computeUserTarget(user)'
+			},
+
+			userData: {
+				type: Object,
+				observer: '_userDataChanged'
+			}	      	
 		},
 
 		ready: function() {
@@ -113,16 +140,45 @@
 			this.phone = 0;
 		},
 
-		checkData: function(username, email, password, passwordCheck, birth, countryCode, phone) {			
+		isFacebookMode: function(provider) {
+			if(this.provider=='facebook') return true;
+			else return false;
+		},
+
+		computeUserTarget: function(user) {
+			if(user!=null){				
+				return "https://flamingo365.firebaseio.com/users/"+user.uid;
+			}			
+		},
+
+		_userDataChanged: function() {						
+			this.gender = this.userData.gender;
+			if(this.gender=="male"){
+				this.$.rgGender.selected = "male";
+			} else {
+				this.$.rgGender.selected = "female";
+			}
+			this.username = this.userData.username;
+			this.picture = this.userData.picture;
+			this.link = this.userData.link;
+		},
+
+		checkData: function(provider, username, email, password, passwordCheck, birth, countryCode, phone) {			
 			if(this.username==''){
 				return true;
 			}
-			if(this.password=='' || this.passwordCheck==''){
-				return true;
-			}
-			if(this.password!==this.passwordCheck){
-				return true;
-			}
+
+			if(provider=="password"){
+				if(this.email==''){
+					return true;
+				}
+				if(this.password=='' || this.passwordCheck==''){
+					return true;
+				}
+				if(this.password!==this.passwordCheck){
+					return true;
+				}
+			}			
 
 			if(this.birth==''){
 				return true;
@@ -139,10 +195,8 @@
 
 
 		signup: function() {
-			if(this.email=='' || this.password==''){
-				return;
-			}
 
+			var that = this;
 			var gender = this.$.rgGender.selected;			
 
 			var data = {
@@ -154,28 +208,40 @@
 				countryCode: this.countryCode,
 				phone: this.phone,
 				created_at: new Date().getTime(),
+				link: this.link,
+				picture: this.picture,
 				status: 1
 			};
 
-			var that = this;
 			var ref = new Firebase("https://flamingo365.firebaseio.com");
-			ref.createUser({
-				email: that.email,
-				password : that.password
-			}, function(error, userData){
-				if(error) {
-					console.log("Error creating user:", error);
-					alert("error");
+			if(this.provider=="password"){
+				if(this.email=='' || this.password==''){
 					return;
-				} else {
-					console.log("Successfully created user account with uid", userData.uid);
+				}									
+							
+				ref.createUser({
+					email: that.email,
+					password : that.password
+				}, function(error, userData){
+					if(error) {
+						console.log("Error creating user:", error);
+						alert("error");
+						return;
+					} else {
+						console.log("Successfully created user account with uid", userData.uid);
 
-					ref.child("users").child(userData.uid).set(data);
+						ref.child("users").child(userData.uid).set(data);
 
-					that.initialize();					
-					that.fire('show-dialog', {content: "Sign-up has completed.", url: "/register"});
-				}
-			});
+						that.initialize();					
+						that.fire('show-dialog', {content: "Sign-up has completed.", url: "/register"});
+					}
+				});
+			} else {
+				ref.child("users").child(this.users.uid).set(data);
+
+				that.initialize();
+				that.fire('show-dialog', {content: "Sign-up has completed.", url: "/register"});
+			}
 			
 		}
 

@@ -111,6 +111,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       loginDlog.toggle();
     });    
 
+    loginDlog.addEventListener('move-signup', function(e) {
+      page.redirect('/signup');
+    });
+
     loginDlog.addEventListener('login-complete', function(e) { 
         if(btnLogin!=null){
           btnLogin.innerHTML = "LOG OUT";                        

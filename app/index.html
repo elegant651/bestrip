@@ -44,7 +44,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <!-- build:css styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
-  <link rel="import" href="my-custom-style.html">
+  <link rel="import" href="styles/my-custom-style.html">
   <!-- endbuild-->
 
   <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
@@ -199,7 +199,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </section>
           
               <section data-route="signup">
-                 <sign-up id="signup"></sign-up>
+                 <sign-up id="signup" provider="{{provider}}" user="{{user}}"></sign-up>
               </section>
 
               <section data-route="profile">
@@ -207,7 +207,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </section>
 
               <section data-route="register">
-                  <register-schedule id="registerSchedule" user="{{user}}"></register-schedule>                                 
+                  <register-schedule id="registerSchedule" user="{{user}}"></register-schedule>
               </section>
 
               <section data-route="search">
@@ -233,7 +233,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </iron-pages>
         </div>
 
-        <login-dialog id="loginDlog" user="{{user}}" isfindingenable="{{isfindingenable}}"></login-dialog>
+        <login-dialog id="loginDlog" user="{{user}}" provider="{{provider}}" isfindingenable="{{isfindingenable}}"></login-dialog>
       </paper-header-panel>
     </paper-drawer-panel>
 

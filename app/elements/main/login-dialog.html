@@ -58,7 +58,8 @@
 		properties: {
 			provider: {
 				type: String,
-				value: 'facebook'
+				value: 'facebook',
+				notify: true
 			},
 
 			message: {
@@ -74,17 +75,7 @@
 	      	password: {
 	        	type: String,
 	        	value: ''
-	      	},
-
-	      	nemail: {
-	        	type: String,
-	        	value: ''
-	      	},
-
-	      	npassword: {
-	        	type: String,
-	        	value: ''
-	      	},
+	      	},	      	
 
 			user: {
 	        	type: Object,
@@ -180,7 +171,12 @@
 
 			    					// go to signup page
 			    					console.log("go to signup page with provider");
-			    				} 
+			    					that.fire('move-signup', {userid: that.user.uid}, {bubbles: true});
+			    				}  else {
+
+			    					console.log("login complete");
+			    					that.fire('login-complete', {userid: that.user.uid}, {bubbles: true});	    		
+			    				}
 			    			});	    												
 	    				} else {
 	    					ref.child(that.user.uid).set({
@@ -194,16 +190,17 @@
 
 	    					/// go to signup page    	
 	    					console.log("go to signup page with provider");
+	    					that.fire('move-signup', {userid: that.user.uid}, {bubbles: true});
 	    				}
 	    			});	    			
 
 	    		} else {
 
 
+
 	    		}	    		
 	    			    	
-	    		
-	    		this.fire('login-complete', {userid: this.user.uid}, {bubbles: true});	    		
+	    			    		
 	    		this.close();
 	    	} else {	    		
 
