@@ -1,0 +1,69 @@
+
+<dom-module id="mobileweb-login">
+	<style>
+		#moBtnSignup {
+			position: fixed;
+			right: 30px;
+			top: 30px;
+			cursor: pointer;
+		}
+
+		.moHeader {
+			background-image: url("../../images/main/main_image.jpg");
+			background-size: cover;
+			background-repeat: no-repeat;	
+			height: 300px;
+			text-align: center;
+		}
+
+		.moHeader .title {
+			color: rgb(254,254,254);
+			font-size: 55px;
+			padding-top: 100px;
+		}
+
+		.moHeader .subtitle {
+			color: rgb(254,254,254);
+			font-size: 25px;
+			font-weight: lighter;
+			margin-top: 20px
+		}
+
+		.moBody {
+			text-align: center;
+		}		
+
+		#moBtnFacebook {	
+			margin-top: 10px;	
+			cursor: pointer;
+		}
+
+		#moBtnLogin {			
+			margin-top: 20px;
+			cursor: pointer;
+		}
+	</style>
+	<template>
+		<div id="moWrapper">
+			<iron-image id="moBtnSignup" src="../../images/main/main_signup_btn.png"></iron-image>
+          	<div class="moHeader"><div class="title">FLAMINGO</div><div class="subtitle">Find traveler at once</div></div>
+          	<div class="moBody">
+            	<div><iron-image id="moBtnFacebook" src="../../images/main/facebook.png"></iron-image></div>
+            	<div><iron-image src="../../images/main/main_or.png"></iron-image></div>
+            	<div><input placeholder="email" value="{{email::input}}"></div>
+            	<div><input placeholder="password" value="{{password::input}}"></div>          
+
+            	<div><iron-image id="moBtnLogin" src="../../images/main/main_login_btn.png"></iron-image></div>
+          	</div>
+        </div>        
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: "mobileweb-login",
+
+		properties: {
+
+		}
+	});
+</script>

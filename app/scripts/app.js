@@ -127,6 +127,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     if(btnFacebook!=null){
       btnFacebook.addEventListener('click', function() {
+        
         loginDlog.toggle();
       });    
     }    

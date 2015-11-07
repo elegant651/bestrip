@@ -127,16 +127,6 @@ body {
 	height: 60px;
 }
 
-/* for mobile web */
-.moHeader {
-	background-image: url("../images/main/main_image.jpg");
-	background-size: cover;
-	background-repeat: no-repeat;	
-	height: 300px;
-}
-
-/*  end  */
-
 #titleMenu {
 	margin-left: 40px;	
 	color: rgb(254,254,254);
