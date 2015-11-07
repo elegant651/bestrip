@@ -25,15 +25,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     console.log('Our app is ready to rock!');        
 
     /// routing ///
-    var initDrawer = function() {
+    var initDrawer = function(title) {
         document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "240px");
         document.querySelector('#drawerWrap').removeAttribute('hidden');
         document.querySelector('#mainToolbar').className = 'nolanding';
-        document.querySelector('#headerPanel').setAttribute('mode', 'waterfall-tall');   
+        document.querySelector('#headerPanel').setAttribute('mode', 'standard');   
+        document.querySelector('#imgLogo').setAttribute('hidden', '');
+        document.querySelector('#titleMenu').removeAttribute('hidden');
+        document.querySelector('#titleMenu').innerHTML = title;
 
         document.querySelector('.titleWrap').setAttribute('hidden', '');          
-
-
     };
 
     page('/', function () {
@@ -42,24 +43,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.querySelector('#drawerWrap').setAttribute('hidden', '');
       document.querySelector('#mainToolbar').className = 'landing';
       document.querySelector('#headerPanel').setAttribute('mode', 'cover');      
+      document.querySelector('#imgLogo').removeAttribute('hidden');
+      document.querySelector('#titleMenu').setAttribute('hidden', '');
       
       document.querySelector('.titleWrap').removeAttribute('hidden');             
     });
 
     page('/signup', function() {
-        initDrawer();
+        initDrawer('SIGN UP');
 
         app.route = 'signup';
     });
 
     page('/myprofile', function() {
-        initDrawer();
+        initDrawer('PROFILE');
 
         app.route = 'profile';
     });
 
     page('/register', function () {
-      initDrawer();      
+      initDrawer('REGISTER');      
 
       app.route = 'register';            
     });
@@ -67,26 +70,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     page('/search', function() {
       app.route = 'search';
 
-      initDrawer();
+      initDrawer('SEARCH');
     });
 
     page('/schedules', function() {
       app.route = 'schedules';
 
-      initDrawer();
+      initDrawer('NOTIFICATION');
     });    
 
     page('/myschedule', function() {
       app.route = 'myschedule';
 
-      initDrawer();
+      initDrawer('MY TRAVELERS');
     });
 
     page('/contactinfo/:id', function (data) {
       app.route = 'contactinfo';
       app.params = data.params;
 
-      initDrawer();
+      initDrawer('CONTACT INFO');
     });  
 
     // add #! before urls
