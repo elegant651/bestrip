@@ -134,9 +134,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <span class="flex"></span>
           
-          <template is="dom-if" if="{{queryMatches}}">
-            <div id="imgLogo" class="middle paper-font-display2 app-name" style="margin-top: 25px;"><iron-image src="../../images/main/logo.png"></iron-image></div>          
-          
+
+          <div id="imgLogo" class="middle paper-font-display2 app-name" style="margin-top: 25px;"><iron-image src="../../images/main/logo.png"></iron-image></div>          
+
+          <template is="dom-if" if="{{queryMatches}}">                      
             <div class="middle titleWrap">                      
                 <div class="middle headerWrapper">
                   <div class="title1">Meet your soulmate at strange place</div>
@@ -155,6 +156,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
             <section data-route="home">
+
+              <!-- desktop web -->
               <template is="dom-if" if="{{queryMatches}}">
                 <iron-image id="btnFacebook" src="../../images/main/facebook.png"></iron-image>             
                 <div id="homeWrapper">                
@@ -183,6 +186,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       </div>
                     </paper-material>                                              
                 </div>
+              </template>
+              <!-- mobile web -->
+              <template is="dom-if" if="{{!queryMatches}}">
+                <div class="moHeader"></div>
+                <iron-image id="btnFacebook" src="../../images/main/facebook.png"></iron-image>
+                
               </template>
             </section>
           

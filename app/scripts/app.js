@@ -30,23 +30,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         document.querySelector('#drawerWrap').removeAttribute('hidden');
         document.querySelector('#mainToolbar').className = 'nolanding';
         document.querySelector('#headerPanel').setAttribute('mode', 'standard');   
-        document.querySelector('#imgLogo').setAttribute('hidden', '');
+        if(document.querySelector('#imgLogo')!=null){
+          document.querySelector('#imgLogo').setAttribute('hidden', '');
+        }       
         document.querySelector('#titleMenu').removeAttribute('hidden');
         document.querySelector('#titleMenu').innerHTML = title;
-
-        document.querySelector('.titleWrap').setAttribute('hidden', '');          
+        if(document.querySelector('.titleWrap')!=null){
+          document.querySelector('.titleWrap').setAttribute('hidden', '');          
+        }        
     };
 
     page('/', function () {
       app.route = 'home';
-      document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "0px");      
-      document.querySelector('#drawerWrap').setAttribute('hidden', '');
-      document.querySelector('#mainToolbar').className = 'landing';
-      document.querySelector('#headerPanel').setAttribute('mode', 'cover');      
-      document.querySelector('#imgLogo').removeAttribute('hidden');
-      document.querySelector('#titleMenu').setAttribute('hidden', '');
-      
-      document.querySelector('.titleWrap').removeAttribute('hidden');             
+
+      if(!app.queryMatches){
+        initDrawer();
+        document.querySelector('#mainToolbar').setAttribute('hidden', '');
+
+      } else {
+        document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "0px");      
+        document.querySelector('#drawerWrap').setAttribute('hidden', '');
+        document.querySelector('#mainToolbar').className = 'landing';
+        document.querySelector('#headerPanel').setAttribute('mode', 'cover');      
+        if(document.querySelector('#imgLogo')!=null){
+          document.querySelector('#imgLogo').removeAttribute('hidden');
+        }
+        document.querySelector('#titleMenu').setAttribute('hidden', '');
+        
+        if(document.querySelector('.titleWrap')!=null){
+          document.querySelector('.titleWrap').removeAttribute('hidden');             
+        }
+      }      
+
     });
 
     page('/signup', function() {
@@ -108,11 +123,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var btnLogin = document.querySelector('#btnLogin');
     var loginDlog = document.querySelector('#loginDlog');
     var paperDlog = document.querySelector('#paperDlog');
+    var btnFacebook = document.querySelector('#btnFacebook');
 
-
-    document.querySelector('#btnFacebook').addEventListener('click', function() {
-      loginDlog.toggle();
-    });    
+    if(btnFacebook!=null){
+      btnFacebook.addEventListener('click', function() {
+        loginDlog.toggle();
+      });    
+    }    
 
     loginDlog.addEventListener('move-signup', function(e) {
       page.redirect('/signup');
@@ -197,6 +214,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     if (drawerPanel.narrow) {
       drawerPanel.closeDrawer();
     }
+  };
+
+  app._computeStyle = function(isLargeScreen){
+    console.log("a:"+app.route);
+     // return isLargeScreen? ''
   };
 
 
