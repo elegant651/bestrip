@@ -3,11 +3,47 @@
 	<style>
 		.field {
 			@apply(--layout-horizontal);
+			margin-bottom: 8px;
 		}
 
 		h2 {
+			font-size:  20px;
+			color: rgb(138,138,138);
 			margin-right: 20px;
+			font-weight: normal;
 		}
+
+		paper-radio-button.orange {
+	      --paper-radio-button-checked-color: var(--paper-orange-500);
+	      --paper-radio-button-checked-ink-color: var(--paper-orange-500);
+	      --paper-radio-button-unchecked-color: var(--paper-orange-900);
+	      --paper-radio-button-unchecked-ink-color: var(--paper-orange-900);
+	    }
+
+		#rgGender {
+			margin-top: 10px;
+		}
+
+		#piCountryCode {
+			margin-right: 10px;
+			width: 100px;
+		}
+
+		.txtPolicy {
+			color: rgb(162,161,161);
+		}
+
+		#btnSignup {
+			width: 300px;
+			background-color: rgb(162,161,161);
+			color: rgb(255,254,254);
+			margin-left: 30px;
+			margin-top: 20px;
+		}
+
+		#btnSignup[disabled] {
+			background-color: rgba(162,161,161,0.5);
+		}		
 	</style>
 	<template>
 		<firebase-document
@@ -38,9 +74,9 @@
 
 		<div class="field">
 			<h2>Gender</h2>
-			<paper-radio-group id="rgGender" selected="male">
-				<paper-radio-button name="male">Male</paper-radio-button>
-				<paper-radio-button name="female">Female</paper-radio-button>
+			<paper-radio-group id="rgGender" selected="male" noink>
+				<paper-radio-button class="orange" name="male"><iron-image src="../../images/main/signup_male_selected.png"></iron-image></paper-radio-button>
+				<paper-radio-button class="orange" name="female"><iron-image src="../../images/main/signup_female_selected.png"></iron-image></paper-radio-button>
 			</paper-radio-group>
 		</div>
 
@@ -62,9 +98,9 @@
 			<paper-input id="piPhone" type="number" value="{{phone}}" required auto-validate maxlength="15"></paper-input>
 		</div>
 		<div class="field">
-			<span>By continuing, you're confiming that you're read and agree to our terms and conditions and privacy policy</span>
+			<span class="txtPolicy">By continuing, you're confiming that you're read and agree to our terms and conditions and privacy policy</span>
 		</div>
-		<paper-button id="btnSignup" on-tap="signup" disabled$="{{checkData(provider, username, email, password, passwordCheck, birth, countryCode, phone)}}" raised class="colorful ripple">Sign Up</paper-button>
+		<paper-button id="btnSignup" on-tap="signup" disabled$="{{checkData(provider, username, email, password, passwordCheck, birth, countryCode, phone)}}" noink class="colorful ripple">Start</paper-button>
 	</template>
 </dom-module>
 <script>
