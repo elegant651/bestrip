@@ -44,16 +44,18 @@
 		}
 	</style>
 	<template>
+		<firebase-auth id="firebaseLogin" user="{{user}}" status-known="{{statusKnown}}" location="https://flamingo365.firebaseio.com" provider="{{provider}}" on-error="errorHandler"></firebase-auth>
+
 		<div id="moWrapper">
-			<iron-image id="moBtnSignup" src="../../images/main/main_signup_btn.png"></iron-image>
+			<iron-image id="moBtnSignup" src="../../images/main/main_signup_btn.png" on-tap="moveSignup"></iron-image>
           	<div class="moHeader"><div class="title">FLAMINGO</div><div class="subtitle">Find traveler at once</div></div>
           	<div class="moBody">
-            	<div><iron-image id="moBtnFacebook" src="../../images/main/facebook.png"></iron-image></div>
+            	<div><iron-image id="moBtnFacebook" src="../../images/main/testlogin.png" on-tap="facebookLogin"></iron-image></div>
             	<div><iron-image src="../../images/main/main_or.png"></iron-image></div>
             	<div><input placeholder="email" value="{{email::input}}"></div>
             	<div><input placeholder="password" value="{{password::input}}"></div>          
 
-            	<div><iron-image id="moBtnLogin" src="../../images/main/main_login_btn.png"></iron-image></div>
+            	<div><iron-image id="moBtnLogin" src="../../images/main/main_login_btn.png" on-tap="emailLogin"></iron-image></div>
           	</div>
         </div>        
 	</template>
@@ -63,7 +65,128 @@
 		is: "mobileweb-login",
 
 		properties: {
+			provider: {
+				type: String,
+				value: 'facebook',
+				notify: true
+			},
 
-		}
+			message: {
+	        	type: String,
+	        	value: ''
+	      	},
+
+	      	email: {
+	        	type: String,
+	        	value: ''
+	      	},
+
+	      	password: {
+	        	type: String,
+	        	value: ''
+	      	},	      	
+
+			user: {
+	        	type: Object,
+	        	value: null,
+	        	observer: '_userChanged',
+	        	notify: true
+	      	},
+
+	      	statusKnown: {
+	        	type: Boolean
+	      	}				      	
+		},
+
+		moveSignup: function() {
+			page.redirect('/signup');
+		},
+
+		facebookLogin: function() {
+			this.provider = "facebook";
+	    	var params = null;
+	    	this.$.firebaseLogin.login(params);
+		},
+
+		emailLogin: function() {
+			this.provider = "password";
+	    	var params;
+
+	      	try {
+	        	params = JSON.parse(this.params);
+	      	} catch (e) {
+	       		params = null;
+	      	}
+	      	
+	        params = params || {};
+	        params.email = this.email;
+	        params.password = this.password;
+	      
+	      	this.$.firebaseLogin.login(params);
+		},
+
+		errorHandler: function(e) {
+	      this.message = 'Error: ' + e.detail.message;
+	      console.log(this.message);
+	    },
+
+	    _userChanged: function() {
+
+	    	if (this.statusKnown && this.user) {	   	    		    				    	    		    				    		
+	    		if(this.provider=="facebook"){
+	    			console.log("logging in :"+this.user.uid+"/"+this.user.facebook.displayName+"/"+this.user.facebook.cachedUserProfile.link+"/"+this.user.facebook.cachedUserProfile.gender+"/"+this.user.facebook.cachedUserProfile.picture.data.url);
+
+	    			var that = this;
+	    			var ref = new Firebase("https://flamingo365.firebaseio.com/users");	  
+	    				    			
+
+	    			ref.once('value', function(snapshot) {
+	    				if(snapshot.hasChild(that.user.uid)){	    					
+	    					ref.child(that.user.uid).child("status").once('value', function(snapshot){
+			    				console.log("status:"+snapshot.val());
+			    				var status = snapshot.val();
+			    				if(status!=1){
+
+			    					// go to signup page
+			    					console.log("go to signup page with provider");
+			    					that.fire('move-signup', {userid: that.user.uid}, {bubbles: true});
+			    				}  else {
+
+			    					console.log("login complete");
+			    					that.fire('login-complete', {userid: that.user.uid}, {bubbles: true});	    		
+			    				}
+			    			});	    												
+	    				} else {
+	    					ref.child(that.user.uid).set({
+								provider: "facebook",
+								username: that.user.facebook.displayName,
+								gender: that.user.facebook.cachedUserProfile.gender,
+								picture: that.user.facebook.cachedUserProfile.picture.data.url,
+								link: that.user.facebook.cachedUserProfile.link,						
+								status: 0						
+							});	
+
+	    					/// go to signup page    	
+	    					console.log("go to signup page with provider");
+	    					that.fire('move-signup', {userid: that.user.uid}, {bubbles: true});
+	    				}
+	    			});	    			
+
+	    		} else {
+
+
+
+	    		}	    		
+	    			    	
+	    			    		
+	    		this.close();
+	    	} else {	    		
+
+	    		if(window.location.hash!==""){
+	    			console.log("tt");
+	    			// location.href = "/";
+	    		}	    		
+	    	}
+	    }
 	});
 </script>

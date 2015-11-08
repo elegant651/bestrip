@@ -28,8 +28,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var initDrawer = function(title) {
         document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "240px");
         document.querySelector('#drawerWrap').removeAttribute('hidden');
+        document.querySelector('#mainToolbar').removeAttribute('hidden');
         document.querySelector('#mainToolbar').className = 'nolanding';
         document.querySelector('#headerPanel').setAttribute('mode', 'standard');   
+        document.querySelector('#paperToggle').removeAttribute('hidden');
         if(document.querySelector('#imgLogo')!=null){
           document.querySelector('#imgLogo').setAttribute('hidden', '');
         }       
@@ -66,6 +68,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     page('/signup', function() {
         initDrawer('SIGN UP');
+        document.querySelector('#paperToggle').setAttribute('hidden', '');
 
         app.route = 'signup';
     });
@@ -130,7 +133,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         
         loginDlog.toggle();
       });    
-    }    
+    }
 
     loginDlog.addEventListener('move-signup', function(e) {
       page.redirect('/signup');
