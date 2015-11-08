@@ -50,12 +50,12 @@
 			<iron-image id="moBtnSignup" src="../../images/main/main_signup_btn.png" on-tap="moveSignup"></iron-image>
           	<div class="moHeader"><div class="title">FLAMINGO</div><div class="subtitle">Find traveler at once</div></div>
           	<div class="moBody">
-            	<div><iron-image id="moBtnFacebook" src="../../images/main/testlogin.png" on-tap="facebookLogin"></iron-image></div>
+            	<div><iron-image id="moBtnFacebook" src="../../images/main/facebook.png" on-tap="facebookLogin"></iron-image></div>
             	<div><iron-image src="../../images/main/main_or.png"></iron-image></div>
             	<div><input placeholder="email" value="{{email::input}}"></div>
             	<div><input placeholder="password" value="{{password::input}}"></div>          
 
-            	<div><iron-image id="moBtnLogin" src="../../images/main/main_login_btn.png" on-tap="emailLogin"></iron-image></div>
+            	<div><iron-image id="moBtnLogin" disabled$="{{computeLogin(email,password)}}" src="../../images/main/main_login_btn.png" on-tap="emailLogin"></iron-image></div>
           	</div>
         </div>        
 	</template>
@@ -108,7 +108,20 @@
 	    	this.$.firebaseLogin.login(params);
 		},
 
-		emailLogin: function() {
+		computeLogin: function(email, password) {
+			if(this.email==null || this.password==null || this.email=='' || this.password==''){
+				return true;
+			}
+
+			return false;
+		},
+
+		emailLogin: function() {	
+			if(this.email==null || this.password==null || this.email=='' || this.password==''){
+				console.log("email or password incorrect");
+				return;
+			}
+
 			this.provider = "password";
 	    	var params;
 
@@ -148,12 +161,12 @@
 			    				if(status!=1){
 
 			    					// go to signup page
-			    					console.log("go to signup page with provider");
-			    					that.fire('move-signup', {userid: that.user.uid}, {bubbles: true});
+			    					console.log("go to signup page with provider");						
+			    					page.redirect('/signup');
 			    				}  else {
 
-			    					console.log("login complete");
-			    					that.fire('login-complete', {userid: that.user.uid}, {bubbles: true});	    		
+			    					console.log("login complete");			    					
+			    					page.redirect('/register');
 			    				}
 			    			});	    												
 	    				} else {
@@ -167,19 +180,18 @@
 							});	
 
 	    					/// go to signup page    	
-	    					console.log("go to signup page with provider");
-	    					that.fire('move-signup', {userid: that.user.uid}, {bubbles: true});
+	    					console.log("go to signup page with provider");	    					
+	    					page.redirect('/signup');
 	    				}
 	    			});	    			
 
 	    		} else {
-
-
+	    			console.log("login complete");
+	    			// that.fire('login-complete', {userid: that.user.uid}, {bubbles: true});
+	    			page.redirect('/register');
 
 	    		}	    		
-	    			    	
-	    			    		
-	    		this.close();
+	    			    		    			    			    		
 	    	} else {	    		
 
 	    		if(window.location.hash!==""){
