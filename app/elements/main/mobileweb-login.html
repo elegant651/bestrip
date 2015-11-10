@@ -1,6 +1,6 @@
 
 <dom-module id="mobileweb-login">
-	<style>
+	<style>		
 		#moBtnSignup {
 			position: fixed;
 			right: 30px;
@@ -33,6 +33,20 @@
 			text-align: center;
 		}		
 
+		.moBody input {
+			width: 220px;
+			height: 45px;
+			font-size: 20px;
+			padding-left: 10px;
+			text-align: center;
+		}
+
+		.moBody .icField {
+			position: absolute;
+    		left: 99px;
+    		margin-top: 12px;
+		}
+
 		#moBtnFacebook {	
 			margin-top: 10px;	
 			cursor: pointer;
@@ -51,9 +65,9 @@
           	<div class="moHeader"><div class="title">FLAMINGO</div><div class="subtitle">Find traveler at once</div></div>
           	<div class="moBody">
             	<div><iron-image id="moBtnFacebook" src="../../images/main/facebook.png" on-tap="facebookLogin"></iron-image></div>
-            	<div><iron-image src="../../images/main/main_or.png"></iron-image></div>
-            	<div><input placeholder="email" value="{{email::input}}"></div>
-            	<div><input placeholder="password" value="{{password::input}}"></div>          
+            	<div style="color:rgb(129,129,129); margin: 5px;">or</div>
+            	<div><input placeholder="email" value="{{email::input}}"><iron-icon class="icField" src="../../images/main/main_email_icon.png"></iron-icon></div>
+            	<div><input placeholder="password" value="{{password::input}}"><iron-icon class="icField" src="../../images/main/main_password_icon.png"></iron-icon></div>          
 
             	<div><iron-image id="moBtnLogin" disabled$="{{computeLogin(email,password)}}" src="../../images/main/main_login_btn.png" on-tap="emailLogin"></iron-image></div>
           	</div>
