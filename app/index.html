@@ -189,7 +189,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </template>
               <!-- mobile web -->
               <template is="dom-if" if="{{!queryMatches}}">
-                <mobileweb-login id="mwLogin"></mobileweb-login>
+                <mobileweb-login id="mwLogin" provider="{{provider}}"></mobileweb-login>
               </template>
             </section>
           
@@ -228,7 +228,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </iron-pages>
         </div>
 
-        <login-dialog id="loginDlog" user="{{user}}" provider="{{provider}}" isfindingenable="{{isfindingenable}}"></login-dialog>
+        <login-dialog id="loginDlog" user="{{user}}" isfindingenable="{{isfindingenable}}"></login-dialog>
       </paper-header-panel>
     </paper-drawer-panel>
 

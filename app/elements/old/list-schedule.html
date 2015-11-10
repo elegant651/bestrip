@@ -1,0 +1,203 @@
+
+
+<dom-module id="list-schedule">
+	<style>
+		:host {
+
+		}
+
+		.list-element {
+			width: 100%;			
+						
+		}
+
+		.title {
+			font-size: 15px;
+			font-weight: bold;
+		}
+
+		.listWrapper {
+			@apply(--layout-horizontal);
+			@apply(--layout-justified);	
+		}
+
+		.usersWrapper {
+			@apply(--layout-horizontal);
+		}
+
+		.userbox {
+			width: 100px;
+		}
+
+		.buttons {
+			width: 200px;
+		}
+
+		.buttons #btnAccept {
+			--paper-fab-background: var(--paper-blue-300);
+		}
+
+		.buttons #btnRefuse {
+
+		}
+	</style>
+	<template>		
+		 <firebase-collection	  
+			  id="fcRequests"        
+	          location="https://flamingo365.firebaseio.com/requests"
+	          order-by-child="schedule_userid"
+	          equal-to="{{user.uid}}"
+	          data="{{requests}}"	          
+	          ></firebase-collection>
+
+	     <firebase-collection
+	     	id="fcSchedule"
+	     	location="{{scheduleTarget}}"
+	     	></firebase-collection>
+
+	     <firebase-document
+	     	location="{{requestTarget}}"
+	     	data="{{requestData}}"
+	     	>
+	     </firebase-document>
+
+	     <firebase-document
+	     	location="{{userTarget}}"
+	     	data="{{userData}}"
+	     	>
+	     </firebase-document>
+	     	     
+		
+		<div class="vertical-section">
+			
+			<template id="t" is="dom-repeat" items="[[requests]]" filter="filterStatus" as="request">				
+			
+				<!-- Type2 : request message -->
+				<div class="list-element">
+					<div class="title">[[request.schedule_title]]</div>
+					<div class="listWrapper">
+						<div class="usersWrapper">
+							<a href="[[request.userlink]]" target="_blank">
+								<div class="userbox">
+									<iron-image src="[[request.userpic]]" style="width:100px; height:100px;"></iron-image>
+									<div class="name">[[request.username]]</div>
+								</div>
+							</a>
+						</div>
+
+						<div class="buttons">
+							<paper-fab id="btnAccept" on-tap="accept" data-key$="{{request.__firebaseKey__}}" 
+								data-scheduleid$="{{request.schedule_id}}"
+								data-userid$="{{request.userid}}" data-userlink$="{{request.userlink}}"
+								data-username$="{{request.username}}" data-userpic$="{{request.userpic}}"
+							 	icon="check"></paper-fab>
+							<paper-fab id="btnRefuse" on-tap="refuse" data-key$="{{request.__firebaseKey__}}" icon="close"></paper-fab>			
+						</div>
+					</div>
+				</div>
+			</template>			
+		</div>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: "list-schedule",
+
+		properties: {
+			requestId: Number,
+			scheduleId: Number,			
+
+			userData: {
+				type: Object,
+				observer: '_userDataChanged'
+			},
+
+			requestTarget: {
+				type: String,
+				computed: 'computeRequestTarget(requestId)'
+			},
+
+			scheduleTarget: {
+				type: String,
+				computed: 'computeScheduleTarget(scheduleId)'
+			},
+
+			userTarget: {
+				type: String,
+				computed: 'computeUserTarget(user)'
+			},
+
+			user: {
+				type: Object,
+				value: null					
+			}
+		},
+
+		_userDataChanged: function() {			
+			if(this.userData.numRT!=this.requests.length){
+				console.log("differentRT");
+
+				var ref = new Firebase(this.userTarget);
+				ref.update({
+					"numRT": this.requests.length
+				});
+
+				this.userData.numRT = this.requests.length;
+		  		this.notifyPath('userData.numRT', this.userData.numRT);
+
+		  		this.fire('show-newflag');
+		 	} else {
+		 		this.fire('hide-newflag');
+		 	}
+		},
+
+		filterStatus: function(item) {
+			return item.status == 0;
+		},
+
+		computeRequestTarget: function(requestId) {
+			return "https://flamingo365.firebaseio.com/requests/"+requestId;
+		},
+
+		computeScheduleTarget: function(scheduleId) {
+			return "https://flamingo365.firebaseio.com/schedules/"+scheduleId+"/req_users";
+		},
+
+		computeUserTarget: function(user) {
+			if(user!=null){				
+				return "https://flamingo365.firebaseio.com/users/"+user.uid;
+			}			
+		},
+
+		accept: function(e) {
+			this.requestId = e.currentTarget.getAttribute("data-key");	
+			this.scheduleId = e.currentTarget.getAttribute("data-scheduleid");					
+
+			if(this.requestId!=null && this.scheduleId!=null){
+				this.requestData.status = 1;
+				this.notifyPath('requestData.status', this.requestData.status);
+
+				//push user data in schedule								
+				var data = {
+					userid: e.currentTarget.getAttribute("data-userid"),
+					username: e.currentTarget.getAttribute("data-username"),
+					userlink: e.currentTarget.getAttribute("data-userlink"),
+					userpic: e.currentTarget.getAttribute("data-userpic")
+				};
+				this.$.fcSchedule.add(data);
+
+				this.fire('show-dialog', {content: "The task has completed.", url: "/schedules"});
+			}						
+		},
+
+		refuse: function(e) {
+			this.requestId = e.currentTarget.getAttribute("data-key");			
+			if(this.requestId!=null){
+				this.requestData.status = 2;
+				this.notifyPath('requestData.status', this.requestData.status);
+
+				this.fire('show-dialog', {content: "The task has completed.", url: "/schedules"});
+			}			
+		}
+	});
+</script>

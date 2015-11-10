@@ -151,6 +151,11 @@
 
 	      	link: String,
 
+	      	user: {
+				type: Object,
+				value: null					
+			},
+
 	      	userTarget: {
 				type: String,
 				computed: 'computeUserTarget(user)'
@@ -273,7 +278,7 @@
 					}
 				});
 			} else {
-				ref.child("users").child(this.users.uid).set(data);
+				ref.child("users").child(this.user.uid).set(data);
 
 				that.initialize();
 				that.fire('show-dialog', {content: "Sign-up has completed.", url: "/register"});
