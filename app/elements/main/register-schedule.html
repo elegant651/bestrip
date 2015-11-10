@@ -76,8 +76,7 @@
 		<div class="vertical-section">
 			<paper-button id="btnRegister" raised disabled$="{{checkData(user, selCityIdx, isPickStartDate, isPickFinishDate, contact, phone)}}" on-tap="register" class="colorful ripple"><iron-icon icon="check"></iron-icon>Register</paper-button>
 		</div>
-		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
-		<privacy-dialog id="privacyDlog" on-tap="hidePrivacy"></privacy-dialog>				
+		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>		
 	</template>
 </dom-module>
 <script>
@@ -142,14 +141,11 @@
 		initialize: function() {
 			this.$.btnSelCity.innerHTML = "Select City";
 			this.selCityIdx = -1;
-			this.startDate = -1;
-			// this.finishDate = -1;	
-			this.$.piStartDate.value = "Select Start Date";  
-			// this.$.piFinishDate.value = "Select Finish Date"; 
+			this.startDate = -1;			
+			this.$.piStartDate.value = "Select Start Date";  			
 			this.$.rgTheme.selected = "all";
 			this.$.cityDlog.close();
-			this.$.dpDlog.close();
-			this.$.privacyDlog.close();
+			this.$.dpDlog.close();			
 		},
 
 		_userChanged: function() {
@@ -165,12 +161,7 @@
 		showStartDateDlog: function() {
 			this.dlogType = 0;					
 			this.$.dpDlog.open();
-		},
-
-		// showFinishDateDlog: function() {
-		// 	this.dlogType = 1;			
-		// 	this.$.dpDlog.open();
-		// },		
+		},		
 
 		_pickerDateChanged: function() {
 			this.$.dpDlog.close();
@@ -205,15 +196,7 @@
 			this.selCityIdx = e.detail.idx;
 			var strName = e.detail.name;
 			this.$.btnSelCity.innerHTML = strName;
-		},		
-
-		showPrivacy: function() {
-			this.$.privacyDlog.open();
-		},
-
-		hidePrivacy: function() {
-			this.$.privacyDlog.close();
-		},
+		},				
 
 		checkData: function(user, selCityIdx, startDate, finishDate, contact, phone) {			
 			if(this.user==null){
@@ -224,10 +207,7 @@
 			}						
 			if(this.startDate==-1){
 				return true;
-			}			
-			// if(this.finishDate==-1){
-			// 	return true;
-			// }
+			}						
 
 			if(this.$.ipContact.value==null || this.$.ipContact.value===""){
 				return true;
