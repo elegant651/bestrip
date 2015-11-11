@@ -1,8 +1,7 @@
 
 <dom-module id="finding-travelers">
 	<style>
-		.searchWrapper {
-			/*@apply(--layout-horizontal);*/
+		.searchWrapper {			
 			width: 100%;
 		}
 
@@ -17,11 +16,7 @@
 		#btnSelCity {
 			width: 150px;
 			margin-top: 15px;			
-		}
-
-		#btnSelActivity {
-			margin-top: 15px;
-		}
+		}		
 		
 		.wrapperDate paper-input {
 			margin-right: 20px;			
@@ -61,10 +56,6 @@
 		
 	</style>
 	<template>
-<!-- 		<firebase-collection	  
-				id="fcSchedules"        
-	          location="https://flamingo365.firebaseio.com/schedules"
-	          data="{{schedules}}"></firebase-collection> -->	    
 
 	    <firebase-collection	  
 				id="fcRequests"        
@@ -80,17 +71,20 @@
 					<div class="vertical-section">
 						<h2>Date</h2>
 						<paper-input id="piPickDate" label="Select" on-tap="showDateDlog"></paper-input>
-						<!-- <input type="text" id="piPickDate" value="Select"> -->						
 					</div>
 
 					<div class="vertical-section">
-						<h2>Activity</h2>
-						<paper-button id="btnSelActivity" data-dialog="dlogActivity" on-tap="showActivityDlog">Select</paper-button>
+						<h2>Theme</h2>
+						<paper-radio-group id="rgTheme" selected="party">
+							<paper-radio-button name="dining"><div class="imgDining"></div>Dining</paper-radio-button>
+							<paper-radio-button name="party"><div class="imgParty"></div>Party</paper-radio-button>
+							<paper-radio-button name="accompany"><div class="imgAccompany"></div>Accompany</paper-radio-button>				
+						</paper-radio-group>
 					</div>
 							
 
 					<div class="vertical-section">
-						<paper-button id="btnSearch" raised on-tap="search" class="colorful ripple"><iron-icon icon="search"></iron-icon>Search</paper-button>				
+						<paper-button id="btnSearch" raised on-tap="search" class="colorful ripple"><iron-image src="../../images/main/searching_btn_2.png"></iron-image></paper-button>				
 					</div>
 				</div>
 			</paper-material>
@@ -114,7 +108,7 @@
 		</div>		
 
 		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
-		<activity-dialog id="activityDlog" on-select-activity="onSelectActivity"></activity-dialog>		
+
 
 		<paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
 			<div class="buttons">
@@ -123,11 +117,6 @@
 	        </div>
 	        <paper-date-picker id="datePicker" date="{{pickerDate}}" responsive-width="655px"></paper-date-picker>	        
 	      </paper-dialog>
-
-		<!-- <div hidden$="{{!isShow}}">			
-			<h2>To viewing this page, Go to register your schedule!!</h2>
-		</div> -->
-
 	</template>
 </dom-module>
 <script>
@@ -138,8 +127,7 @@
 			schedules: Object,
 			user: {
 				type: Object,
-				value: null,
-				observer: '_userChanged'
+				value: null				
 			},
 
 			selCityIdx: {
@@ -168,13 +156,7 @@
 			}
 		},
 
-		ready: function() {
-	
-			// var that = this;
-			// this.$.datePicker.addEventListener("click", function() {
-		 //  		that.$.dpDlog.toggle();
-		 //  		that.dateValueChanged();
-		 //  	});
+		ready: function() {			
 
 			this.search();			
 		},
@@ -190,26 +172,7 @@
 		_sort: function(a, b) {			
 			return a.startDate > b.startDate ? 1 : -1;
 		},
-
-		_userChanged: function() {
-			
-			///check if user's status is 1
-			// if(this.user){
-			// 	var that = this;
-			// 	var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    			 
-	  //   		ref.child(this.user.uid).on("value", function(snapshot) {
-	  //   			var userdata = snapshot.val();	    				    			    			
-	  //   			if(userdata.status==1){
-	  //   				that.isShow = false;    				
-	  //   			} else {
-	  //   				that.isShow = true;
-	  //   			}
-	  //   		}, function(error){
-	  //   			console.log("error:" + error.code);
-	  //   		});	    		
-			// }			
-		},
-
+		
 		showCityDlog: function() {			
 			this.$.cityDlog.open();
 		},
@@ -218,10 +181,7 @@
 			this.$.dpDlog.open();
 		},
 
-		showActivityDlog: function() {
-			this.$.activityDlog.open();
-		},
-
+		
 		_pickerDateChanged: function() {
 			this.$.dpDlog.close();
 			this.dateValueChanged();
@@ -248,13 +208,7 @@
 			var strName = e.detail.name;
 			this.$.btnSelCity.innerHTML = strName;			
 		},		
-
-		onSelectActivity: function(e) {
-			this.themeIdx = e.detail.idx;
-			var strName = e.detail.name;
-			this.$.btnSelActivity.innerHTML = strName;
-		},
-
+		
 		search: function() {							
 			var selCityIdx = this.selCityIdx;
 			var pickDate = this.pickDate;			
