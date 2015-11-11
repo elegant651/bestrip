@@ -24,6 +24,28 @@
 			margin-top: 10px;
 		}
 
+		#rgGender .imgMale {
+			background-image: url("../../images/main/signup_male_unselected.png");
+			background-size: cover;
+			background-repeat: no-repeat;	
+			width: 100px;
+			height: 26px;
+		}
+		#rgGender .iron-selected .imgMale {
+			background-image: url("../../images/main/signup_male_selected.png");
+		}
+
+		#rgGender .imgFemale {
+			background-image: url("../../images/main/signup_female_unselected.png");
+			background-size: cover;
+			background-repeat: no-repeat;	
+			width: 100px;
+			height: 26px;
+		}
+		#rgGender .iron-selected .imgFemale {
+			background-image: url("../../images/main/signup_female_selected.png");
+		}
+
 		#piCountryCode {
 			margin-right: 10px;
 			width: 100px;
@@ -75,8 +97,8 @@
 		<div class="field">
 			<h2>Gender</h2>
 			<paper-radio-group id="rgGender" selected="male" noink>
-				<paper-radio-button class="orange" name="male"><iron-image src="../../images/main/signup_male_selected.png"></iron-image></paper-radio-button>
-				<paper-radio-button class="orange" name="female"><iron-image src="../../images/main/signup_female_selected.png"></iron-image></paper-radio-button>
+				<paper-radio-button class="orange" name="male"><div class="imgMale"></div></paper-radio-button>
+				<paper-radio-button class="orange" name="female"><div class="imgFemale"></div></paper-radio-button>
 			</paper-radio-group>
 		</div>
 

@@ -69,7 +69,7 @@
             	<div><input placeholder="email" value="{{email::input}}"><iron-icon class="icField" src="../../images/main/main_email_icon.png"></iron-icon></div>
             	<div><input placeholder="password" value="{{password::input}}"><iron-icon class="icField" src="../../images/main/main_password_icon.png"></iron-icon></div>          
 
-            	<div><iron-image id="moBtnLogin" disabled$="{{computeLogin(email,password)}}" src="../../images/main/main_login_btn.png" on-tap="emailLogin"></iron-image></div>
+            	<div><paper-button id="moBtnLogin" disabled$="{{computeLogin(email,password)}}" on-tap="emailLogin"><iron-image src="../../images/main/main_login_btn.png"></iron-image></paper-button></div>
           	</div>
         </div>        
 	</template>
@@ -202,6 +202,8 @@
 	    		} else {
 	    			console.log("login complete");
 	    			// that.fire('login-complete', {userid: that.user.uid}, {bubbles: true});
+	    			
+	    			
 	    			page.redirect('/register');
 
 	    		}	    		
