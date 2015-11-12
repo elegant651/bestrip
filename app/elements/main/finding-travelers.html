@@ -1,17 +1,17 @@
 
 <dom-module id="finding-travelers">
 	<style>
+		h2 {
+			text-align: center;
+			font-size: 15px;
+			font-weight: normal;
+		}
+
 		.searchWrapper {			
 			width: 100%;
-		}
-
-		.searchWrapper .vertical-section {
-			float: left;			
-		}		
-
-		.clear {
-			clear: both;
-		}
+			text-align: center;
+			margin-top: 50px;
+		}				
 
 		#btnSelCity {
 			width: 150px;
@@ -36,10 +36,44 @@
         	background-color: #ddd;
       	}		
 
-      	#rgTheme {      		
-      		overflow: scroll;
-      		margin: 15px;
-      	}
+      	#rgTheme {
+			font-size: 13px;			
+			@apply(--layout-horizontal);	
+			@apply(--layout-center-justified);
+		}
+
+		#rgTheme .imgDining {
+			background-image: url("../../images/main/dining_icon_1.png");
+			background-size: cover;
+			background-repeat: no-repeat;	
+			width: 30px;
+			height: 30px;
+		}
+		#rgTheme .iron-selected .imgDining {
+			background-image: url("../../images/main/dining_icon_2.png");
+		}
+
+		#rgTheme .imgParty {
+			background-image: url("../../images/main/party_icon_1.png");
+			background-size: cover;
+			background-repeat: no-repeat;	
+			width: 30px;
+			height: 30px;
+		}
+		#rgTheme .iron-selected .imgParty {
+			background-image: url("../../images/main/party_icon_2.png");
+		}
+
+		#rgTheme .imgAccompany {
+			background-image: url("../../images/main/accompany_icon_1.png");
+			background-size: cover;
+			background-repeat: no-repeat;	
+			width: 30px;
+			height: 30px;
+		}
+		#rgTheme .iron-selected .imgAccompany {
+			background-image: url("../../images/main/accompany_icon_2.png");
+		}
 
       	.selectorWrapper {
       		@apply(--layout-horizontal);	
@@ -88,8 +122,6 @@
 					</div>
 				</div>
 			</paper-material>
-
-			<div class="clear"></div>
 
 			<div class="vertical-section">			
 

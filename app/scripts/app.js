@@ -88,7 +88,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     page('/search', function() {
       app.route = 'search';
 
-      initDrawer('SEARCH');
+      initDrawer('SEARCHING');
     });
 
     page('/schedules', function() {
