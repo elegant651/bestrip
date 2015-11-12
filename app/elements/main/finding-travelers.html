@@ -11,15 +11,33 @@
 			width: 100%;
 			text-align: center;
 			margin-top: 50px;
-		}				
+		}		
+
+		.wrapperCity {
+			@apply(--layout-horizontal);			
+			@apply(--layout-center-justified);
+		}		
+
+		.wrapperCity .icCity {
+			margin: 18px;
+		}
 
 		#btnSelCity {
 			width: 150px;
 			margin-top: 15px;			
 		}		
 		
+		.wrapperDate {
+			@apply(--layout-horizontal);			
+			@apply(--layout-center-justified);
+		}
+
+		.wrapperDate .icDate {
+			margin: 18px;
+		}
+
 		.wrapperDate paper-input {
-			margin-right: 20px;			
+			margin-right: 20px;
 		}
 
 		.travelBox {
@@ -75,18 +93,20 @@
 			background-image: url("../../images/main/accompany_icon_2.png");
 		}
 
-      	.selectorWrapper {
-      		@apply(--layout-horizontal);	
+		#btnSearch {
+			height: 60px;
+			margin-top: 30px;
+			margin-bottom: 30px;
+		}
+
+      	.search-result{
+      		margin: 10px;
+      		margin-top: 25px;
       	}
 
 		#btnRequest {
 			background: rgb(233, 84, 46);
-		}
-
-		#btnSearch {
-			height: 60px;
-			margin-top: 60px;
-		}		
+		}			
 		
 	</style>
 	<template>
@@ -100,11 +120,17 @@
 				<div class="searchWrapper">
 					<div class="vertical-section">
 						<h2>City</h2>
-						<paper-button id="btnSelCity" data-dialog="dlogCity" on-tap="showCityDlog">Select<paper-button>
+						<div class="wrapperCity">
+							<iron-icon class="icCity" src="../../images/main/nationality_icon.png"></iron-icon>
+							<paper-button id="btnSelCity" data-dialog="dlogCity" on-tap="showCityDlog">Select<paper-button>
+						</div>
 					</div>
-					<div class="vertical-section">
-						<h2>Date</h2>
-						<paper-input id="piPickDate" label="Select" on-tap="showDateDlog"></paper-input>
+					<div class="vertical-section">											
+						<h2>Date</h2>			
+						<div class="wrapperDate">
+							<iron-icon class="icDate" src="../../images/main/calendar_icon_2.png"></iron-icon>
+							<paper-input id="piPickDate" label="Select Start Date" on-tap="showDateDlog"></paper-input>				
+						</div>
 					</div>
 
 					<div class="vertical-section">
@@ -123,7 +149,7 @@
 				</div>
 			</paper-material>
 
-			<div class="vertical-section">			
+			<div class="vertical-section search-result">			
 
 				<template is="dom-repeat" items="[[schedules]]" filter="filterStatus" sort="_sort" as="schedule">
 					<h2>{{schedule.schedule_title}}</h2>				
