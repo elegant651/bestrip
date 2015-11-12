@@ -40,11 +40,6 @@
 			margin-right: 20px;
 		}
 
-		.travelBox {
-			@apply(--layout-horizontal);	
-			@apply(--layout-justified);	
-		}
-
 		iron-selector > * {
         	padding: 8px;
         	width: 60px;
@@ -104,9 +99,17 @@
       		margin-top: 25px;
       	}
 
-		#btnRequest {
-			background: rgb(233, 84, 46);
-		}			
+		.travelBox {
+			@apply(--layout-horizontal);				
+		}
+
+		.travelBox .userinfoWrapper {
+			@apply(--layout-horizontal);	
+		}
+			
+		.travelBox .themeWrapper {
+			@apply(--layout-horizontal);				
+		}	
 		
 	</style>
 	<template>
@@ -151,15 +154,25 @@
 
 			<div class="vertical-section search-result">			
 
-				<template is="dom-repeat" items="[[schedules]]" filter="filterStatus" sort="_sort" as="schedule">
-					<h2>{{schedule.schedule_title}}</h2>				
+				<template is="dom-repeat" items="[[schedules]]" filter="filterStatus" sort="_sort" as="schedule">					
 					<div class="travelBox">
 						<iron-image src="[[schedule.userpic]]" style="width:100px; height:100px;"></iron-image>
-						<div class="name">[[schedule.username]]</div>
-						<paper-fab id="btnRequest" on-tap="request" data-key$="{{schedule.__firebaseKey__}}" data-schedule-userid$="{{schedule.userid}}"
-						data-schedule-userlink$="{{schedule.userlink}}" data-schedule-username$="{{schedule.username}}"
-						data-schedule-userpic$="{{schedule.userpic}}"
-						 data-schedule-title$="{{schedule.schedule_title}}" icon="arrow-forward"></paper-fab>
+						<div class="vertical-section">
+							<div class="userinfoWrapper">
+								<iron-icon src="../../images/main/male_imae.png"></iron-icon>
+								<div class="name">[[schedule.username]]</div>
+							</div>
+							<div class="themeWrapper">
+								<div class="themes"></div>
+
+								<paper-button id="btnRequest" on-tap="request" data-key$="{{schedule.__firebaseKey__}}" data-schedule-userid$="{{schedule.userid}}"
+								data-schedule-userlink$="{{schedule.userlink}}" data-schedule-username$="{{schedule.username}}"
+								data-schedule-userpic$="{{schedule.userpic}}"
+								 data-schedule-title$="{{schedule.schedule_title}}">
+								 	<iron-image src="../../images/main/request_btn.png"></iron-image>
+								</paper-button>
+							</div>							
+						</div>
 					</div>				
 				</template>				
 			</div>
