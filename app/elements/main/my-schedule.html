@@ -78,7 +78,7 @@
 									
 									<iron-image src="{{requser.userpic}}" style="width:100px; height:100px;"></iron-image>
 									<div class="infos">
-										<iron-icon src="../../images/main/male_imae.png"></iron-icon>
+										<iron-icon src="{{_computeUserGender(requser.usergender)}}"></iron-icon>
 										<div class="username">{{requser.username}}</div>
 									</div>
 									
@@ -109,7 +109,7 @@
 							<div class="userbox">
 								<iron-image src="{{request.schedule_userpic}}" style="width:100px; height:100px;"></iron-image>
 								<div class="infos">
-									<iron-icon src="../../images/main/male_imae.png"></iron-icon>
+									<iron-icon src="{{_computeUserGender(request.schedule_usergender)}}"></iron-icon>
 									<div class="username">{{request.schedule_username}}</div>
 								</div>
 							</div>														
@@ -191,6 +191,14 @@
 
 		computeContactSrc: function(scheduleId){
 			return "/contactinfo/"+scheduleId;
+		},
+
+		_computeUserGender: function(gender) {
+			if(gender==="male"){
+				return "../../images/main/male_imae.png";
+			} else {
+				return "../../images/main/female_imae.png";
+			}
 		},
 
 		arrayify: function(obj) { 		

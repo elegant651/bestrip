@@ -107,8 +107,8 @@
 			@apply(--layout-horizontal);	
 		}
 			
-		.travelBox .themeWrapper {
-			@apply(--layout-horizontal);				
+		.travelBox .themeWrapper {			
+			@apply(--layout-horizontal);					
 		}	
 		
 	</style>
@@ -159,11 +159,11 @@
 						<iron-image src="[[schedule.userpic]]" style="width:100px; height:100px;"></iron-image>
 						<div class="vertical-section">
 							<div class="userinfoWrapper">
-								<iron-icon src="../../images/main/male_imae.png"></iron-icon>
+								<iron-icon src="{{_computeUserGender(schedule.usergender)}}"></iron-icon>
 								<div class="name">[[schedule.username]]</div>
 							</div>
 							<div class="themeWrapper">
-								<div class="themes"></div>
+								<div class="themes"><iron-icon src="{{_computeThemeImg(schedule.themeIdx)}}"></iron-icon></div>
 
 								<paper-button id="btnRequest" on-tap="request" data-key$="{{schedule.__firebaseKey__}}" data-schedule-userid$="{{schedule.userid}}"
 								data-schedule-userlink$="{{schedule.userlink}}" data-schedule-username$="{{schedule.username}}"
@@ -309,6 +309,24 @@
 					});
 				});
 			}			
+		},
+
+		_computeUserGender: function(gender) {
+			if(gender==="male"){
+				return "../../images/main/male_imae.png";
+			} else {
+				return "../../images/main/female_imae.png";
+			}
+		},
+
+		_computeThemeImg: function(themeIdx) {
+			if(themeIdx == 0){
+				return "../../images/main/dining_icon_2.png";
+			} else if(themeIdx == 1){
+				return "../../images/main/party_icon_2.png";
+			} else if(themeIdx == 2){
+				return "../../images/main/accompany_icon_2.png";
+			}
 		},
 
 		checkData: function(userid) {						
