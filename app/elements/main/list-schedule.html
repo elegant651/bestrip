@@ -66,14 +66,17 @@
 	     	data="{{userData}}"
 	     	>
 	     </firebase-document>
-	     	     
+	    
+
+	    <div class="request-count">
+
+	    </div> 	     
 		
 		<div class="vertical-section">
 			
-			<template id="t" is="dom-repeat" items="[[requests]]" filter="filterStatus" as="request">				
-			
+			<template id="t" is="dom-repeat" items="[[requests]]" filter="filterStatus" as="request">							
 				<!-- Type2 : request message -->
-				<div class="list-element">
+				<div class="list-element">					
 					<div class="title">[[request.schedule_title]]</div>
 					<div class="listWrapper">
 						<div class="usersWrapper">
@@ -86,12 +89,16 @@
 						</div>
 
 						<div class="buttons">
-							<paper-fab id="btnAccept" on-tap="accept" data-key$="{{request.__firebaseKey__}}" 
+							<paper-button id="btnAccept" on-tap="accept" data-key$="{{request.__firebaseKey__}}" 
 								data-scheduleid$="{{request.schedule_id}}"
 								data-userid$="{{request.userid}}" data-userlink$="{{request.userlink}}"
 								data-username$="{{request.username}}" data-userpic$="{{request.userpic}}"
-							 	icon="check"></paper-fab>
-							<paper-fab id="btnRefuse" on-tap="refuse" data-key$="{{request.__firebaseKey__}}" icon="close"></paper-fab>			
+							 	>
+							 	<iron-image src="../../images/main/ok_btn_2.png"></iron-image>
+							 </paper-button>
+							<paper-button id="btnRefuse" on-tap="refuse" data-key$="{{request.__firebaseKey__}}">
+								<iron-image src="../../images/main/reject_btn_1.png"></iron-image>
+							</paper-button>			
 						</div>
 					</div>
 				</div>
