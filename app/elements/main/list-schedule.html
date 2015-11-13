@@ -6,9 +6,16 @@
 
 		}
 
+		.request-count {
+			margin: 15px;
+			color:rgb(253,68,19);
+			font-size: 18px;
+		}
+
 		.list-element {
-			width: 100%;			
-						
+			width: 100%;		
+			margin-bottom: 10px;	
+			padding-left: 10px;						
 		}
 
 		.title {
@@ -25,20 +32,23 @@
 			@apply(--layout-horizontal);
 		}
 
+		.usersWrapper .name {
+			line-height: 60px;
+			margin-left: 10px;
+		}
+
 		.userbox {
 			width: 100px;
 		}
 
 		.buttons {
-			width: 200px;
+			width: 190px;
+			@apply(--layout-horizontal);
+			margin-top: 10px;
 		}
 
-		.buttons #btnAccept {
-			--paper-fab-background: var(--paper-blue-300);
-		}
-
-		.buttons #btnRefuse {
-
+		.buttons paper-button {
+			margin: 0px;
 		}
 	</style>
 	<template>		
@@ -69,7 +79,6 @@
 	    
 
 	    <div class="request-count">
-
 	    </div> 	     
 		
 		<div class="vertical-section">
@@ -80,19 +89,23 @@
 					<div class="title">[[request.schedule_title]]</div>
 					<div class="listWrapper">
 						<div class="usersWrapper">							
-							<iron-image src="[[request.userpic]]" style="width:100px; height:100px;"></iron-image>
+							<iron-image src="[[request.userpic]]" style="width:70px; height:70px;"></iron-image>
 							<div class="name">[[request.username]]</div>						
 						</div>
 
 						<div class="buttons">
-							<paper-button id="btnAccept" on-tap="accept" data-key$="{{request.__firebaseKey__}}" 
+							<paper-button id="btnAccept" noink on-tap="accept" 
+								data-key$="{{request.__firebaseKey__}}" 
 								data-scheduleid$="{{request.schedule_id}}"
-								data-userid$="{{request.userid}}" data-userlink$="{{request.userlink}}"
-								data-username$="{{request.username}}" data-userpic$="{{request.userpic}}"
+								data-userid$="{{request.userid}}"
+								data-usergender$="{{request.usergender}}"
+								data-username$="{{request.username}}" 
+								data-userpic$="{{request.userpic}}"
 							 	>
 							 	<iron-image src="../../images/main/ok_btn_2.png"></iron-image>
 							 </paper-button>
-							<paper-button id="btnRefuse" on-tap="refuse" data-key$="{{request.__firebaseKey__}}">
+							<paper-button id="btnRefuse" noink on-tap="refuse" 
+								data-key$="{{request.__firebaseKey__}}">
 								<iron-image src="../../images/main/reject_btn_1.png"></iron-image>
 							</paper-button>			
 						</div>
@@ -184,7 +197,7 @@
 				var data = {
 					userid: e.currentTarget.getAttribute("data-userid"),
 					username: e.currentTarget.getAttribute("data-username"),
-					userlink: e.currentTarget.getAttribute("data-userlink"),
+					usergender: e.currentTarget.getAttribute("data-usergender"),
 					userpic: e.currentTarget.getAttribute("data-userpic")
 				};
 				this.$.fcSchedule.add(data);
