@@ -27,8 +27,14 @@
 
 		.userbox {
 			width: 130px;
+			height: 130px;
 			text-align: center;
 			font-size: 13px;
+		}
+
+		.userbox .icHost {
+			left: 18px;
+    		top: -80px;
 		}
 
 		.userbox .icGender {
@@ -40,7 +46,8 @@
 		}
 
 		.userbox .infos {
-			@apply(--layout-horizontal);	
+			@apply(--layout-horizontal);
+			margin-left: 25px;	
 		}
 
 		.buttons {
@@ -103,9 +110,9 @@
 						</div>
 
 						<div class="buttons">							
-							<paper-button id="btnMakeTeam" raised on-tap="makeTeam" 
-							data-scheduleid$="{{schedule.__firebaseKey__}}"
-							hidden$="{{showMakeTeamButton(schedule.status)}}" class="colorful ripple"><iron-icon icon="check"></iron-icon>Complete Team</paper-button>
+							<paper-button id="btnMakeTeam" on-tap="makeTeam" 
+								data-scheduleid$="{{schedule.__firebaseKey__}}"
+								hidden$="{{showMakeTeamButton(schedule.status)}}" class="colorful ripple"><iron-icon icon="check"></iron-icon>Set team</paper-button>
 						</div>
 					</div>
 				</div>
@@ -119,14 +126,14 @@
 					<h2>{{request.schedule_title}}</h2>
 
 					<div class="listWrapper">
-						<div class="usersWrapper">
-							<h3>Host</h3>							
+						<div class="usersWrapper">													
 							<div class="userbox">
+								<iron-icon class="icHost" src="../../images/main/host_icon.png"></iron-icon>								
 								<iron-image src="{{request.schedule_userpic}}" style="width:70px; height:70px;"></iron-image>
 								<div class="infos">
 									<iron-icon class="icGender" src="{{_computeUserGender(request.schedule_usergender)}}"></iron-icon>
 									<div class="username">{{request.schedule_username}}</div>
-								</div>
+								</div>								
 							</div>														
 						</div>						
 					</div>

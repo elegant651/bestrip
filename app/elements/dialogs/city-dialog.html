@@ -4,7 +4,8 @@
 			width: 250px;
 			height: 300px;
 			max-height: 300px;
-			margin: 10px;				
+			margin: 10px;			
+			overflow: auto;	
 		}		
 
 		.cityWrapper {
@@ -36,7 +37,7 @@
 					<div class="title">Paris</div>
 				</div>
 			</div>
-			<div class="cityWrapper" on-mouseover="onHoverInfo" on-mouseout="onUnhoverInfo">
+			<div class="cityWrapper">
 				<div class="citybox" on-tap="selectCity" data-idx="3">
 					<iron-image src="../../images/main/kr_citylist_berlin.png" style="width:100px; height:100px;"></iron-image>
 					<div class="title">Berlin</div>
@@ -65,9 +66,7 @@
 					<iron-image src="../../images/main/kr_citylist_barcelona.png" style="width:100px; height:100px;"></iron-image>
 					<div class="title">Barcelona</div>
 				</div>
-			</div>		
-			
-			<!-- <teleport-module id="tpDlog"></teleport-module>	 -->		
+			</div>								
 	</template>
 </dom-module>
 <script>
@@ -96,13 +95,6 @@
 			];
 		},	
 
-		// onHoverInfo: function() {
-		// 	this.$.tpDlog.toggle();
-		// },
-
-		// onUnhoverInfo: function() {
-		// 	this.$.tpDlog.close();
-		// },	
 
 	    selectCity: function(e) {
 	    	var idx = e.currentTarget.getAttribute("data-idx");	    	

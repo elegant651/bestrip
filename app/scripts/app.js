@@ -110,6 +110,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       initDrawer('CONTACT INFO');
     });  
 
+    page('/logout', function() {
+      app.route = 'logout';
+
+      initDrawer('LOG OUT');
+    });
+
     // add #! before urls
     page({
       hashbang: true
@@ -122,9 +128,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var registerSchedule = document.querySelector("#registerSchedule");
     var findingTravelers = document.querySelector("#findingTravelers");
     var listSchedule = document.querySelector('#listSchedule');
-    var mySchedule = document.querySelector('#mySchedule');
+    var mySchedule = document.querySelector('#mySchedule');    
     var btnLogin = document.querySelector('#btnLogin');
     var loginDlog = document.querySelector('#loginDlog');
+    var logoutDlog = document.querySelector('#logoutDlog');
     var paperDlog = document.querySelector('#paperDlog');
     var btnFacebook = document.querySelector('#btnFacebook');
 
@@ -153,12 +160,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         location.href='/';
     });    
+
+    logoutDlog.addEventListener('logout-complete', function(e) {
+        location.href='/';
+    });
     
     if(btnLogin!=null){ 
       btnLogin.addEventListener('click', function() {
           loginDlog.toggle();
       });
-    }
+    }  
 
     signup.addEventListener('show-dialog', function(e) {
         paperDlog.toggle();

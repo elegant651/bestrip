@@ -117,11 +117,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   </a>                  
 
                   <hr />
-
-                  <a>
-                    <span>Log out</span>
-                    <div id="icLogout" class="icon"></div>                    
-                  </a>          
+                  
+                  <a data-route="logout" href="/logout">                    
+                      <span>Log out</span>
+                      <div id="icLogout" class="icon"></div>                                        
+                  </a>                            
             </paper-menu>
         </div>      
 
@@ -217,6 +217,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <my-schedule id="mySchedule" user="{{user}}"></my-schedule>
               </section>
 
+              <section data-route="logout">
+                  <logout-dialog id="logoutDlog" user="{{user}}">></logout-dialog>
+              </section>
 
               <section data-route="contactinfo">
                 <paper-material elevation="1">
@@ -228,7 +231,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </iron-pages>
         </div>
 
-        <login-dialog id="loginDlog" user="{{user}}" isfindingenable="{{isfindingenable}}"></login-dialog>
+        <login-dialog id="loginDlog" user="{{user}}"></login-dialog>
+        <logout-dialog id="logoutDlog" user="{{user}}"></logout-dialog>
       </paper-header-panel>
     </paper-drawer-panel>
 
