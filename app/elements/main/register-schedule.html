@@ -95,7 +95,12 @@
 		<firebase-collection	  
 				id="fcSchedules"        
 	          location="https://flamingo365.firebaseio.com/schedules"
-	          data="{{schedules}}"></firebase-collection>	    
+	          ></firebase-collection>	    
+	    <firebase-document
+	     	location="{{userTarget}}"
+	     	data="{{userData}}"
+	     	>
+	     </firebase-document>      
 		
 		<div class="destinationWrapper">
 			<h2 id="txtSelCity">London</h2>
@@ -105,8 +110,7 @@
 			<h2>Date</h2>			
 			<div class="wrapperDate">
 				<iron-icon class="icDate" src="../../images/main/calendar_icon_2.png"></iron-icon>
-				<paper-input id="piStartDate" label="Select Start Date" on-tap="showStartDateDlog"></paper-input>
-				<!-- <paper-input id="piFinishDate" label="Select Finish Date" on-tap="showFinishDateDlog"></paper-input> -->				
+				<paper-input id="piStartDate" label="Select Start Date" on-tap="showStartDateDlog"></paper-input>			
 			</div>
 			
 			<paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
@@ -154,6 +158,15 @@
 			pickerDate: {
 				type: Number,
 				observer: '_pickerDateChanged'
+			},
+
+			userTarget: {
+				type: String,
+				computed: 'computeUserTarget(user)'
+			},
+
+			userData: {
+				type: Object				
 			}			
 		},		
 
@@ -214,6 +227,12 @@
     		this.startDate = date.getTime();    			    		
 		},
 
+		computeUserTarget: function(user) {
+			if(user!=null){				
+				return "https://flamingo365.firebaseio.com/users/"+user.uid;
+			}			
+		},
+
 		onSelectCity: function(e) {			
 			this.selCityIdx = e.detail.idx;
 			var strName = e.detail.name;
@@ -235,6 +254,10 @@
 		},	
 
 		register: function() {			
+			if(this.userData==null){
+				return;
+			}
+
 			var theme = this.$.rgTheme.selected;
 			var themeIdx = 2;
 			if(theme === "dining"){
@@ -243,19 +266,22 @@
 				themeIdx = 2;
 			} else if(theme === "accompany"){
 				themeIdx = 3;
-			} 
+			} 			
 			
 			var startDateName = this.$.piStartDate.value;
 			var selCityName = this.cityNames[this.selCityIdx].name;
-			var schedule_title = startDateName + " : " + selCityName;
+			var schedule_title = startDateName + " : " + selCityName;			
 
 			var data = {
 				userid: this.user.uid,
-				usergender: this.user.gender,
-				username: this.user.username,				
-				userpic: this.user.picture,
+				usergender: this.userData.gender,
+				username: this.userData.username,				
+				userpic: this.userData.picture,
+				userbirth: this.userData.birth,
+				usercountryCode: this.userData.countryCode,
+				userphone: this.userData.phone,
 				selCityIdx: this.selCityIdx,
-				selCityName: this.selCityName,
+				selCityName: selCityName,
 				themeIdx: themeIdx,
 				startDate: this.startDate,		
 				startDateName: startDateName,
@@ -263,6 +289,7 @@
 				created_at: new Date().getTime(),
 				status: 0				
 			};
+			
 			this.$.fcSchedules.add(data);					
 			
 			this.fire('show-dialog', {content: "Registration has completed.", url: "/register"});		

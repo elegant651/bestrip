@@ -157,6 +157,15 @@
 	      console.log(this.message);
 	    },
 
+	  //   setUserData: function(snapshot) {
+			// this.user.username = snapshot.child("username").val();
+			// this.user.gender = snapshot.child("gender").val();
+			// this.user.picture = snapshot.child("picture").val();
+			// this.user.birth = snapshot.child("birth").val();
+			// this.user.countryCode = snapshot.child("countryCode").val();
+			// this.user.phone = snapshot.child("phone").val();	    	
+	  //   },
+
 	    _userChanged: function() {
 
 	    	if (this.statusKnown && this.user) {	   	    		    				    	    		    				    		
@@ -169,9 +178,8 @@
 
 	    			ref.once('value', function(snapshot) {
 	    				if(snapshot.hasChild(that.user.uid)){	    					
-	    					ref.child(that.user.uid).child("status").once('value', function(snapshot){
-			    				console.log("status:"+snapshot.val());
-			    				var status = snapshot.val();
+	    					ref.child(that.user.uid).once('value', function(snapshot){			    				
+			    				var status = snapshot.child("status").val();
 			    				if(status!=1){
 
 			    					// go to signup page
@@ -179,6 +187,7 @@
 			    					page.redirect('/signup');
 			    				}  else {
 
+			    					// that.setUserData(snapshot);
 			    					console.log("login complete");			    					
 			    					page.redirect('/register');
 			    				}
@@ -200,12 +209,14 @@
 	    			});	    			
 
 	    		} else {
-	    			console.log("login complete");
-	    			// that.fire('login-complete', {userid: that.user.uid}, {bubbles: true});
-	    			
-	    			
-	    			page.redirect('/register');
+	    			// var ref = new Firebase("https://flamingo365.firebaseio.com/users");
+	    			// var that = this;
+	    			// ref.child(this.user.uid).once('value', function(snapshot){
+	    			// 	that.setUserData(snapshot);
 
+	    				console.log("login complete");	    			
+	    				page.redirect('/register');
+	    			// });	    			
 	    		}	    		
 	    			    		    			    			    		
 	    	} else {	    		
