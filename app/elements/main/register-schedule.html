@@ -92,15 +92,16 @@
 		
 	</style>	
 	<template>		
-		<firebase-collection	  
-				id="fcSchedules"        
-	          location="https://flamingo365.firebaseio.com/schedules"
-	          ></firebase-collection>	    
-	    <firebase-document
+		<firebase-document
 	     	location="{{userTarget}}"
 	     	data="{{userData}}"
 	     	>
 	     </firebase-document>      
+
+		<firebase-collection	  
+				id="fcSchedules"        
+	          location="https://flamingo365.firebaseio.com/schedules"
+	          ></firebase-collection>	    	    
 		
 		<div class="destinationWrapper">
 			<h2 id="txtSelCity">London</h2>
@@ -162,13 +163,19 @@
 
 			userTarget: {
 				type: String,
-				computed: 'computeUserTarget(user)'
+				computed: '_computeUserTarget(user)'
 			},
 
 			userData: {
 				type: Object				
 			}			
 		},		
+
+		_computeUserTarget: function(user) {
+			if(user!=null){				
+				return "https://flamingo365.firebaseio.com/users/"+user.uid;
+			}			
+		},
 
 		ready: function() {
 			this.cityNames = [	
@@ -225,13 +232,7 @@
 			    		
     		this.$.piStartDate.value = strDate;  
     		this.startDate = date.getTime();    			    		
-		},
-
-		computeUserTarget: function(user) {
-			if(user!=null){				
-				return "https://flamingo365.firebaseio.com/users/"+user.uid;
-			}			
-		},
+		},		
 
 		onSelectCity: function(e) {			
 			this.selCityIdx = e.detail.idx;

@@ -115,6 +115,10 @@
 		.travelBox .userinfoWrapper .name {
 			margin-top: 3px;
 		}
+
+		.travelBox .userinfoWrapper .age {
+			margin: 3px;
+		}
 			
 		.travelBox .themeWrapper {			
 			@apply(--layout-horizontal);					
@@ -132,10 +136,16 @@
 	</style>
 	<template>
 
+		<firebase-document
+	     	location="{{userTarget}}"
+	     	data="{{userData}}"
+	     	>
+	     </firebase-document>      
+
 	    <firebase-collection	  
-				id="fcRequests"        
-	          location="https://flamingo365.firebaseio.com/requests"
-	          ></firebase-collection>
+			id="fcRequests"        
+          location="https://flamingo365.firebaseio.com/requests"
+          ></firebase-collection>	     
 	    	    
 			<paper-material elevation="1">
 				<div class="searchWrapper">
@@ -179,13 +189,17 @@
 							<div class="userinfoWrapper">
 								<iron-icon class="icGender" src="{{_computeUserGender(schedule.usergender)}}"></iron-icon>
 								<div class="name">[[schedule.username]]</div>
+								<div class="age">, [[_computeUserAge(schedule.userbirth)]]</div>
 							</div>
 							<div class="themeWrapper">
 								<div class="themes"><iron-image src="{{_computeThemeImg(schedule.themeIdx)}}"></iron-image></div>								
-								<paper-button id="btnRequest" on-tap="request" data-key$="{{schedule.__firebaseKey__}}" data-schedule-userid$="{{schedule.userid}}"
-								data-schedule-userlink$="{{schedule.userlink}}" data-schedule-username$="{{schedule.username}}"
-								data-schedule-userpic$="{{schedule.userpic}}"
-								 data-schedule-title$="{{schedule.schedule_title}}">
+								<paper-button id="btnRequest" on-tap="request" hidden$="{{checkData(schedule.userid)}}"
+									data-key$="{{schedule.__firebaseKey__}}" 
+									data-schedule-userid$="{{schedule.userid}}"
+									data-schedule-usergender$="{{schedule.usergender}}"								
+									data-schedule-username$="{{schedule.username}}"
+									data-schedule-userpic$="{{schedule.userpic}}"								
+									data-schedule-title$="{{schedule.schedule_title}}">
 								 	<iron-image src="../../images/main/request_btn.png"></iron-image>
 								</paper-button>
 							</div>							
@@ -241,7 +255,22 @@
 			themeIdx: {
 				type: Number,
 				value: 0
+			},
+
+			userTarget: {
+				type: String,
+				computed: '_computeUserTarget(user)'
+			},
+
+			userData: {
+				type: Object				
 			}
+		},
+
+		_computeUserTarget: function(user) {
+			if(user!=null){				
+				return "https://flamingo365.firebaseio.com/users/"+user.uid;
+			}			
 		},
 
 		ready: function() {			
@@ -336,6 +365,16 @@
 			}
 		},
 
+		_computeUserAge: function(birth) {
+			if(birth==null){
+				return "";
+			}
+			
+			var date = new Date(birth);
+			var ageDate = new Date(Date.now()-date.getTime());
+			return Math.abs(ageDate.getFullYear()-1970);
+		},
+
 		_computeThemeImg: function(themeIdx) {
 			if(themeIdx == 0){
 				return "../../images/main/dining_icon.png";
@@ -358,8 +397,8 @@
 			var schedule_id = e.currentTarget.getAttribute("data-key");
 			var schedule_title = e.currentTarget.getAttribute("data-schedule-title");
 			var schedule_userid = e.currentTarget.getAttribute("data-schedule-userid");
-			var schedule_username = e.currentTarget.getAttribute("data-schedule-username");
-			var schedule_userlink = e.currentTarget.getAttribute("data-schedule-userlink");
+			var schedule_usergender = e.currentTarget.getAttribute("data-schedule-usergender");
+			var schedule_username = e.currentTarget.getAttribute("data-schedule-username");			
 			var schedule_userpic = e.currentTarget.getAttribute("data-schedule-userpic");			
 
 			if(this.user==null || this.user.uid==schedule_userid){
@@ -371,13 +410,13 @@
 				schedule_id: schedule_id,
 				schedule_title: schedule_title,
 				schedule_userid: schedule_userid,
-				schedule_username: schedule_username,
-				schedule_userlink: schedule_userlink,
+				schedule_usergender: schedule_usergender,
+				schedule_username: schedule_username,				
 				schedule_userpic: schedule_userpic,
 				userid: this.user.uid,
-				username: this.user.facebook.displayName,
-				userlink: this.user.facebook.cachedUserProfile.link,
-				userpic: this.user.facebook.cachedUserProfile.picture.data.url,
+				username: this.userData.username,
+				usergender: this.userData.gender,				
+				userpic: this.userData.picture,
 				status: 0,
 				created_at: new Date().getTime()				
 			};
