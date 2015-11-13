@@ -104,12 +104,30 @@
 		}
 
 		.travelBox .userinfoWrapper {
-			@apply(--layout-horizontal);	
+			@apply(--layout-horizontal);				
+		}
+
+		.travelBox .userinfoWrapper .icGender {
+			margin-left: 15px;
+			margin-right: 10px;
+		}
+
+		.travelBox .userinfoWrapper .name {
+			margin-top: 3px;
 		}
 			
 		.travelBox .themeWrapper {			
 			@apply(--layout-horizontal);					
 		}	
+
+		.travelBox .themeWrapper .themes {
+			margin: 15px;
+		}
+
+		.travelBox .themeWrapper #btnRequest {
+			position: absolute;
+			right: 15px;
+		}
 		
 	</style>
 	<template>
@@ -159,12 +177,11 @@
 						<iron-image src="[[schedule.userpic]]" style="width:100px; height:100px;"></iron-image>
 						<div class="vertical-section">
 							<div class="userinfoWrapper">
-								<iron-icon src="{{_computeUserGender(schedule.usergender)}}"></iron-icon>
+								<iron-icon class="icGender" src="{{_computeUserGender(schedule.usergender)}}"></iron-icon>
 								<div class="name">[[schedule.username]]</div>
 							</div>
 							<div class="themeWrapper">
-								<div class="themes"><iron-icon src="{{_computeThemeImg(schedule.themeIdx)}}"></iron-icon></div>
-
+								<div class="themes"><iron-image src="{{_computeThemeImg(schedule.themeIdx)}}"></iron-image></div>								
 								<paper-button id="btnRequest" on-tap="request" data-key$="{{schedule.__firebaseKey__}}" data-schedule-userid$="{{schedule.userid}}"
 								data-schedule-userlink$="{{schedule.userlink}}" data-schedule-username$="{{schedule.username}}"
 								data-schedule-userpic$="{{schedule.userpic}}"
@@ -321,11 +338,11 @@
 
 		_computeThemeImg: function(themeIdx) {
 			if(themeIdx == 0){
-				return "../../images/main/dining_icon_2.png";
+				return "../../images/main/dining_icon.png";
 			} else if(themeIdx == 1){
-				return "../../images/main/party_icon_2.png";
+				return "../../images/main/party_icon.png";
 			} else if(themeIdx == 2){
-				return "../../images/main/accompany_icon_2.png";
+				return "../../images/main/accompany_icon.png";
 			}
 		},
 
