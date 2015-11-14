@@ -82,8 +82,7 @@
 	     </firebase-document>
 		
 		<div class="vertical-section">
-			<template is="dom-repeat" items="{{schedules}}" sort="_sort" filter="filterOutdated" as="schedule"> 
-				
+			<template is="dom-repeat" items="{{schedules}}" sort="_sort" filter="filterOutdated" as="schedule"> 				
 				<div class="list-element">					
 					<h2>{{schedule.schedule_title}}</h2>
 					<div class="listWrapper">
@@ -96,8 +95,7 @@
 							</div>							
 
 							<template is="dom-repeat" items="{{arrayify(schedule.req_users)}}" as="requser">						
-								<div class="userbox">									
-									
+								<div class="userbox">
 									<iron-image src="{{requser.userpic}}" style="width:70px; height:70px;"></iron-image>
 									<div class="infos">
 										<iron-icon class="icGender" src="{{_computeUserGender(requser.usergender)}}"></iron-icon>

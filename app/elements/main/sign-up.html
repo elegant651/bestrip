@@ -78,7 +78,7 @@
 
 		<div class="field">
 			<h2>Picture</h2>
-			<iron-image src="{{picture}}" style="width:150px; height:150px;"></iron-image>
+			<iron-image src="{{picture}}" style="width:150px; height:150px;"></iron-image>			
 		</div>
 
 		<div class="field" hidden$="{{isFacebookMode(provider)}}">
@@ -169,7 +169,10 @@
 
 	      	phone: Number,
 
-	      	picture: String,
+	      	picture: {
+	      		type: String,
+	      		value: 'https://flamingofly.com/images/main/photo_img.png'
+	      	},
 
 	      	link: String,
 
