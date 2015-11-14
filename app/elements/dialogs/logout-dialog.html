@@ -62,24 +62,12 @@
 
 	    errorHandler: function(e) {
 	      this.message = 'Error: ' + e.detail.message;
-	      console.log(this.message);
+	      alert(this.message);
 	    },	    
 
-	    computeLogoutHidden: function(statusKnown, user) {
+	    computeLogoutHidden: function(statusKnown, user) {	    
 	      return !statusKnown || !user;
-	    },
-
-	    computeLoginStatus: function(statusKnown, user) {
-	      if (statusKnown && user) {
-	        return 'Logged in';
-	      }
-
-	      if (statusKnown) {
-	        return 'Logged out';
-	      }
-
-	      return 'Unknown (checking status...)';
-	    }
+	    }	    
 	   
 	});
 </script>

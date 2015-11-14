@@ -26,6 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     /// routing ///
     var initDrawer = function(title) {
+        window.scrollTo(0, 0);
         document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "240px");
         document.querySelector('#drawerWrap').removeAttribute('hidden');
         document.querySelector('#mainToolbar').removeAttribute('hidden');
@@ -174,6 +175,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     signup.addEventListener('show-dialog', function(e) {
         paperDlog.toggle();
         paperDlog.querySelector("#content").innerHTML = e.detail.content;
+        var url = e.detail.url;
+        paperDlog.addEventListener('click', function() {                  
+            page.redirect(url);        
+        });
     });
 
     findingTravelers.addEventListener('show-dialog', function(e) {
@@ -183,7 +188,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     registerSchedule.addEventListener('show-dialog', function(e) {
         paperDlog.toggle();
-        paperDlog.querySelector("#content").innerHTML = e.detail.content;        
+        paperDlog.querySelector("#content").innerHTML = e.detail.content;                
     });
 
     listSchedule.addEventListener('show-dialog', function(e) {

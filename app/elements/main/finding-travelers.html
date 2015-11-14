@@ -153,7 +153,7 @@
 						<h2>City</h2>
 						<div class="wrapperCity">
 							<iron-icon class="icCity" src="../../images/main/nationality_icon.png"></iron-icon>
-							<paper-button id="btnSelCity" data-dialog="dlogCity" on-tap="showCityDlog">Select<paper-button>
+							<paper-input id="piSelCity" data-dialog="dlogCity" label="Select City" on-tap="showCityDlog"><paper-input>
 						</div>
 					</div>
 					<div class="vertical-section">											
@@ -175,7 +175,7 @@
 							
 
 					<div class="vertical-section">
-						<paper-button id="btnSearch" on-tap="search" class="colorful ripple"><iron-image src="../../images/main/searching_btn_2.png"></iron-image></paper-button>				
+						<paper-button id="btnSearch" on-tap="search" noink><iron-image src="../../images/main/searching_btn_2.png"></iron-image></paper-button>				
 					</div>
 				</div>
 			</paper-material>
@@ -183,9 +183,10 @@
 			<div class="vertical-section search-result">			
 
 				<template is="dom-repeat" items="[[schedules]]" filter="filterStatus" sort="_sort" as="schedule">					
-					<div class="travelBox">
+					<div class="travelBox">						
 						<iron-image src="[[schedule.userpic]]" style="width:90px; height:90px;"></iron-image>
 						<div class="vertical-section">
+							<div>[[schedule.schedule_title]]</div>
 							<div class="userinfoWrapper">
 								<iron-icon class="icGender" src="{{_computeUserGender(schedule.usergender)}}"></iron-icon>
 								<div class="name">[[schedule.username]]</div>
@@ -323,22 +324,22 @@
 		onSelectCity: function(e) {			
 			this.selCityIdx = e.detail.idx;
 			var strName = e.detail.name;
-			this.$.btnSelCity.innerHTML = strName;			
+			this.$.piSelCity.value = strName;			
 		},		
 		
 		search: function() {							
 			var selCityIdx = this.selCityIdx;
 			var pickDate = this.pickDate;			
-			
+						
 			var that = this;
 			
 			var ref = new Firebase("https://flamingo365.firebaseio.com/schedules");					
 			if(selCityIdx!=-1 && pickDate!=-1){						
-				ref.orderByChild("selCityIdx").equalTo(selCityIdx).on("value", function(querySnapshot) {									
+				ref.orderByChild("selCityIdx").on("value", function(querySnapshot) {
 					that.schedules = [];				
+
 					querySnapshot.forEach(function(snapshot) {						
-						if(snapshot.val().startDate <= pickDate && pickDate <= snapshot.val().finishDate){
-					// 		// objSchedule = snapshot;										
+						if(snapshot.val().selCityIdx==selCityIdx && snapshot.val().startDate <= pickDate && pickDate < snapshot.val().startDate+86400000){
 							var sv = snapshot.val();							
 							sv["__firebaseKey__"] = snapshot.key();									
 							that.push('schedules', sv);							
@@ -376,11 +377,11 @@
 		},
 
 		_computeThemeImg: function(themeIdx) {
-			if(themeIdx == 0){
+			if(themeIdx == 1){
 				return "../../images/main/dining_icon.png";
-			} else if(themeIdx == 1){
-				return "../../images/main/party_icon.png";
 			} else if(themeIdx == 2){
+				return "../../images/main/party_icon.png";
+			} else if(themeIdx == 3){
 				return "../../images/main/accompany_icon.png";
 			}
 		},

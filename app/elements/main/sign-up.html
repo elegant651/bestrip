@@ -78,7 +78,7 @@
 
 		<div class="field">
 			<h2>Picture</h2>
-			<iron-image src="{{picture}}" style="width:150px; height:150px;"></iron-image>			
+			<iron-image src="{{picture}}" style="width:100px; height:100px;"></iron-image>			
 		</div>
 
 		<div class="field" hidden$="{{isFacebookMode(provider)}}">
@@ -174,7 +174,10 @@
 	      		value: 'https://flamingofly.com/images/main/photo_img.png'
 	      	},
 
-	      	link: String,
+	      	link: {
+	      		type: String,
+	      		value: 'https://flamingofly.com'
+	      	},
 
 	      	user: {
 				type: Object,
@@ -204,6 +207,8 @@
 			this.birth = "";
 			this.countryCode = 0;
 			this.phone = 0;
+
+			this.$.btnSignup.removeAttribute('hidden');
 		},
 
 		isFacebookMode: function(provider) {
@@ -284,14 +289,15 @@
 				if(this.email=='' || this.password==''){
 					return;
 				}									
-							
+				
+				this.$.btnSignup.setAttribute('hidden', '');			
 				ref.createUser({
 					email: that.email,
 					password : that.password
 				}, function(error, userData){
 					if(error) {
-						console.log("Error creating user:", error);
-						alert("error");
+						alert("Error creating user:", error);						
+						that.$.btnSignup.removeAttribute('hidden');
 						return;
 					} else {
 						console.log("Successfully created user account with uid", userData.uid);
@@ -299,7 +305,7 @@
 						ref.child("users").child(userData.uid).set(data);
 
 						that.initialize();					
-						that.fire('show-dialog', {content: "Sign-up has completed.", url: "/register"});
+						that.fire('show-dialog', {content: "Sign-up has completed.", url: "/"});
 					}
 				});
 			} else {

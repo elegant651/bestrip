@@ -67,7 +67,7 @@
             	<div><iron-image id="moBtnFacebook" src="../../images/main/facebook.png" on-tap="facebookLogin"></iron-image></div>
             	<div style="color:rgb(129,129,129); margin: 5px;">or</div>
             	<div><input placeholder="email" value="{{email::input}}"><iron-icon class="icField" src="../../images/main/main_email_icon.png"></iron-icon></div>
-            	<div><input placeholder="password" value="{{password::input}}"><iron-icon class="icField" src="../../images/main/main_password_icon.png"></iron-icon></div>          
+            	<div><input placeholder="password" type="password" value="{{password::input}}"><iron-icon class="icField" src="../../images/main/main_password_icon.png"></iron-icon></div>          
 
             	<div><paper-button id="moBtnLogin" disabled$="{{computeLogin(email,password)}}" on-tap="emailLogin"><iron-image src="../../images/main/main_login_btn.png"></iron-image></paper-button></div>
           	</div>
@@ -155,6 +155,7 @@
 		errorHandler: function(e) {
 	      this.message = 'Error: ' + e.detail.message;
 	      console.log(this.message);
+	      alert(this.message);
 	    },
 
 	  //   setUserData: function(snapshot) {
