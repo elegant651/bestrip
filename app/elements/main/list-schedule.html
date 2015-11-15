@@ -123,9 +123,9 @@
 					</div>
 				</div>
 			</template>	
-			<template is="dom-if" if="{{reqblank}}">
+			<!-- <template is="dom-if" if="{{reqblank}}">
 				<div class="blank"><iron-image src="../../images/main/vacant_icon.png"></iron-image><div class="blanktitle">You currently do not have any notifications</div></div>
-			</template>		
+			</template>		 -->
 		</div>
 	</template>
 </dom-module>
@@ -172,15 +172,14 @@
 			}
 		},
 
-		_requestsChanged: function() {			
+		_userDataChanged: function() {		
+			console.log(this.requests.length+"/r");	
 			if(this.requests.length==0){
 				this.reqblank = true;
 			} else {
 				this.reqblank = false;
 			}
-		},
 
-		_userDataChanged: function() {			
 			if(this.userData.numRT!=this.requests.length){
 				console.log("differentRT");
 

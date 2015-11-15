@@ -189,6 +189,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     registerSchedule.addEventListener('show-dialog', function(e) {
         paperDlog.toggle();
         paperDlog.querySelector("#content").innerHTML = e.detail.content;                
+        paperDlog.addEventListener('click', function() {                  
+            page.redirect('/register');        
+        });
     });
 
     listSchedule.addEventListener('show-dialog', function(e) {
