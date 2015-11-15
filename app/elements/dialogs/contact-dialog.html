@@ -2,27 +2,35 @@
 <dom-module id="contact-dialog">
 	<style>
 		:host {
-			width: 200px;
-			height: 200px;
-			max-height: 200px;
-			background: rgb(255,255,255);			
-		}		
+			width: 190px;
+			height: 80px;
+			max-height: 80px;
+			background: rgb(215,215,215);	
 
-		.contactWrapper {
+			overflow: auto;
+		}	
+
+		h2 {
+			text-align: center;
+			font-size: 18px;			
+		}	
+
+		.contacts {
 			width: 100%;
+
 			@apply(--layout-horizontal);
 		}
 		
 	</style>
-	<link rel="import" type="css" href="../../bower_components/paper-dialog-behavior/paper-dialog-common.css">
+	
 	<template>
 		<firebase-document
 	    	id="fdUser"
 	    	location="{{userTarget}}"
 	    	data="{{userData}}"></firebase-document>
 
-		<div class="contactWrapper">
-			<h2>{{userData.phone}}</h2>
+		<div class="contacts">
+			<h2><span>+{{userData.countryCode}}</span> - {{userData.phone}}</h2>
 		</div>		
 	</template>
 </dom-module>

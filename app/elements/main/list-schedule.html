@@ -50,6 +50,17 @@
 		.buttons paper-button {
 			margin: 0px;
 		}
+
+		.blank {
+			text-align: center;
+			margin-top: 100px;
+		}
+
+		.blanktitle {			
+			font-size: 16px;
+			color: rgb(103,103,103);
+			margin-top: 20px;
+		}
 	</style>
 	<template>		
 		 <firebase-collection	  
@@ -111,7 +122,10 @@
 						</div>
 					</div>
 				</div>
-			</template>			
+			</template>	
+			<template is="dom-if" if="{{reqblank}}">
+				<div class="blank"><iron-image src="../../images/main/vacant_icon.png"></iron-image><div class="blanktitle">You currently do not have any notifications</div></div>
+			</template>		
 		</div>
 	</template>
 </dom-module>
@@ -120,6 +134,15 @@
 		is: "list-schedule",
 
 		properties: {
+			requests: {
+				type: Array,
+				observer: '_requestsChanged'
+			},
+			reqblank: {
+				type: Boolean,
+				value: true
+			},
+
 			requestId: Number,
 			scheduleId: Number,			
 
@@ -146,6 +169,14 @@
 			user: {
 				type: Object,
 				value: null					
+			}
+		},
+
+		_requestsChanged: function() {			
+			if(this.requests.length==0){
+				this.reqblank = true;
+			} else {
+				this.reqblank = false;
 			}
 		},
 

@@ -130,47 +130,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var findingTravelers = document.querySelector("#findingTravelers");
     var listSchedule = document.querySelector('#listSchedule');
     var mySchedule = document.querySelector('#mySchedule');    
-    var btnLogin = document.querySelector('#btnLogin');
-    var loginDlog = document.querySelector('#loginDlog');
+    // var btnLogin = document.querySelector('#btnLogin');
+    // var loginDlog = document.querySelector('#loginDlog');
     var logoutDlog = document.querySelector('#logoutDlog');
     var paperDlog = document.querySelector('#paperDlog');
-    var btnFacebook = document.querySelector('#btnFacebook');
+    // var btnFacebook = document.querySelector('#btnFacebook');
 
-    if(btnFacebook!=null){
-      btnFacebook.addEventListener('click', function() {
+    // if(btnFacebook!=null){
+    //   btnFacebook.addEventListener('click', function() {
         
-        loginDlog.toggle();
-      });    
-    }
+    //     loginDlog.toggle();
+    //   });    
+    // }
 
-    loginDlog.addEventListener('move-signup', function(e) {
-      page.redirect('/signup');
-    });
+    // loginDlog.addEventListener('move-signup', function(e) {
+    //   page.redirect('/signup');
+    // });
 
-    loginDlog.addEventListener('login-complete', function(e) { 
-        if(btnLogin!=null){
-          btnLogin.innerHTML = "LOG OUT";                        
-        }
+    // loginDlog.addEventListener('login-complete', function(e) { 
+    //     if(btnLogin!=null){
+    //       btnLogin.innerHTML = "LOG OUT";                        
+    //     }
 
-        page.redirect('/register');
-    });
-    loginDlog.addEventListener('logout-complete', function(e) {
-        if(btnLogin!=null){
-          btnLogin.innerHTML = "LOG IN";
-        }
+    //     page.redirect('/register');
+    // });
+    // loginDlog.addEventListener('logout-complete', function(e) {
+    //     if(btnLogin!=null){
+    //       btnLogin.innerHTML = "LOG IN";
+    //     }
 
-        location.href='/';
-    });    
+    //     location.href='/';
+    // });    
 
     logoutDlog.addEventListener('logout-complete', function(e) {
         location.href='/';
     });
     
-    if(btnLogin!=null){ 
-      btnLogin.addEventListener('click', function() {
-          loginDlog.toggle();
-      });
-    }  
+    // if(btnLogin!=null){ 
+    //   btnLogin.addEventListener('click', function() {
+    //       loginDlog.toggle();
+    //   });
+    // }  
 
     signup.addEventListener('show-dialog', function(e) {
         paperDlog.toggle();
@@ -207,6 +207,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     mySchedule.addEventListener('show-dialog', function(e) {
         paperDlog.toggle();
         paperDlog.querySelector("#content").innerHTML = e.detail.content;        
+        var url = e.detail.url;
+        paperDlog.addEventListener('click', function() {                  
+            page.redirect(url);        
+        });
     });
 
     // mySchedule.addEventListener('show-newflag', function(e) {
