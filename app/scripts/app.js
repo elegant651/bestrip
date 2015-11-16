@@ -48,8 +48,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       if(!app.queryMatches){
         initDrawer();
-        document.querySelector('#mainToolbar').setAttribute('hidden', '');
-
+        document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "0px"); 
+        document.querySelector('#drawerWrap').setAttribute('hidden', '');
+        document.querySelector('#mainToolbar').setAttribute('hidden', '');        
       } else {
         document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "0px");      
         document.querySelector('#drawerWrap').setAttribute('hidden', '');

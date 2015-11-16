@@ -187,6 +187,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </paper-material>                                              
                 </div>
               </template>
+              
               <!-- mobile web -->
               <template is="dom-if" if="{{!queryMatches}}">
                 <mobileweb-login id="mwLogin" provider="{{provider}}"></mobileweb-login>
@@ -256,7 +257,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </paper-dialog>
 
-      <iron-media-query query="(min-width: 600px)" query-matches="{{queryMatches}}"></iron-media-query>
+      <iron-media-query query="(min-width: 1400px)" query-matches="{{queryMatches}}"></iron-media-query>
   </template>
 
   <!-- build:js scripts/app.js -->
