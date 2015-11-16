@@ -184,6 +184,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     findingTravelers.addEventListener('show-dialog', function(e) {
         paperDlog.toggle();
         paperDlog.querySelector("#content").innerHTML = e.detail.content;
+        var url = e.detail.url;
+        paperDlog.addEventListener('click', function() {                  
+            page.redirect('/search');        
+        });
     });
     
     registerSchedule.addEventListener('show-dialog', function(e) {
@@ -196,7 +200,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     listSchedule.addEventListener('show-dialog', function(e) {
         paperDlog.toggle();
-        paperDlog.querySelector("#content").innerHTML = e.detail.content;
+        paperDlog.querySelector("#content").innerHTML = e.detail.content;        
+        paperDlog.addEventListener('click', function() {                  
+            page.redirect('/schedules');        
+        });
     });
 
     // listSchedule.addEventListener('show-newflag', function(e) {
@@ -212,7 +219,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         paperDlog.querySelector("#content").innerHTML = e.detail.content;        
         var url = e.detail.url;
         paperDlog.addEventListener('click', function() {                  
-            page.redirect(url);        
+            page.redirect('/myschedule');        
         });
     });
 
