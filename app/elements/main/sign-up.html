@@ -46,6 +46,10 @@
 			background-image: url("../../images/main/signup_female_selected.png");
 		}
 
+		.field.birthdate paper-input{
+			margin-right: 10px;
+		}
+
 		#piCountryCode {			
 			margin-right: 10px;
 			width: 90px;
@@ -106,7 +110,7 @@
 			<h2>Name</h2>
 			<paper-input id="piUserName" value="{{username}}" label="ex) William" required auto-validate maxlength="15"></paper-input>
 		</div>		
-		<div class="field">
+		<div class="field birthdate">
 			<h2>Birth Date</h2>
 			<paper-input id="piBirthYear" type="number" label="Y" value="{{birthYear}}" min="1940" max="2016" required></paper-input>
 			<paper-input id="piBirthMonth" type="number" label="M" value="{{birthMonth}}" min="1" max="12" required></paper-input>

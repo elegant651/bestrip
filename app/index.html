@@ -57,7 +57,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   -->
 
   <!-- will be replaced with elements/elements.vulcanized.html -->
-  <link rel="import" href="elements/elements.html">  
+  <script src="bower_components/page/page.js"></script>  
+  <link rel="import" href="elements/elements.html" >  
+
+  <!--
+  <script>
+    window.Polymer = window.Polymer || {dom: 'shadow'};
+  </script>
+  <link rel="import" href="bower_components/polymer/polymer.html">
+  -->
   <!-- endreplace-->
 </head>
 
@@ -126,7 +134,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-header-panel id="headerPanel" main mode="cover">
 
         <!-- Main Toolbar -->
-        <paper-toolbar id="mainToolbar" hidden class="landing">
+        <paper-toolbar id="mainToolbar" hidden class="nolanding">
           <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
           <div id="titleMenu" hidden></div>
 
@@ -208,7 +216,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <!-- build:js scripts/app.js -->
-  <script src="scripts/app.js"></script>
+  <script src="scripts/app.js" async></script>
   <!-- endbuild-->
   <!-- google Analytics -->
   <script>

@@ -13,6 +13,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Grab a reference to our auto-binding template
   // and give it some initial binding values
   // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
+  // var webComponentsSupported = (
+  //     'registerElement' in document &&
+  //     'import' in document.createElement('link') &&
+  //     'content' in document.createElement('template'));
+
+  // if(!webComponentsSupported) {
+  //   var script = document.createElement('script');
+  //   script.async = true;
+  //   script.src = 'bower_components/webcomponentsjs/webcomponents-lite.min.js';
+  //   script.onload = finishLazyLoading;
+  //   document.head.appendChild(script);
+  // } else {
+  //   finishLazyLoading();
+  // }
+  // function finishLazyLoading() {
+  //   console.log("finishLazyLoading");
+  // }
+
+
   var app = document.querySelector('#app');
 
   app.displayInstalledToast = function() {
@@ -23,6 +42,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
     console.log('Our app is ready to rock!');        
+
+    //import page
+    var importPage = function(url) {
+      return new Promise(function(resolve, reject) {
+        Polymer.Base.importHref(url, function(e) {
+          resolve(e.target.import);
+        }, reject);
+      });
+    };
 
     /// routing ///
     var initDrawer = function(title) {        
