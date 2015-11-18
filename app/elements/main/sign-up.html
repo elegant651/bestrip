@@ -46,9 +46,9 @@
 			background-image: url("../../images/main/signup_female_selected.png");
 		}
 
-		#piCountryCode {
+		#piCountryCode {			
 			margin-right: 10px;
-			width: 100px;
+			width: 90px;
 		}
 
 		.txtPolicy {
@@ -108,7 +108,10 @@
 		</div>		
 		<div class="field">
 			<h2>Birth Date</h2>
-			<paper-input id="ipBirth" type="date" value="{{birth}}" required auto-validate></paper-input>
+			<paper-input id="piBirthYear" type="number" label="Y" value="{{birthYear}}" min="1940" max="2016" required></paper-input>
+			<paper-input id="piBirthMonth" type="number" label="M" value="{{birthMonth}}" min="1" max="12" required></paper-input>
+			<paper-input id="piBirthDay" type="number" label="D" value="{{birthDay}}" min="1" max="31" required></paper-input>
+			<!-- <paper-input id="ipBirth" type="date" value="{{birth}}" required auto-validate></paper-input> -->
 		</div>
 		<!-- <div class="field">
 			<h2>Nationality</h2>
@@ -116,13 +119,13 @@
 		</div> -->
 		<div class="field">
 			<h2>Phone Number</h2>
-			<paper-input id="piCountryCode" type="number" label="country code (ex:82)" value="{{countryCode}}" required auto-validate></paper-input>
-			<paper-input id="piPhone" type="number" value="{{phone}}" required auto-validate maxlength="15"></paper-input>
+			<paper-input id="piCountryCode" type="number" label="country code" value="{{countryCode}}" required auto-validate></paper-input>
+			<paper-input id="piPhone" type="number" label="phone number" value="{{phone}}" required auto-validate maxlength="15"></paper-input>
 		</div>
 		<div class="field">
 			<span class="txtPolicy">By continuing, you're confiming that you're read and agree to our terms and conditions and privacy policy</span>
 		</div>
-		<paper-button id="btnSignup" on-tap="signup" disabled$="{{checkData(provider, username, email, password, passwordCheck, birth, countryCode, phone)}}" noink class="colorful ripple">Start</paper-button>
+		<paper-button id="btnSignup" on-tap="signup" disabled$="{{checkData(provider, username, email, password, passwordCheck, birthYear, countryCode, phone)}}" noink class="colorful ripple">Start</paper-button>
 	</template>
 </dom-module>
 <script>
@@ -164,6 +167,19 @@
 	      		type: String,
 	      		value: ''
 	      	},
+
+	      	birthYear: {
+	      		type: Number,
+	      		value: 1987
+	      	},
+	      	birthMonth: {
+	      		type: Number,
+	      		value: 1
+	      	},
+	      	birthDay: {
+	      		type: Number,
+	      		value: 1
+	      	},	      	
 
 	      	countryCode: Number,
 
@@ -208,7 +224,7 @@
 			this.countryCode = 0;
 			this.phone = 0;
 
-			this.$.btnSignup.removeAttribute('hidden');
+			this.$.btnSignup.removeAttribute('hidden');			
 		},
 
 		isFacebookMode: function(provider) {
@@ -234,7 +250,7 @@
 			this.link = this.userData.link;
 		},
 
-		checkData: function(provider, username, email, password, passwordCheck, birth, countryCode, phone) {			
+		checkData: function(provider, username, email, password, passwordCheck, birthYear, countryCode, phone) {			
 			if(this.username==''){
 				return true;
 			}
@@ -251,7 +267,7 @@
 				}
 			}			
 
-			if(this.birth==''){
+			if(this.birthYear==null || this.birthYear==0){
 				return true;
 			}
 			if(this.countryCode==null || this.countryCode==0){
@@ -268,7 +284,9 @@
 		signup: function() {
 
 			var that = this;
-			var gender = this.$.rgGender.selected;			
+			var gender = this.$.rgGender.selected;	
+
+			this.birth = this.birthYear+"-"+this.birthMonth+"-"+this.birthDay;
 
 			var data = {
 				provider: this.provider,

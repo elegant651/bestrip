@@ -42,9 +42,16 @@
 		}
 
 		.moBody .icField {
-			position: absolute;
-    		left: 99px;
-    		margin-top: 12px;
+			top: -40px;
+    		left: -90px;    		
+		}
+
+		.moBody .moField {
+			width: 230px;
+			height: 45px;
+			text-align: center;
+			margin: 0 auto;
+			margin-bottom: 10px;
 		}
 
 		#moBtnFacebook {	
@@ -66,8 +73,8 @@
           	<div class="moBody">
             	<div><iron-image id="moBtnFacebook" src="../../images/main/facebook.png" on-tap="facebookLogin"></iron-image></div>
             	<div style="color:rgb(129,129,129); margin: 5px;">or</div>
-            	<div><input placeholder="email" value="{{email::input}}" /><iron-icon class="icField" src="../../images/main/main_email_icon.png"></iron-icon></div>
-            	<div><input placeholder="password" type="password" value="{{password::input}}" /><iron-icon class="icField" src="../../images/main/main_password_icon.png"></iron-icon></div>          
+            	<div class="moField"><input placeholder="email" value="{{email::input}}" /><iron-icon class="icField" src="../../images/main/main_email_icon.png"></iron-icon></div>
+            	<div class="moField"><input placeholder="password" type="password" value="{{password::input}}" /><iron-icon class="icField" src="../../images/main/main_password_icon.png"></iron-icon></div>          
 
             	<div><paper-button id="moBtnLogin" disabled$="{{computeLogin(email,password)}}" on-tap="emailLogin"><iron-image src="../../images/main/main_login_btn.png"></iron-image></paper-button></div>
           	</div>

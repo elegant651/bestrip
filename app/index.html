@@ -43,8 +43,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
 
   <!-- build:css styles/main.css -->
-  <link rel="stylesheet" href="styles/main.css">
-  <link rel="import" href="styles/my-custom-style.html">
+  <link rel="stylesheet" href="styles/main.css" async>
+  <link rel="import" href="styles/my-custom-style.html" async>
   <!-- endbuild-->
 
   <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
@@ -53,9 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <!-- extra js -->
   <!--
-  <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-  <script type="text/javascript" src="scripts/clarifai-basic.js"></script>
-  <script type="text/javascript" src="scripts/example.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>    
   -->
 
   <!-- will be replaced with elements/elements.vulcanized.html -->
@@ -77,11 +75,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <!-- Drawer Content -->          
             <paper-menu id="drawerList" class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">                
                 
-                  <a data-route="signup" href="/signup">
+                  <!-- <a data-route="signup" href="/signup">
                     <span>SignUp</span>
                   </a>
 
-                  <hr />
+                  <hr /> -->
 
                   <!-- <a data-route="profile" href="/myprofile">
                     <span>Profile</span>
@@ -128,70 +126,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-header-panel id="headerPanel" main mode="cover">
 
         <!-- Main Toolbar -->
-        <paper-toolbar id="mainToolbar" class="landing">
+        <paper-toolbar id="mainToolbar" hidden class="landing">
           <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
           <div id="titleMenu" hidden></div>
 
           <span class="flex"></span>
           
 
-          <div id="imgLogo" class="middle paper-font-display2 app-name" style="margin-top: 25px;"><iron-image src="../../images/main/logo.png"></iron-image></div>          
-
-          <template is="dom-if" if="{{queryMatches}}">                      
-            <div class="middle titleWrap">                      
-                <div class="middle headerWrapper">
-                  <div class="title1">Meet your soulmate at strange place</div>
-                  <div class="title2">Find your worldwide travel companion at once!</div>         
-                </div>        
-            </div>
-          </template>
-        </paper-toolbar>       
-        
-        <!-- <template is="dom-if" if="{{queryMatches}}">
-          <paper-button id="btnLogin" raised>Log In</paper-button> 
-        </template> -->
+          <div id="imgLogo" class="middle paper-font-display2 app-name" style="margin-top: 25px;"><iron-image src="../../images/main/logo.png"></iron-image></div>                   
+        </paper-toolbar>                       
 
         <!-- Main Content -->
         <div class="content">
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
-            <section data-route="home">
-
-              <!-- desktop web -->
-              <template is="dom-if" if="{{queryMatches}}">
-                <iron-image id="btnFacebook" src="../../images/main/facebook.png"></iron-image>             
-                <div id="homeWrapper">                
-                    <paper-material elevation="1">                  
-                      <div class="textWrapper">
-                        <iron-image class="imgText" src="../../images/main/text.png"></iron-image>
-                      </div>                  
-                      <div class="contactWrapper">
-                        <div class="ctitle1">READY TO TRAVEL WITH FLAMINGO?</div>
-                        <div class="ctitle2">
-                          Join our WEB/APP to be among the first to try the new service. <br />
-                          You will get a new travel friend, exciting experience <br />
-                          and the top discounts offered by FLAMINGO.
-                        </div>                    
-                        <div class="buttons">
-                          <a href="https://admin.typeform.com/form/593459/fields" target="_blank"><iron-image src="../../images/main/contact.png"></iron-image></a>
-                          <a href="https://admin.typeform.com/form/593074/fields/" target="_blank"><iron-image src="../../images/main/report.png"></iron-image></a>
-                        </div>                    
-                      </div>                  
-                    </paper-material>                              
-
-                    <paper-material elevation="1">                   
-                      <div class="footer">
-                        The Social Travel Network <br />
-                        ⓒ2015 FLAMINGO All rights reserved.
-                      </div>
-                    </paper-material>                                              
-                </div>
-              </template>
-              
-              <!-- mobile web -->
-              <template is="dom-if" if="{{!queryMatches}}">
-                <mobileweb-login id="mwLogin" provider="{{provider}}"></mobileweb-login>
-              </template>
+            <section data-route="home">                           
+              <!-- mobile web -->              
+                <mobileweb-login id="mwLogin" provider="{{provider}}"></mobileweb-login>              
             </section>
           
               <section data-route="signup">
@@ -230,16 +181,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </section>           
 
           </iron-pages>
-        </div>
-
-        <!-- <login-dialog id="loginDlog" user="{{user}}"></login-dialog>         -->
+        </div>        
       </paper-header-panel>
     </paper-drawer-panel>
 
-    <paper-toast id="caching-complete"
+    <!-- <paper-toast id="caching-complete"
                  duration="6000"
                  text="Caching complete! This app will work offline.">
-    </paper-toast>
+    </paper-toast> -->
 
     <platinum-sw-register auto-register
                           clients-claim
@@ -255,9 +204,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="buttons">
           <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
         </div>
-      </paper-dialog>
-
-      <iron-media-query query="(min-width: 1400px)" query-matches="{{queryMatches}}"></iron-media-query>
+      </paper-dialog>      
   </template>
 
   <!-- build:js scripts/app.js -->

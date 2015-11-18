@@ -25,7 +25,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     console.log('Our app is ready to rock!');        
 
     /// routing ///
-    var initDrawer = function(title) {        
+    var initDrawer = function(title) {
+        window.scrollTo(0, 0);
         document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "240px");
         document.querySelector('#drawerWrap').removeAttribute('hidden');
         document.querySelector('#mainToolbar').removeAttribute('hidden');
@@ -44,11 +45,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     page('/', function () {
       app.route = 'home';
-      
-      initDrawer();
-      document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "0px"); 
-      document.querySelector('#drawerWrap').setAttribute('hidden', '');
-      document.querySelector('#mainToolbar').setAttribute('hidden', '');              
+
+      if(!app.queryMatches){
+        initDrawer();
+        document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "0px"); 
+        document.querySelector('#drawerWrap').setAttribute('hidden', '');
+        document.querySelector('#mainToolbar').setAttribute('hidden', '');        
+      } else {
+        document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "0px");      
+        document.querySelector('#drawerWrap').setAttribute('hidden', '');
+        document.querySelector('#mainToolbar').className = 'landing';
+        document.querySelector('#headerPanel').setAttribute('mode', 'cover');      
+        if(document.querySelector('#imgLogo')!=null){
+          document.querySelector('#imgLogo').removeAttribute('hidden');
+        }
+        document.querySelector('#titleMenu').setAttribute('hidden', '');
+        
+        if(document.querySelector('.titleWrap')!=null){
+          document.querySelector('.titleWrap').removeAttribute('hidden');             
+        }
+      }      
+
     });
 
     page('/signup', function() {
@@ -88,6 +105,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       initDrawer('MY TRAVELERS');
     });
 
+    // page('/contactinfo/:id', function (data) {
+    //   app.route = 'contactinfo';
+    //   app.params = data.params;
+
+    //   initDrawer('CONTACT INFO');
+    // });  
+
     page('/logout', function() {
       app.route = 'logout';
 
@@ -106,14 +130,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var registerSchedule = document.querySelector("#registerSchedule");
     var findingTravelers = document.querySelector("#findingTravelers");
     var listSchedule = document.querySelector('#listSchedule');
-    var mySchedule = document.querySelector('#mySchedule');        
+    var mySchedule = document.querySelector('#mySchedule');    
+    // var btnLogin = document.querySelector('#btnLogin');
+    // var loginDlog = document.querySelector('#loginDlog');
     var logoutDlog = document.querySelector('#logoutDlog');
     var paperDlog = document.querySelector('#paperDlog');
+    // var btnFacebook = document.querySelector('#btnFacebook');
 
+    // if(btnFacebook!=null){
+    //   btnFacebook.addEventListener('click', function() {
+        
+    //     loginDlog.toggle();
+    //   });    
+    // }
+
+    // loginDlog.addEventListener('move-signup', function(e) {
+    //   page.redirect('/signup');
+    // });
+
+    // loginDlog.addEventListener('login-complete', function(e) { 
+    //     if(btnLogin!=null){
+    //       btnLogin.innerHTML = "LOG OUT";                        
+    //     }
+
+    //     page.redirect('/register');
+    // });
+    // loginDlog.addEventListener('logout-complete', function(e) {
+    //     if(btnLogin!=null){
+    //       btnLogin.innerHTML = "LOG IN";
+    //     }
+
+    //     location.href='/';
+    // });    
 
     logoutDlog.addEventListener('logout-complete', function(e) {
         location.href='/';
-    });    
+    });
+    
+    // if(btnLogin!=null){ 
+    //   btnLogin.addEventListener('click', function() {
+    //       loginDlog.toggle();
+    //   });
+    // }  
 
     signup.addEventListener('show-dialog', function(e) {
         paperDlog.toggle();
