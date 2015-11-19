@@ -32,23 +32,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="application-name" content="Flamingo">
   <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
-
-  <!-- Add to homescreen for Safari on iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Flamingo">
-  <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">  
 
-  <!-- Tile icon for Win8 (144x144) -->
-  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
 
   <!-- build:css styles/main.css -->
-  <link rel="stylesheet" href="styles/main.css" async>
-  <link rel="import" href="styles/my-custom-style.html" async>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="import" href="styles/my-custom-style.html">
   <!-- endbuild-->
 
   <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
-  <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js" async></script>  
+  <!--<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js" async></script>  -->
   <!-- endbuild -->
 
   <!-- extra js -->
@@ -57,20 +50,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   -->
 
   <!-- will be replaced with elements/elements.vulcanized.html -->
-  <script src="bower_components/page/page.js"></script>  
-  <link rel="import" href="elements/elements.html" >  
-
-  <!--
-  <script>
-    window.Polymer = window.Polymer || {dom: 'shadow'};
-  </script>
-  <link rel="import" href="bower_components/polymer/polymer.html">
-  -->
+  <script src="bower_components/page/page.js"></script>    
+  <link rel="import" id="bundle" href="elements/elements.html">  
+  <base href="/">
   <!-- endreplace-->
 </head>
 
-<body class="fullbleed layout vertical">
-  <span id="browser-sync-binding"></span>  
+<body class="fullbleed loading layout vertical">
+  <!-- Loading screens happen outside of HTML Imports + Polymer so 1st
+     paint is fast and does not depend on network resources. Mobile gets
+     a loading splash screen. Desktop the layout/shell of the app. -->
+  <div id="splash">
+    <div class="appshell_drawer">
+      <div class="appshell_drawer_top"></div>
+      <div class="appshell_drawer_bottom"></div>
+    </div>
+    <div class="appshell_main">
+      <div class="appshell_header"></div>
+      <div class="appshell_content"></div>
+    </div>
+  </div>
+
+  <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">            
 
     <paper-drawer-panel id="paperDrawerPanel" drawer-width="240px">      
@@ -192,16 +193,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>        
       </paper-header-panel>
     </paper-drawer-panel>
-
-    <!-- <paper-toast id="caching-complete"
-                 duration="6000"
-                 text="Caching complete! This app will work offline.">
-    </paper-toast> -->
+  
 
     <platinum-sw-register auto-register
                           clients-claim
-                          skip-waiting
-                          on-service-worker-installed="displayInstalledToast">
+                          skip-waiting>
       <platinum-sw-cache default-cache-strategy="networkFirst"
                          precache-file="precache.json">
       </platinum-sw-cache>

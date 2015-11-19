@@ -9,34 +9,51 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 (function(document) {
   'use strict';
-
-  // Grab a reference to our auto-binding template
-  // and give it some initial binding values
-  // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
-  // var webComponentsSupported = (
-  //     'registerElement' in document &&
-  //     'import' in document.createElement('link') &&
-  //     'content' in document.createElement('template'));
-
-  // if(!webComponentsSupported) {
-  //   var script = document.createElement('script');
-  //   script.async = true;
-  //   script.src = 'bower_components/webcomponentsjs/webcomponents-lite.min.js';
-  //   script.onload = finishLazyLoading;
-  //   document.head.appendChild(script);
-  // } else {
-  //   finishLazyLoading();
-  // }
-  // function finishLazyLoading() {
-  //   console.log("finishLazyLoading");
-  // }
-
+    
 
   var app = document.querySelector('#app');
 
-  app.displayInstalledToast = function() {
-    // document.querySelector('#caching-complete').show();
-  };  
+
+  var webComponentsSupported = (
+      'registerElement' in document &&
+      'import' in document.createElement('link') &&
+      'content' in document.createElement('template'));
+
+  if(!webComponentsSupported) {
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = 'bower_components/webcomponentsjs/webcomponents-lite.min.js';
+    script.onload = finishLazyLoadingImports;
+    document.head.appendChild(script);
+  } else {
+    finishLazyLoadingImports();
+    var loadContainer = document.getElementById('splash');
+    loadContainer.parentNode.removeChild(loadContainer);
+  }
+
+  function finishLazyLoadingImports() {
+    // Use native Shadow DOM if it's available in the browser.
+    window.Polymer = window.Polymer || {dom: 'shadow'};
+
+    var onImportLoaded = function() {
+      var loadContainer = document.getElementById('splash');
+      loadContainer.addEventListener('transitionend', function(e){
+        loadContainer.parentNode.removeChild(loadContainer); // IE 10 doesn't support el.remove()
+        console.log("loaded");
+      });      
+
+      document.body.classList.remove('loading');
+    };
+
+    // crbug.com/504944 - readyState never goes to complete until Chrome 46.
+    // crbug.com/505279 - Resource Timing API is not available until Chrome 46.
+    var link = document.querySelector('#bundle');
+    if (link.import && link.import.readyState === 'complete') {
+      onImportLoaded();
+    } else {
+      link.addEventListener('load', onImportLoaded);
+    }
+  }
 
   // Listen for template bound event to know when bindings
   // have resolved and content has been stamped to the page
