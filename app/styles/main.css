@@ -157,11 +157,14 @@ body.loading #splash {
 	height: 60px;
 }
 
-#titleMenu {
-	margin-left: 40px;	
+#titleMenu {	
 	color: rgb(254,254,254);
 	font-size: 20px;
+	display: inline-block;
+    margin-left: 80px;
+    margin-top: 15px;
 }
+
 
 #btnLogin {
 	position: fixed;
