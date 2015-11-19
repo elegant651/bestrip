@@ -1,0 +1,254 @@
+
+
+<dom-module id="list-schedule">
+	<style>
+		:host {
+
+		}
+
+		.request-count {
+			margin: 15px;
+			color:rgb(253,68,19);
+			font-size: 18px;
+		}
+
+		.list-element {
+			width: 100%;		
+			margin-bottom: 10px;	
+			padding-left: 10px;						
+		}
+
+		.title {
+			font-size: 15px;
+			font-weight: bold;
+		}
+
+		.listWrapper {
+			@apply(--layout-horizontal);
+			@apply(--layout-justified);	
+		}
+
+		.usersWrapper {
+			@apply(--layout-horizontal);
+		}
+
+		.usersWrapper .name {
+			line-height: 60px;
+			margin-left: 10px;
+		}
+
+		.userbox {
+			width: 100px;
+		}
+
+		.buttons {
+			width: 190px;
+			@apply(--layout-horizontal);
+			margin-top: 10px;
+		}
+
+		.buttons paper-button {
+			margin: 0px;
+		}
+
+		.blank {
+			text-align: center;
+			margin-top: 100px;
+		}
+
+		.blanktitle {			
+			font-size: 16px;
+			color: rgb(103,103,103);
+			margin-top: 20px;
+		}
+	</style>
+	<template>		
+		 <firebase-collection	  
+			  id="fcRequests"        
+	          location="https://flamingo365.firebaseio.com/requests"
+	          order-by-child="schedule_userid"
+	          equal-to="{{user.uid}}"
+	          data="{{requests}}"	          
+	          ></firebase-collection>
+
+	     <firebase-collection
+	     	id="fcSchedule"
+	     	location="{{scheduleTarget}}"
+	     	></firebase-collection>
+
+	     <firebase-document
+	     	location="{{requestTarget}}"
+	     	data="{{requestData}}"
+	     	>
+	     </firebase-document>
+
+	     <firebase-document
+	     	location="{{userTarget}}"
+	     	data="{{userData}}"
+	     	>
+	     </firebase-document>
+	    
+
+	     <!-- <paper-button id="pbRefresh" on-tap="refresh"><iron-icon icon="refresh"></iron-icon></paper-button> -->
+
+	    <div class="request-count">
+	    </div> 	     
+		
+		<div class="vertical-section">
+			
+			<template id="t" is="dom-repeat" items="[[requests]]" filter="filterStatus" as="request">							
+				<!-- Type2 : request message -->
+				<div class="list-element">					
+					<div class="title">[[request.schedule_title]]</div>
+					<div class="listWrapper">
+						<div class="usersWrapper">							
+							<iron-image src="[[request.userpic]]" style="width:70px; height:70px;"></iron-image>
+							<div class="name">[[request.username]]</div>						
+						</div>
+
+						<div class="buttons">
+							<paper-button id="btnAccept" noink on-tap="accept" 
+								data-key$="{{request.__firebaseKey__}}" 
+								data-scheduleid$="{{request.schedule_id}}"
+								data-userid$="{{request.userid}}"
+								data-usergender$="{{request.usergender}}"
+								data-username$="{{request.username}}" 
+								data-userpic$="{{request.userpic}}"
+							 	>
+							 	<iron-image src="../../images/main/ok_btn_2.png"></iron-image>
+							 </paper-button>
+							<paper-button id="btnRefuse" noink on-tap="refuse" 
+								data-key$="{{request.__firebaseKey__}}">
+								<iron-image src="../../images/main/reject_btn_1.png"></iron-image>
+							</paper-button>			
+						</div>
+					</div>
+				</div>
+			</template>	
+			<!-- <template is="dom-if" if="{{reqblank}}">
+				<div class="blank"><iron-image src="../../images/main/vacant_icon.png"></iron-image><div class="blanktitle">You currently do not have any notifications</div></div>
+			</template>		 -->
+		</div>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: "list-schedule",
+
+		properties: {
+			requests: {
+				type: Array				
+			},
+			reqblank: {
+				type: Boolean,
+				value: true
+			},
+
+			requestId: Number,
+			scheduleId: Number,			
+
+			userData: {
+				type: Object,
+				observer: '_userDataChanged'
+			},
+
+			requestTarget: {
+				type: String,
+				computed: 'computeRequestTarget(requestId)'
+			},
+
+			scheduleTarget: {
+				type: String,
+				computed: 'computeScheduleTarget(scheduleId)'
+			},
+
+			userTarget: {
+				type: String,
+				computed: 'computeUserTarget(user)'
+			},
+
+			user: {
+				type: Object,
+				value: null					
+			}
+		},
+
+		_userDataChanged: function() {		
+			console.log(this.requests.length+"/r");	
+			if(this.requests.length==0){
+				this.reqblank = true;
+			} else {
+				this.reqblank = false;
+			}
+
+			if(this.userData.numRT!=this.requests.length){
+				console.log("differentRT");
+
+				var ref = new Firebase(this.userTarget);
+				ref.update({
+					"numRT": this.requests.length
+				});
+
+				this.userData.numRT = this.requests.length;
+		  		this.notifyPath('userData.numRT', this.userData.numRT);
+
+		  		this.fire('show-newflag');
+		 	} else {
+		 		this.fire('hide-newflag');
+		 	}
+		},
+
+		refresh: function() {
+			
+		},
+
+		filterStatus: function(item) {
+			return item.status == 0;
+		},
+
+		computeRequestTarget: function(requestId) {
+			return "https://flamingo365.firebaseio.com/requests/"+requestId;
+		},
+
+		computeScheduleTarget: function(scheduleId) {
+			return "https://flamingo365.firebaseio.com/schedules/"+scheduleId+"/req_users";
+		},
+
+		computeUserTarget: function(user) {
+			if(user!=null){				
+				return "https://flamingo365.firebaseio.com/users/"+user.uid;
+			}			
+		},
+
+		accept: function(e) {
+			this.requestId = e.currentTarget.getAttribute("data-key");	
+			this.scheduleId = e.currentTarget.getAttribute("data-scheduleid");					
+
+			if(this.requestId!=null && this.scheduleId!=null){
+				this.requestData.status = 1;
+				this.notifyPath('requestData.status', this.requestData.status);
+
+				//push user data in schedule								
+				var data = {
+					userid: e.currentTarget.getAttribute("data-userid"),
+					username: e.currentTarget.getAttribute("data-username"),
+					usergender: e.currentTarget.getAttribute("data-usergender"),
+					userpic: e.currentTarget.getAttribute("data-userpic")
+				};
+				this.$.fcSchedule.add(data);
+
+				this.fire('show-dialog', {content: "The task has completed.", url: "/schedules"});
+			}						
+		},
+
+		refuse: function(e) {
+			this.requestId = e.currentTarget.getAttribute("data-key");			
+			if(this.requestId!=null){
+				this.requestData.status = 2;
+				this.notifyPath('requestData.status', this.requestData.status);
+
+				this.fire('show-dialog', {content: "The task has completed.", url: "/schedules"});
+			}			
+		}
+	});
+</script>

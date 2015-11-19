@@ -1,0 +1,73 @@
+
+<dom-module id="logout-dialog">
+	<style>
+		:host {
+			background: rgb(255,255,255);			
+			text-align: center;
+			@apply(--layout-center-justified);
+		}		
+
+		.logoutWrapper {
+			width: 100%;			
+			@apply(--layout-horizontal);			
+			@apply(--layout-center-justified);
+			text-align: center;
+			cursor: pointer;
+			margin-top: 200px;
+		}
+
+		.logoutWrapper paper-button {
+			text-align: center;
+			width: 100%;
+			font-size: 22px;
+			font-weight: bold;
+		}
+	</style>	
+
+	<template>
+		<firebase-auth id="firebaseLogin" user="{{user}}" status-known="{{statusKnown}}" location="https://flamingo365.firebaseio.com" on-error="errorHandler"></firebase-auth>
+
+		
+		<div class="logoutWrapper" on-tap="logout" hidden$="{{computeLogoutHidden(statusKnown, user)}}">				
+			<paper-button raised>Log out</paper-button>			
+		</div>					
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: "logout-dialog",
+
+		properties: {			
+
+			message: {
+	        	type: String,
+	        	value: ''
+	      	},
+	      
+	      	user: {
+	        	type: Object,
+	        	value: null,	        	
+	        	notify: true
+	      	},
+
+	      	statusKnown: {
+	        	type: Boolean
+	      	}				      	
+		},
+
+	    logout: function() {
+	    	this.$.firebaseLogin.logout();
+	    	this.fire('logout-complete', {userid: null}, {bubbles: true});	    			    	
+	    },
+
+	    errorHandler: function(e) {
+	      this.message = 'Error: ' + e.detail.message;
+	      alert(this.message);
+	    },	    
+
+	    computeLogoutHidden: function(statusKnown, user) {	    
+	      return !statusKnown || !user;
+	    }	    
+	   
+	});
+</script>

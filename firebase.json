@@ -1,13 +1,13 @@
 {
   "firebase": "flamingo365",
-  "public": "dist",
+  "public": "public",
   "ignore": [
     "firebase.json",
     "**/.*",
     "**/node_modules/**"
   ],
   "rewrites": [ {
-   	"source": "**",
+    "source": "**",
     "destination": "/index.html"
   } ]
 }

@@ -1,0 +1,301 @@
+
+<dom-module id="register-schedule">
+	<style>						
+
+		h2 {
+			text-align: center;
+			font-size: 15px;
+			font-weight: normal;
+		}
+
+		.destinationWrapper {
+			background-image: url("../../images/main/london_img.jpg");
+			background-size: cover;
+			background-repeat: no-repeat;				
+			height: 230px;			
+			margin-top: -20px;							
+		}
+
+		.destinationWrapper h2 {					
+			text-align: center;
+			color: #FFF;
+			padding-top: 60px;
+			font-size: 30px;
+			font-weight: bold;
+		}
+
+		.destinationWrapper #btnSelCity {
+			text-align: center;			
+		    margin: 0 auto;
+    		display: table;
+		}
+
+		.wrapperDate {
+			@apply(--layout-horizontal);			
+			@apply(--layout-center-justified);
+		}
+
+		.wrapperDate .icDate {
+			margin: 18px;
+		}
+
+		.wrapperDate paper-input {
+			margin-right: 20px;
+		}
+
+		#rgTheme {
+			font-size: 13px;			
+			@apply(--layout-horizontal);	
+			@apply(--layout-center-justified);
+		}
+
+		#rgTheme .imgDining {
+			background-image: url("../../images/main/dining_icon_1.png");
+			background-size: cover;
+			background-repeat: no-repeat;	
+			width: 30px;
+			height: 30px;
+		}
+		#rgTheme .iron-selected .imgDining {
+			background-image: url("../../images/main/dining_icon_2.png");
+		}
+
+		#rgTheme .imgParty {
+			background-image: url("../../images/main/party_icon_1.png");
+			background-size: cover;
+			background-repeat: no-repeat;	
+			width: 30px;
+			height: 30px;
+		}
+		#rgTheme .iron-selected .imgParty {
+			background-image: url("../../images/main/party_icon_2.png");
+		}
+
+		#rgTheme .imgAccompany {
+			background-image: url("../../images/main/accompany_icon_1.png");
+			background-size: cover;
+			background-repeat: no-repeat;	
+			width: 30px;
+			height: 30px;
+		}
+		#rgTheme .iron-selected .imgAccompany {
+			background-image: url("../../images/main/accompany_icon_2.png");
+		}
+
+		#btnRegister {			
+			margin-top: 20px;		
+			@apply(--layout-horizontal);	
+			@apply(--layout-center-justified);	
+			cursor: pointer;
+		}
+		
+	</style>	
+	<template>		
+		<firebase-document
+	     	location="{{userTarget}}"
+	     	data="{{userData}}"
+	     	>
+	     </firebase-document>      
+
+		<firebase-collection	  
+				id="fcSchedules"        
+	          location="https://flamingo365.firebaseio.com/schedules"
+	          ></firebase-collection>	    	    
+		
+		<div class="destinationWrapper">
+			<h2 id="txtSelCity">London</h2>
+			<iron-image id="btnSelCity" src="../../images/main/others_icon.png" data-dialog="dlogCity" on-tap="showCityDlog"></iron-image>			
+		</div>		
+		<div class="vertical-section">
+			<h2>Date</h2>			
+			<div class="wrapperDate">
+				<iron-icon class="icDate" src="../../images/main/calendar_icon_2.png"></iron-icon>
+				<paper-input id="piStartDate" label="Select Start Date" on-tap="showStartDateDlog"></paper-input>			
+			</div>
+			
+			<paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
+				<div class="buttons">
+		          <paper-button dialog-dismiss>Cancel</paper-button>
+		          <paper-button dialog-confirm>OK</paper-button>
+		        </div>
+		        <paper-date-picker id="datePicker" date="{{pickerDate}}" responsive-width="655px"></paper-date-picker>      
+		      </paper-dialog>
+		</div>
+		<div class="vertical-section">
+			<h2>Theme</h2>
+			<paper-radio-group id="rgTheme" selected="party">
+				<paper-radio-button name="dining"><div class="imgDining"></div>Dining</paper-radio-button>
+				<paper-radio-button name="party"><div class="imgParty"></div>Party</paper-radio-button>
+				<paper-radio-button name="accompany"><div class="imgAccompany"></div>Accompany</paper-radio-button>				
+			</paper-radio-group>
+		</div>		
+		<div class="vertical-section">
+			<paper-button id="btnRegister" noink disabled$="{{checkData(user, selCityIdx, startDate)}}" on-tap="register"><iron-image src="../../images/main/register_btn_2.png"></iron-image></paper-button>			
+		</div>
+		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>		
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: "register-schedule",
+
+		properties: {
+			user: {
+				type: Object,
+				value: null							
+			},
+			
+			selCityIdx: {
+				type: Number,
+				value: 1
+			},
+
+			startDate: {
+				type: Number,
+				value: -1
+			},
+
+			pickerDate: {
+				type: Number,
+				observer: '_pickerDateChanged'
+			},
+
+			userTarget: {
+				type: String,
+				computed: '_computeUserTarget(user)'
+			},
+
+			userData: {
+				type: Object				
+			}			
+		},		
+
+		_computeUserTarget: function(user) {
+			if(user!=null){				
+				return "https://flamingo365.firebaseio.com/users/"+user.uid;
+			}			
+		},
+
+		ready: function() {
+			this.cityNames = [	
+				{name: 'All', idx: 0},			
+				{name: 'London', idx: 1},
+				{name: 'Paris', idx: 2},
+				{name: 'Berlin', idx: 3},
+				{name: 'Munich', idx: 4},
+				{name: 'Rome', idx: 5},
+				{name: 'Istanbul', idx: 6},
+				{name: 'Prague', idx: 7},
+				{name: 'Barcelona', idx: 8}
+			];
+
+			this.initialize();
+		},		
+
+		initialize: function() {			
+			this.$.txtSelCity.innerHTML = "London";
+			this.selCityIdx = 1;
+			this.startDate = -1;			
+			this.$.piStartDate.value = "Select Start Date";  			
+			this.$.rgTheme.selected = "party";
+			this.$.cityDlog.close();
+			this.$.dpDlog.close();			
+		},
+			
+		showCityDlog: function() {									
+			this.$.cityDlog.open();												
+		},        
+
+		showStartDateDlog: function() {			
+			this.$.dpDlog.open();
+		},		
+
+		_pickerDateChanged: function() {
+			this.$.dpDlog.close();
+			this.dateValueChanged();
+		},
+
+		dateValueChanged: function() {			
+			if(this.$.datePicker.date==null){
+				return;
+			}
+
+			this.locale = 'en-US';
+			var date = this.$.datePicker.date;						
+
+			var year = this.$.datePicker.dateFormat(date, 'YYYY');
+			var month = this.$.datePicker.dateFormat(date, 'MMM');
+			var day = this.$.datePicker.dateFormat(date, 'D');
+			
+			var strDate = year+" "+month+" "+day;			
+			    		
+    		this.$.piStartDate.value = strDate;  
+    		this.startDate = date.getTime();    			    		
+		},		
+
+		onSelectCity: function(e) {			
+			this.selCityIdx = e.detail.idx;
+			var strName = e.detail.name;
+			this.$.txtSelCity.innerHTML = strName;
+		},				
+
+		checkData: function(user, selCityIdx, startDate) {			
+			if(this.user==null){
+				return true;
+			}
+			if(this.selCityIdx==-1){				
+				return true;
+			}						
+			if(this.startDate==-1){					
+				return true;
+			}									
+
+			return false;
+		},	
+
+		register: function() {			
+			if(this.userData==null){
+				return;
+			}
+
+			var theme = this.$.rgTheme.selected;
+			var themeIdx = 2;
+			if(theme === "dining"){
+				themeIdx = 1;
+			} else if(theme === "party"){
+				themeIdx = 2;
+			} else if(theme === "accompany"){
+				themeIdx = 3;
+			} 			
+			
+			var startDateName = this.$.piStartDate.value;
+			var selCityName = this.cityNames[this.selCityIdx].name;
+			var schedule_title = startDateName + " : " + selCityName;			
+
+			var data = {
+				userid: this.user.uid,
+				usergender: this.userData.gender,
+				username: this.userData.username,				
+				userpic: this.userData.picture,
+				userbirth: this.userData.birth,
+				usercountryCode: this.userData.countryCode,
+				userphone: this.userData.phone,
+				selCityIdx: this.selCityIdx,
+				selCityName: selCityName,
+				themeIdx: themeIdx,
+				startDate: this.startDate,		
+				startDateName: startDateName,
+				schedule_title : schedule_title,				
+				created_at: new Date().getTime(),
+				status: 0				
+			};
+			
+			this.$.fcSchedules.add(data);					
+			
+			this.fire('show-dialog', {content: "Registration has completed.", url: "/register"});		
+
+			//initialize
+			this.initialize();
+		}		
+	});
+</script>

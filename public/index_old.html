@@ -32,8 +32,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="application-name" content="Flamingo">
   <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Flamingo">
+  <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">  
+
+  <!-- Tile icon for Win8 (144x144) -->
+  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
 
   <!-- build:css styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
@@ -43,35 +50,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
   <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js" async></script>  
   <!-- endbuild -->
- 
+
   <!-- extra js -->
   <!--
-  <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>    
+  <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="scripts/clarifai-basic.js"></script>
+  <script type="text/javascript" src="scripts/example.js"></script>
   -->
 
   <!-- will be replaced with elements/elements.vulcanized.html -->
-  <script src="bower_components/page/page.js"></script>    
-  <link rel="import" id="bundle" href="elements/elements.html">  
-  <base href="/">
+  <link rel="import" href="elements/elements.html">  
   <!-- endreplace-->
 </head>
 
-<body class="fullbleed loading layout vertical">
-  <!-- Loading screens happen outside of HTML Imports + Polymer so 1st
-     paint is fast and does not depend on network resources. Mobile gets
-     a loading splash screen. Desktop the layout/shell of the app. -->
-<!--   <div id="splash">
-    <div class="appshell_drawer">
-      <div class="appshell_drawer_top"></div>
-      <div class="appshell_drawer_bottom"></div>
-    </div>
-    <div class="appshell_main">
-      <div class="appshell_header"></div>
-      <div class="appshell_content"></div>
-    </div>
-  </div> -->
-
-  <span id="browser-sync-binding"></span>
+<body class="fullbleed layout vertical">
+  <span id="browser-sync-binding"></span>  
   <template is="dom-bind" id="app">            
 
     <paper-drawer-panel id="paperDrawerPanel" drawer-width="240px">      
@@ -82,20 +75,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>          
 
           <!-- Drawer Content -->          
-            <paper-menu id="drawerList" class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">                
+            <paper-menu id="drawerList" class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
+                <!-- <a data-route="home" href="/">
+                  <iron-icon icon="home"></iron-icon>
+                  <span>Home</span>
+                </a> -->
                 
-                  <!-- <a data-route="signup" href="/signup">
+                  <a data-route="signup" href="/signup">
                     <span>SignUp</span>
                   </a>
 
-                  <hr /> -->
+                  <hr />
 
-                  <!-- <a data-route="profile" href="/myprofile">
+                  <a data-route="profile" href="/myprofile">
                     <span>Profile</span>
                     <div id="icProfile" class="icon"></div>
                   </a>
 
-                  <hr /> -->
+                  <hr />
 
                   <a data-route="register" href="/register">
                     <span>Register</span>
@@ -124,34 +121,81 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   </a>                  
 
                   <hr />
-                  
-                  <a data-route="logout" href="/logout">                    
-                      <span>Log out</span>
-                      <div id="icLogout" class="icon"></div>                                        
-                  </a>                            
+
+                  <a>
+                    <span>Log out</span>
+                    <div id="icLogout" class="icon"></div>                    
+                  </a>          
             </paper-menu>
         </div>      
 
       <paper-header-panel id="headerPanel" main mode="cover">
 
         <!-- Main Toolbar -->
-        <paper-toolbar id="mainToolbar" hidden class="nolanding">
+        <paper-toolbar id="mainToolbar" class="landing">
           <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
-          <div id="titleMenu" hidden></div>
-
           <span class="flex"></span>
-          
 
-          <div id="imgLogo" class="middle paper-font-display2 app-name" style="margin-top: 25px;"><iron-image src="../../images/main/logo.png"></iron-image></div>                   
-        </paper-toolbar>                       
+          <!-- Toolbar icons -->                    
+
+          <!-- Application name -->
+          <div class="middle paper-font-display2 app-name" style="margin-top: 25px;"><iron-image src="../../images/main/logo.png"></iron-image></div>
+        
+          <div class="middle titleWrap">
+          <!-- for mobile web -->        
+            <template is="dom-if" if="{{!queryMatches}}">
+              <div class="motitle">Meet your soulmate at strange place</div>
+            </template>
+          <!-- -->
+
+            <template is="dom-if" if="{{queryMatches}}">
+              <div class="middle headerWrapper">
+                <div class="title1">Meet your soulmate at strange place</div>
+                <div class="title2">Find your worldwide travel companion at once!</div>         
+              </div>
+            </template>
+          </div>
+        </paper-toolbar>       
+
+        <!-- <iron-image id="btnLogin" src="../../images/main/login.png"></iron-image> -->
+        <template is="dom-if" if="{{queryMatches}}">
+          <paper-button id="btnLogin" raised>Log In</paper-button> 
+        </template>
 
         <!-- Main Content -->
         <div class="content">
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
-            <section data-route="home">                           
-              <!-- mobile web -->              
-                <mobileweb-login id="mwLogin" provider="{{provider}}"></mobileweb-login>              
+            <section data-route="home">
+              <iron-image id="btnFacebook" src="../../images/main/facebook.png"></iron-image>             
+              <div id="homeWrapper">
+                <template is="dom-if" if="{{queryMatches}}">
+                  <paper-material elevation="1">                  
+                    <div class="textWrapper">
+                      <iron-image class="imgText" src="../../images/main/text.png"></iron-image>
+                    </div>                  
+                    <div class="contactWrapper">
+                      <div class="ctitle1">READY TO TRAVEL WITH FLAMINGO?</div>
+                      <div class="ctitle2">
+                        Join our WEB/APP to be among the first to try the new service. <br />
+                        You will get a new travel friend, exciting experience <br />
+                        and the top discounts offered by FLAMINGO.
+                      </div>                    
+                      <div class="buttons">
+                        <a href="https://admin.typeform.com/form/593459/fields" target="_blank"><iron-image src="../../images/main/contact.png"></iron-image></a>
+                        <a href="https://admin.typeform.com/form/593074/fields/" target="_blank"><iron-image src="../../images/main/report.png"></iron-image></a>
+                      </div>                    
+                    </div>                  
+                  </paper-material>                              
+
+                  <paper-material elevation="1">                   
+                    <div class="footer">
+                      The Social Travel Network <br />
+                      ⓒ2015 FLAMINGO All rights reserved.
+                    </div>
+                  </paper-material>                              
+                </template>
+              </div>
             </section>
           
               <section data-route="signup">
@@ -159,7 +203,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </section>
 
               <section data-route="profile">
-                <my-profile id="myprofile" hidden></my-profile>
+                <my-profile id="myprofile"></my-profile>
               </section>
 
               <section data-route="register">
@@ -178,9 +222,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <my-schedule id="mySchedule" user="{{user}}"></my-schedule>
               </section>
 
-              <section data-route="logout">
-                  <logout-dialog id="logoutDlog" user="{{user}}"></logout-dialog>
-              </section>
 
               <section data-route="contactinfo">
                 <paper-material elevation="1">
@@ -190,14 +231,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </section>           
 
           </iron-pages>
-        </div>        
+        </div>
+
+        <login-dialog id="loginDlog" user="{{user}}" provider="{{provider}}" isfindingenable="{{isfindingenable}}"></login-dialog>
       </paper-header-panel>
     </paper-drawer-panel>
-  
+
+    <paper-toast id="caching-complete"
+                 duration="6000"
+                 text="Caching complete! This app will work offline.">
+    </paper-toast>
 
     <platinum-sw-register auto-register
                           clients-claim
-                          skip-waiting>
+                          skip-waiting
+                          on-service-worker-installed="displayInstalledToast">
       <platinum-sw-cache default-cache-strategy="networkFirst"
                          precache-file="precache.json">
       </platinum-sw-cache>
@@ -208,11 +256,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="buttons">
           <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
         </div>
-      </paper-dialog>      
+      </paper-dialog>
+
+      <iron-media-query query="(min-width: 600px)" query-matches="{{queryMatches}}"></iron-media-query>
   </template>
 
   <!-- build:js scripts/app.js -->
-  <script src="scripts/app.js" async></script>
+  <script src="scripts/app.js"></script>
   <!-- endbuild-->
   <!-- google Analytics -->
   <script>

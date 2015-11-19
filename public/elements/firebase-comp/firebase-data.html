@@ -1,0 +1,50 @@
+
+<dom-module id="firebase-data">
+	<template>		 
+
+		<div class="vertical-section">
+	      <h3>Question Data List Test</h3>
+	      
+	        <firebase-collection	          
+	          location="https://luminous-heat-7725.firebaseio.com/questions"
+	          data="{{questions}}"></firebase-collection>
+	        <template is="dom-repeat" items="[[questions]]" as="question">
+	        	<span>[[question]]</span>
+	          <h4>[[question.__firebaseKey__]]</h4>
+	          <span>Data: </span><span>[[question.title]]</span>
+	        </template>	      
+	    </div>
+	    <div class="vertical-section">
+	      <h3>Question Data Test</h3>	      
+	        <firebase-document
+	          location="https://dinosaur-facts.firebaseio.com/scores"
+	          data="{{dinosaurs}}"></firebase-document>
+	        <x-pretty-json object=[[dinosaurs]]></x-pretty-json>	      
+	    </div>
+
+	    <div class="vertical-section">
+	    	<h3>Data push Test </h3>
+	    	<firebase-collection	          
+	    		id="fcTest"
+	          	location="https://luminous-heat-7725.firebaseio.com/questions"
+	          	data="{{questions}}"></firebase-collection>	          
+	        <button on-tap="pushTest">PushTest</button>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: "firebase-data",
+
+		properties: {
+
+		},
+
+		pushTest: function() {
+			var data = {
+				test: "testData"
+			};
+			this.$.fcTest.add(data);
+		}
+		
+	});
+</script>	

@@ -1,0 +1,343 @@
+
+<dom-module id="sign-up">
+	<style>
+		.field {
+			@apply(--layout-horizontal);
+			margin-bottom: 8px;
+		}
+
+		h2 {
+			font-size:  20px;
+			color: rgb(138,138,138);
+			margin-right: 20px;
+			font-weight: normal;
+		}
+
+		paper-radio-button.orange {
+	      --paper-radio-button-checked-color: var(--paper-orange-500);
+	      --paper-radio-button-checked-ink-color: var(--paper-orange-500);
+	      --paper-radio-button-unchecked-color: var(--paper-orange-900);
+	      --paper-radio-button-unchecked-ink-color: var(--paper-orange-900);
+	    }
+
+		#rgGender {
+			margin-top: 10px;
+		}
+
+		#rgGender .imgMale {
+			background-image: url("../../images/main/signup_male_unselected.png");
+			background-size: cover;
+			background-repeat: no-repeat;	
+			width: 100px;
+			height: 26px;
+		}
+		#rgGender .iron-selected .imgMale {
+			background-image: url("../../images/main/signup_male_selected.png");
+		}
+
+		#rgGender .imgFemale {
+			background-image: url("../../images/main/signup_female_unselected.png");
+			background-size: cover;
+			background-repeat: no-repeat;	
+			width: 100px;
+			height: 26px;
+		}
+		#rgGender .iron-selected .imgFemale {
+			background-image: url("../../images/main/signup_female_selected.png");
+		}
+
+		.field.birthdate paper-input{
+			margin-right: 10px;
+		}
+
+		#piCountryCode {			
+			margin-right: 10px;
+			width: 90px;
+		}
+
+		.txtPolicy {
+			color: rgb(162,161,161);
+		}
+
+		#btnSignup {
+			width: 300px;
+			background-color: rgb(162,161,161);
+			color: rgb(255,254,254);
+			margin-left: 30px;
+			margin-top: 20px;
+		}
+
+		#btnSignup[disabled] {
+			background-color: rgba(162,161,161,0.5);
+		}		
+	</style>
+	<template>
+		<firebase-document
+	     	location="{{userTarget}}"
+	     	data="{{userData}}"
+	     	>
+	     </firebase-document>
+		
+		<span>{{provider}} Sign-Up</span>
+
+		<div class="field">
+			<h2>Picture</h2>
+			<iron-image src="{{picture}}" style="width:100px; height:100px;"></iron-image>			
+		</div>
+
+		<div class="field" hidden$="{{isFacebookMode(provider)}}">
+			<h2>E-mail</h2>
+			<paper-input id="piEmail" type="email" value="{{email}}" label="fly@flamingofly.com" error-message="check again email form" required auto-validate></paper-input>
+		</div>
+		<div class="field" hidden$="{{isFacebookMode(provider)}}">
+			<h2>Password</h2>
+			<paper-input id="piPassword" value="{{password}}" type="password" label="ex) 12345678" minlength="6" required auto-validate error-message="minimum 6 characters" char-counter maxlength="20"></paper-input>
+		</div>			
+		<div class="field" hidden$="{{isFacebookMode(provider)}}">
+			<h2>Password Check</h2>
+			<paper-input id="piPasswordCheck" value="{{passwordCheck}}" type="password" minlength="6" required auto-validate error-message="minimum 6 characters" char-counter maxlength="20"></paper-input>
+		</div>			
+
+		<div class="field">
+			<h2>Gender</h2>
+			<paper-radio-group id="rgGender" selected="male" noink>
+				<paper-radio-button class="orange" name="male"><div class="imgMale"></div></paper-radio-button>
+				<paper-radio-button class="orange" name="female"><div class="imgFemale"></div></paper-radio-button>
+			</paper-radio-group>
+		</div>
+
+		<div class="field">
+			<h2>Name</h2>
+			<paper-input id="piUserName" value="{{username}}" label="ex) William" required auto-validate maxlength="15"></paper-input>
+		</div>		
+		<div class="field birthdate">
+			<h2>Birth Date</h2>
+			<paper-input id="piBirthYear" type="number" label="Y" value="{{birthYear}}" min="1940" max="2016" required></paper-input>
+			<paper-input id="piBirthMonth" type="number" label="M" value="{{birthMonth}}" min="1" max="12" required></paper-input>
+			<paper-input id="piBirthDay" type="number" label="D" value="{{birthDay}}" min="1" max="31" required></paper-input>
+			<!-- <paper-input id="ipBirth" type="date" value="{{birth}}" required auto-validate></paper-input> -->
+		</div>
+		<!-- <div class="field">
+			<h2>Nationality</h2>
+			<paper-input id="piNationality"></paper-input>
+		</div> -->
+		<div class="field">
+			<h2>Phone Number</h2>
+			<paper-input id="piCountryCode" type="number" label="country code" value="{{countryCode}}" required auto-validate></paper-input>
+			<paper-input id="piPhone" type="number" label="phone number" value="{{phone}}" required auto-validate maxlength="15"></paper-input>
+		</div>
+		<div class="field">
+			<span class="txtPolicy">By continuing, you're confiming that you're read and agree to our terms and conditions and privacy policy</span>
+		</div>
+		<paper-button id="btnSignup" on-tap="signup" disabled$="{{checkData(provider, username, email, password, passwordCheck, birthYear, countryCode, phone)}}" noink class="colorful ripple">Start</paper-button>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: "sign-up",
+
+		properties: {
+			provider: {
+	        	type: String,
+	        	value: 'password'
+	      	},	   
+
+			gender: {
+				type: String,
+				value: 'male'
+			},
+
+			username: {
+	        	type: String,
+	        	value: ''
+	      	},
+
+			email: {
+	        	type: String,
+	        	value: ''
+	      	},	      	
+
+			password: {
+	        	type: String,
+	        	value: ''
+	      	},
+
+	      	passwordCheck: {
+	        	type: String,
+	        	value: ''
+	      	},
+
+	      	birth: {
+	      		type: String,
+	      		value: ''
+	      	},
+
+	      	birthYear: {
+	      		type: Number,
+	      		value: 1987
+	      	},
+	      	birthMonth: {
+	      		type: Number,
+	      		value: 1
+	      	},
+	      	birthDay: {
+	      		type: Number,
+	      		value: 1
+	      	},	      	
+
+	      	countryCode: Number,
+
+	      	phone: Number,
+
+	      	picture: {
+	      		type: String,
+	      		value: 'https://flamingofly.com/images/main/photo_img.png'
+	      	},
+
+	      	link: {
+	      		type: String,
+	      		value: 'https://flamingofly.com'
+	      	},
+
+	      	user: {
+				type: Object,
+				value: null					
+			},
+
+	      	userTarget: {
+				type: String,
+				computed: 'computeUserTarget(user)'
+			},
+
+			userData: {
+				type: Object,
+				observer: '_userDataChanged'
+			}	      	
+		},
+
+		ready: function() {
+
+		},
+
+		initialize: function() {
+			this.username = "";
+			this.email = "";
+			this.password = "";
+			this.passwordCheck = "";
+			this.birth = "";
+			this.countryCode = 0;
+			this.phone = 0;
+
+			this.$.btnSignup.removeAttribute('hidden');			
+		},
+
+		isFacebookMode: function(provider) {
+			if(this.provider=='facebook') return true;
+			else return false;
+		},
+
+		computeUserTarget: function(user) {
+			if(user!=null){				
+				return "https://flamingo365.firebaseio.com/users/"+user.uid;
+			}			
+		},
+
+		_userDataChanged: function() {						
+			this.gender = this.userData.gender;
+			if(this.gender=="male"){
+				this.$.rgGender.selected = "male";
+			} else {
+				this.$.rgGender.selected = "female";
+			}
+			this.username = this.userData.username;
+			this.picture = this.userData.picture;
+			this.link = this.userData.link;
+		},
+
+		checkData: function(provider, username, email, password, passwordCheck, birthYear, countryCode, phone) {			
+			if(this.username==''){
+				return true;
+			}
+
+			if(provider=="password"){
+				if(this.email==''){
+					return true;
+				}
+				if(this.password=='' || this.passwordCheck==''){
+					return true;
+				}
+				if(this.password!==this.passwordCheck){
+					return true;
+				}
+			}			
+
+			if(this.birthYear==null || this.birthYear==0){
+				return true;
+			}
+			if(this.countryCode==null || this.countryCode==0){
+				return true;
+			}
+			if(this.phone==null || this.phone==0){
+				return true;
+			}
+
+			return false;
+		},
+
+
+		signup: function() {
+
+			var that = this;
+			var gender = this.$.rgGender.selected;	
+
+			this.birth = this.birthYear+"-"+this.birthMonth+"-"+this.birthDay;
+
+			var data = {
+				provider: this.provider,
+				gender: gender,
+				username: this.username,
+				email: this.email,				
+				birth: this.birth,
+				countryCode: this.countryCode,
+				phone: this.phone,
+				created_at: new Date().getTime(),
+				link: this.link,
+				picture: this.picture,
+				status: 1
+			};
+
+			var ref = new Firebase("https://flamingo365.firebaseio.com");
+			if(this.provider=="password"){
+				if(this.email=='' || this.password==''){
+					return;
+				}									
+				
+				this.$.btnSignup.setAttribute('hidden', '');			
+				ref.createUser({
+					email: that.email,
+					password : that.password
+				}, function(error, userData){
+					if(error) {
+						alert("Error creating user:", error);						
+						that.$.btnSignup.removeAttribute('hidden');
+						return;
+					} else {
+						console.log("Successfully created user account with uid", userData.uid);
+
+						ref.child("users").child(userData.uid).set(data);
+
+						that.initialize();					
+						that.fire('show-dialog', {content: "Sign-up has completed.", url: "/"});
+					}
+				});
+			} else {
+				ref.child("users").child(this.user.uid).set(data);
+
+				that.initialize();
+				that.fire('show-dialog', {content: "Sign-up has completed.", url: "/register"});
+			}
+			
+		}
+
+	});
+</script>

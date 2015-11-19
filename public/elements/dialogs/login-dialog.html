@@ -1,0 +1,214 @@
+
+<dom-module id="login-dialog">
+	<style>
+		:host {
+			width: 300px;
+			height: 150px;
+			max-height: 150px;
+			background: rgb(255,255,255);			
+		}		
+
+		.loginWrapper {
+			@apply(--layout-horizontal);
+			cursor: pointer;
+		}
+
+		.logoutWrapper {
+			@apply(--layout-horizontal);
+			cursor: pointer;
+		}
+	</style>
+
+	<link rel="import" type="css" href="../../bower_components/paper-dialog-behavior/paper-dialog-common.css">
+
+	<template>
+		<firebase-auth id="firebaseLogin" user="{{user}}" status-known="{{statusKnown}}" location="https://flamingo365.firebaseio.com" provider="{{provider}}" on-error="errorHandler" on-user-created="userSuccessHandler" on-password-changed="userSuccessHandler" on-password-reset="userSuccessHandler" on-user-removed="userSuccessHandler"></firebase-auth>
+
+		<div class="vertical-section">
+			<input placeholder="email" value="{{email::input}}">
+      		<input placeholder="password" value="{{password::input}}">
+      		<div class="loginWrapper" on-tap="emailLogin" hidden$="{{computeLoginHidden(statusKnown, user)}}">
+      			<span>Email Login</span>
+      		</div>
+		</div>
+
+		<div class="vertical-section">
+			<div class="loginWrapper" on-tap="facebookLogin" hidden$="{{computeLoginHidden(statusKnown, user)}}">
+				<iron-image src="../../images/main/facebook_btn.png" style="width:100px; height:100px;"></iron-image>
+				<span>Facebook Login</span>
+			</div>
+
+			<div class="logoutWrapper" on-tap="logout" hidden$="{{computeLogoutHidden(statusKnown, user)}}">
+				<iron-image src="../../images/main/facebook_btn.png" style="width:100px; height:100px;"></iron-image>
+				<span>Facebook Logout</span>
+			</div>
+
+			<!-- <h3>Login status:</h3>
+	    	<p>{{computeLoginStatus(statusKnown, user)}}</p>
+
+	    	<h3>User ID:</h3>
+	    	<pre>{{user.uid}}</pre>	   -->  	
+		</div>	
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: "login-dialog",
+
+		properties: {
+			provider: {
+				type: String,
+				value: 'facebook',
+				notify: true
+			},
+
+			message: {
+	        	type: String,
+	        	value: ''
+	      	},
+
+	      	email: {
+	        	type: String,
+	        	value: ''
+	      	},
+
+	      	password: {
+	        	type: String,
+	        	value: ''
+	      	},	      	
+
+			user: {
+	        	type: Object,
+	        	value: null,
+	        	observer: '_userChanged',
+	        	notify: true
+	      	},
+
+	      	statusKnown: {
+	        	type: Boolean
+	      	}				      	
+		},
+
+		behaviors: [
+	      Polymer.PaperDialogBehavior
+	    ],	    
+
+	    emailLogin: function() {
+	    	this.provider = "password";
+	    	var params;
+
+	      	try {
+	        	params = JSON.parse(this.params);
+	      	} catch (e) {
+	       		params = null;
+	      	}
+	      	
+	        params = params || {};
+	        params.email = this.email;
+	        params.password = this.password;
+	      
+	      	this.$.firebaseLogin.login(params);
+	    },
+
+	    facebookLogin: function() {
+	    	this.provider = "facebook";
+	    	var params = null;
+	    	this.$.firebaseLogin.login(params);
+	    },
+
+	    logout: function() {
+	    	this.$.firebaseLogin.logout();
+	    	this.fire('logout-complete', {userid: null}, {bubbles: true});	    		
+	    	this.toggle();
+	    },
+
+	    errorHandler: function(e) {
+	      this.message = 'Error: ' + e.detail.message;
+	      console.log(this.message);
+	    },
+
+	    userSuccessHandler: function(e) {
+	      this.message = e.type + ' success!';
+	      console.log(this.message);
+	    },
+
+	    computeLoginHidden: function(statusKnown, user) {
+	      return !statusKnown || !!user;
+	    },
+
+	    computeLogoutHidden: function(statusKnown, user) {
+	      return !statusKnown || !user;
+	    },
+
+	    computeLoginStatus: function(statusKnown, user) {
+	      if (statusKnown && user) {
+	        return 'Logged in';
+	      }
+
+	      if (statusKnown) {
+	        return 'Logged out';
+	      }
+
+	      return 'Unknown (checking status...)';
+	    },	    
+
+	    _userChanged: function() {
+
+	    	if (this.statusKnown && this.user) {	   	    		    				    	    		    				    		
+	    		if(this.provider=="facebook"){
+	    			console.log("logging in :"+this.user.uid+"/"+this.user.facebook.displayName+"/"+this.user.facebook.cachedUserProfile.link+"/"+this.user.facebook.cachedUserProfile.gender+"/"+this.user.facebook.cachedUserProfile.picture.data.url);
+
+	    			var that = this;
+	    			var ref = new Firebase("https://flamingo365.firebaseio.com/users");	  
+	    				    			
+
+	    			ref.once('value', function(snapshot) {
+	    				if(snapshot.hasChild(that.user.uid)){	    					
+	    					ref.child(that.user.uid).child("status").once('value', function(snapshot){
+			    				console.log("status:"+snapshot.val());
+			    				var status = snapshot.val();
+			    				if(status!=1){
+
+			    					// go to signup page
+			    					console.log("go to signup page with provider");
+			    					that.fire('move-signup', {userid: that.user.uid}, {bubbles: true});
+			    				}  else {
+
+			    					console.log("login complete");
+			    					that.fire('login-complete', {userid: that.user.uid}, {bubbles: true});	    		
+			    				}
+			    			});	    												
+	    				} else {
+	    					ref.child(that.user.uid).set({
+								provider: "facebook",
+								username: that.user.facebook.displayName,
+								gender: that.user.facebook.cachedUserProfile.gender,
+								picture: that.user.facebook.cachedUserProfile.picture.data.url,
+								link: that.user.facebook.cachedUserProfile.link,						
+								status: 0						
+							});	
+
+	    					/// go to signup page    	
+	    					console.log("go to signup page with provider");
+	    					that.fire('move-signup', {userid: that.user.uid}, {bubbles: true});
+	    				}
+	    			});	    			
+
+	    		} else {
+
+
+
+	    		}	    		
+	    			    	
+	    			    		
+	    		this.close();
+	    	} else {	    		
+
+	    		if(window.location.hash!==""){
+	    			console.log("tt");
+	    			// location.href = "/";
+	    		}	    		
+	    	}
+	    }
+	});
+</script>

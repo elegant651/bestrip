@@ -9,68 +9,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 (function(document) {
   'use strict';
-    
 
+  // Grab a reference to our auto-binding template
+  // and give it some initial binding values
+  // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
   var app = document.querySelector('#app');
 
-
-  // var webComponentsSupported = (
-  //     'registerElement' in document &&
-  //     'import' in document.createElement('link') &&
-  //     'content' in document.createElement('template'));
-
-  // if(!webComponentsSupported) {
-  //   var script = document.createElement('script');
-  //   script.async = true;
-  //   script.src = 'bower_components/webcomponentsjs/webcomponents-lite.min.js';
-  //   script.onload = finishLazyLoadingImports;
-  //   document.head.appendChild(script);
-  // } else {
-  //   finishLazyLoadingImports();
-  //   var loadContainer = document.getElementById('splash');
-  //   loadContainer.parentNode.removeChild(loadContainer);
-  // }
-
-  // function finishLazyLoadingImports() {
-  //   // Use native Shadow DOM if it's available in the browser.
-  //   window.Polymer = window.Polymer || {dom: 'shadow'};
-
-  //   var onImportLoaded = function() {
-  //     var loadContainer = document.getElementById('splash');
-  //     loadContainer.addEventListener('transitionend', function(e){
-  //       loadContainer.parentNode.removeChild(loadContainer); // IE 10 doesn't support el.remove()
-  //       console.log("loaded");
-  //     });      
-
-  //     document.body.classList.remove('loading');
-  //   };
-
-  //   // crbug.com/504944 - readyState never goes to complete until Chrome 46.
-  //   // crbug.com/505279 - Resource Timing API is not available until Chrome 46.
-  //   var link = document.querySelector('#bundle');
-  //   if (link.import && link.import.readyState === 'complete') {
-  //     onImportLoaded();
-  //   } else {
-  //     link.addEventListener('load', onImportLoaded);
-  //   }
-  // }
+  app.displayInstalledToast = function() {
+    // document.querySelector('#caching-complete').show();
+  };  
 
   // Listen for template bound event to know when bindings
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
     console.log('Our app is ready to rock!');        
 
-    //import page
-    var importPage = function(url) {
-      return new Promise(function(resolve, reject) {
-        Polymer.Base.importHref(url, function(e) {
-          resolve(e.target.import);
-        }, reject);
-      });
-    };
-
     /// routing ///
-    var initDrawer = function(title) {        
+    var initDrawer = function(title) {
+        window.scrollTo(0, 0);
         document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "240px");
         document.querySelector('#drawerWrap').removeAttribute('hidden');
         document.querySelector('#mainToolbar').removeAttribute('hidden');
@@ -89,11 +45,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     page('/', function () {
       app.route = 'home';
-      
-      initDrawer();
-      document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "0px"); 
-      document.querySelector('#drawerWrap').setAttribute('hidden', '');
-      document.querySelector('#mainToolbar').setAttribute('hidden', '');              
+
+      if(!app.queryMatches){
+        initDrawer();
+        document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "0px"); 
+        document.querySelector('#drawerWrap').setAttribute('hidden', '');
+        document.querySelector('#mainToolbar').setAttribute('hidden', '');        
+      } else {
+        document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "0px");      
+        document.querySelector('#drawerWrap').setAttribute('hidden', '');
+        document.querySelector('#mainToolbar').className = 'landing';
+        document.querySelector('#headerPanel').setAttribute('mode', 'cover');      
+        if(document.querySelector('#imgLogo')!=null){
+          document.querySelector('#imgLogo').removeAttribute('hidden');
+        }
+        document.querySelector('#titleMenu').setAttribute('hidden', '');
+        
+        if(document.querySelector('.titleWrap')!=null){
+          document.querySelector('.titleWrap').removeAttribute('hidden');             
+        }
+      }      
+
     });
 
     page('/signup', function() {
@@ -133,6 +105,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       initDrawer('MY TRAVELERS');
     });
 
+    // page('/contactinfo/:id', function (data) {
+    //   app.route = 'contactinfo';
+    //   app.params = data.params;
+
+    //   initDrawer('CONTACT INFO');
+    // });  
+
     page('/logout', function() {
       app.route = 'logout';
 
@@ -151,14 +130,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var registerSchedule = document.querySelector("#registerSchedule");
     var findingTravelers = document.querySelector("#findingTravelers");
     var listSchedule = document.querySelector('#listSchedule');
-    var mySchedule = document.querySelector('#mySchedule');        
+    var mySchedule = document.querySelector('#mySchedule');    
+    // var btnLogin = document.querySelector('#btnLogin');
+    // var loginDlog = document.querySelector('#loginDlog');
     var logoutDlog = document.querySelector('#logoutDlog');
     var paperDlog = document.querySelector('#paperDlog');
+    // var btnFacebook = document.querySelector('#btnFacebook');
 
+    // if(btnFacebook!=null){
+    //   btnFacebook.addEventListener('click', function() {
+        
+    //     loginDlog.toggle();
+    //   });    
+    // }
+
+    // loginDlog.addEventListener('move-signup', function(e) {
+    //   page.redirect('/signup');
+    // });
+
+    // loginDlog.addEventListener('login-complete', function(e) { 
+    //     if(btnLogin!=null){
+    //       btnLogin.innerHTML = "LOG OUT";                        
+    //     }
+
+    //     page.redirect('/register');
+    // });
+    // loginDlog.addEventListener('logout-complete', function(e) {
+    //     if(btnLogin!=null){
+    //       btnLogin.innerHTML = "LOG IN";
+    //     }
+
+    //     location.href='/';
+    // });    
 
     logoutDlog.addEventListener('logout-complete', function(e) {
         location.href='/';
-    });    
+    });
+    
+    // if(btnLogin!=null){ 
+    //   btnLogin.addEventListener('click', function() {
+    //       loginDlog.toggle();
+    //   });
+    // }  
 
     signup.addEventListener('show-dialog', function(e) {
         paperDlog.toggle();
