@@ -41,7 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- endbuild-->
 
   <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
-  <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js" async></script>  
+  <!--<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js" async></script>  -->
   <!-- endbuild -->
  
   <!-- extra js -->
@@ -60,7 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- Loading screens happen outside of HTML Imports + Polymer so 1st
      paint is fast and does not depend on network resources. Mobile gets
      a loading splash screen. Desktop the layout/shell of the app. -->
-<!--   <div id="splash">
+  <div id="splash">
     <div class="appshell_drawer">
       <div class="appshell_drawer_top"></div>
       <div class="appshell_drawer_bottom"></div>
@@ -69,7 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="appshell_header"></div>
       <div class="appshell_content"></div>
     </div>
-  </div> -->
+  </div>
 
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">            
