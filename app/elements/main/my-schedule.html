@@ -186,21 +186,21 @@
 		},
 
 		_userDataChanged: function() {			
-			if(this.userData.numMT!=this.requests.length){
-				console.log("differentMT");
+			// if(this.userData.numMT!=this.requests.length){
+			// 	console.log("differentMT");
 
-				var ref = new Firebase(this.userTarget);
-				ref.update({
-					"numMT": this.requests.length
-				});
+			// 	var ref = new Firebase(this.userTarget);
+			// 	ref.update({
+			// 		"numMT": this.requests.length
+			// 	});
 
-				this.userData.numMT = this.requests.length;
-		  		this.notifyPath('userData.numMT', this.userData.numMT);
+			// 	this.userData.numMT = this.requests.length;
+		 //  		this.notifyPath('userData.numMT', this.userData.numMT);
 
-		  		this.fire('show-newflag');
-		 	} else {
-		 		this.fire('hide-newflag');
-		 	}
+		 //  		this.fire('show-newflag');
+		 // 	} else {
+		 // 		this.fire('hide-newflag');
+		 // 	}
 		},
 
 		_sort: function(a, b) {			

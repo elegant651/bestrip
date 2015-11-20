@@ -41,7 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- endbuild-->
 
   <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
-  <!--<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js" async></script>  -->
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js" async></script>  
   <!-- endbuild -->
  
   <!-- extra js -->
@@ -90,12 +90,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                   <hr /> -->
 
-                  <!-- <a data-route="profile" href="/myprofile">
+                  <a data-route="profile" href="/myprofile">
                     <span>Profile</span>
                     <div id="icProfile" class="icon"></div>
                   </a>
 
-                  <hr /> -->
+                  <hr />
 
                   <a data-route="register" href="/register">
                     <span>Register</span>
@@ -149,8 +149,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="content">
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
-            <section data-route="home">                           
-              <!-- mobile web -->              
+            <section data-route="home">                                               
                 <mobileweb-login id="mwLogin" provider="{{provider}}"></mobileweb-login>              
             </section>
           
@@ -159,7 +158,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </section>
 
               <section data-route="profile">
-                <my-profile id="myprofile" hidden></my-profile>
+                <my-profile id="myprofile"></my-profile>
               </section>
 
               <section data-route="register">

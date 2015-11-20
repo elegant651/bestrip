@@ -6,6 +6,10 @@
 			margin-bottom: 8px;
 		}
 
+		.field.picture {
+			margin-top: 20px;
+		}
+
 		h2 {
 			font-size:  20px;
 			color: rgb(138,138,138);
@@ -57,14 +61,17 @@
 
 		.txtPolicy {
 			color: rgb(162,161,161);
+			text-align: center;
+			cursor: pointer;
 		}
 
 		#btnSignup {
 			width: 300px;
 			background-color: rgb(162,161,161);
 			color: rgb(255,254,254);
-			margin-left: 30px;
+			margin-left: 35px;
 			margin-top: 20px;
+			text-align: center;
 		}
 
 		#btnSignup[disabled] {
@@ -78,9 +85,9 @@
 	     	>
 	     </firebase-document>
 		
-		<span>{{provider}} Sign-Up</span>
+		<!-- <span>{{provider}} Sign-Up</span> -->
 
-		<div class="field">
+		<div class="field picture">
 			<h2>Picture</h2>
 			<iron-image src="{{picture}}" style="width:100px; height:100px;"></iron-image>			
 		</div>
@@ -127,9 +134,11 @@
 			<paper-input id="piPhone" type="number" label="phone number" value="{{phone}}" required auto-validate maxlength="15"></paper-input>
 		</div>
 		<div class="field">
-			<span class="txtPolicy">By continuing, you're confiming that you're read and agree to our terms and conditions and privacy policy</span>
+			<span class="txtPolicy" on-tap="showPrivacy">By continuing, you're confiming that you're read and agree to our terms and conditions and privacy policy</span>
 		</div>
 		<paper-button id="btnSignup" on-tap="signup" disabled$="{{checkData(provider, username, email, password, passwordCheck, birthYear, countryCode, phone)}}" noink class="colorful ripple">Start</paper-button>
+
+		<privacy-dialog id="privacyDlog" on-tap="hidePrivacy"></privacy-dialog>
 	</template>
 </dom-module>
 <script>
@@ -229,6 +238,7 @@
 			this.phone = 0;
 
 			this.$.btnSignup.removeAttribute('hidden');			
+			this.$.privacyDlog.close();
 		},
 
 		isFacebookMode: function(provider) {
@@ -284,6 +294,13 @@
 			return false;
 		},
 
+		showPrivacy: function() {
+			this.$.privacyDlog.open();
+		},
+
+		hidePrivacy: function() {
+			this.$.privacyDlog.close();
+		},
 
 		signup: function() {
 

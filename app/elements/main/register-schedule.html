@@ -132,7 +132,7 @@
 		<div class="vertical-section">
 			<paper-button id="btnRegister" noink disabled$="{{checkData(user, selCityIdx, startDate)}}" on-tap="register"><iron-image src="../../images/main/register_btn_2.png"></iron-image></paper-button>			
 		</div>
-		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>		
+		<city-dialog id="cityDlog" on-select-city="onSelectCity" modal></city-dialog>		
 	</template>
 </dom-module>
 <script>
