@@ -90,7 +90,7 @@ body.loading #splash {
 	border: 0;
     height: 1px;
     background: rgb(200,200,200);
-    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+    /*background-image: linear-gradient(to right, #ccc, #333, #ccc);*/
 }
 
 #drawerList #icProfile {

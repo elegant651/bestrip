@@ -1,6 +1,11 @@
 
 <dom-module id="my-profile">
-	<style>		
+	<style>
+		hr {
+			border: 0;
+    		height: 1px;
+    		background: rgb(200,200,200);
+    	}
 
 		.field {
 			@apply(--layout-horizontal);
@@ -9,20 +14,33 @@
 
 		h2 {
 			margin-right: 20px;
-			font-size: 18px;
+			font-size: 16px;
 			font-weight: normal;
 		}
 
 		.userbox {
 			text-align: center;
+			margin-top: 15px
+			margin-bottom: 15px;
+		}
+
+		.userbox .pictureField {
+			margin-top: 15px;
+		}
+
+		.userbox .infos { 
+			margin-top: 10px;
+			@apply(--layout-horizontal);
+			@apply(--layout-center-justified);
 		}
 
 		.infoWrapper {
 			text-align: center;
+			margin-top: 10px;
 		}
 
 		.infoWrapper .title {
-			font-size: 22px;
+			font-size: 20px;
 			color: rgb(253,68,19);	
 		}
 
@@ -64,6 +82,8 @@
 				<div class="age">, [[_computeUserAge(userData.birth)]]</div>
 			</div>
 		</div>
+
+		<hr />
 				
 		<div class="infoWrapper vertical-section">
 			<div class="title">My information</div>
@@ -86,7 +106,7 @@
 		</div>		
 
 		<div class="field">
-			<paper-button id="btnUpdate" on-tap="updateProfile" disabled$="{{checkData(username, email, password, passwordCheck, birth, countryCode, phone)}}" raised class="colorful ripple">Update</paper-button>
+			<paper-button id="btnUpdate" on-tap="updateProfile" hidden raised class="colorful ripple">Update</paper-button>
 		</div>
 	</template>
 </dom-module>
@@ -95,13 +115,19 @@
 		is: "my-profile",
 
 		properties: {		
-			userId: {
-				type: String
+			user: {
+				type: Object,
+				value: null							
+			},
+
+			userid: {
+				type: String,
+				computed: '_defaultUserId(user)'
 			},
 
 	      	userTarget: {
 				type: String,
-				computed: '_computeUserTarget(userId)'
+				computed: '_computeUserTarget(userid)'
 			},
 
 			userData: {
@@ -125,9 +151,16 @@
 			];
 		},
 
-		_computeUserTarget: function(userId) {
-			if(user!=null){				
-				return "https://flamingo365.firebaseio.com/users/"+userId;
+		_defaultUserId: function(user) {
+			if(user!=null){
+				console.log("user:"+user.uid);
+				return user.uid;
+			}
+		},
+
+		_computeUserTarget: function(userid) {			
+			if(userid!=null){					
+				return "https://flamingo365.firebaseio.com/users/"+userid;
 			}			
 		},
 

@@ -158,7 +158,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </section>
 
               <section data-route="profile">
-                <my-profile id="myprofile"></my-profile>
+                <my-profile id="myprofile" user="{{user}}" userid="{{params.id}}"></my-profile>
               </section>
 
               <section data-route="register">
@@ -179,14 +179,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
               <section data-route="logout">
                   <logout-dialog id="logoutDlog" user="{{user}}"></logout-dialog>
-              </section>
-
-              <section data-route="contactinfo">
-                <paper-material elevation="1">
-                  info number : <span>{{params.id}}</span>
-                  <contact-info schedule-id="{{params.id}}"></contact-info>                
-                </paper-material>
-              </section>           
+              </section>              
 
           </iron-pages>
         </div>        

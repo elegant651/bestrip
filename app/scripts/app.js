@@ -109,6 +109,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         app.route = 'profile';
     });
 
+    page('/myprofile/:id', function(data) {
+        initDrawer('PROFILE');
+
+        app.route = 'profile';
+        app.params = data.params;
+    });
+
     page('/register', function () {
       initDrawer('REGISTER');      
 
@@ -137,7 +144,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.route = 'logout';
 
       initDrawer('LOG OUT');
-    });
+    });    
 
     // add #! before urls
     page({
