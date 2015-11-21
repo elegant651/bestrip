@@ -91,7 +91,7 @@
 				<h2>Preference</h2>
 				<div class="content">
 					<template is="dom-repeat" items="{{prefItems}}">
-						<paper-checkbox noink checked$="{{item.checked}}">{{item.name}}</paper-checkbox>
+						<paper-checkbox data-index$="{{index}}" on-iron-change="changeStatus" noink checked$="{{item.checked}}">{{item.name}}</paper-checkbox>
 					</template>					
 				</div>
 			</div>
@@ -99,7 +99,7 @@
 				<h2>Life style</h2>
 				<div class="content">
 					<template is="dom-repeat" items="{{lifeItems}}">
-						<paper-checkbox noink>{{item}}</paper-checkbox>
+						<paper-checkbox class="pcLife" noink checked$="{{item.checked}}">{{item.name}}</paper-checkbox>
 					</template>					
 				</div>
 			</div>
@@ -146,8 +146,8 @@
 			];
 
 			this.lifeItems = [
-				'swimming', 'surfing', 'skiing', 'diving', 'hiking', 'fishing', 'bicycling', 'shopping',
-				'movie', 'artist', 'music', 'cooking', 'photography'
+				{name:'swimming', checked: false}, {name:'surfing', checked: false}, {name:'skiing', checked: false}, {name:'diving', checked: false}, {name:'hiking', checked: false}, {name:'fishing', checked: false}, {name:'bicycling', checked: false}, {name:'shopping', checked: false},
+				{name:'movie', checked: false}, {name:'artist', checked: false}, {name:'music', checked: false}, {name:'cooking', checked: false}, {name:'photography', checked: false}
 			];
 		},
 
@@ -182,16 +182,22 @@
 			return Math.abs(ageDate.getFullYear()-1970);
 		},
 
-		
+		changeStatus: function(e) {
+			var dataIndex = e.currentTarget.getAttribute("data-index");
+			console.log("dd:"+dataIndex);
+		},
+
 		updateProfile: function() {			
 						
+			var strPref = JSON.stringify(this.pcPref);						
+
+			console.log(strPref);
+
 			var data = {								
-				username: this.username,				
-				countryCode: this.countryCode,
-				phone: this.phone				
+								
 			};
 
-			var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
+			// var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
 			// ref.push(data);	  			
 
 			// this.fire('show-dialog', {content: "Sign-up has completed.", url: "/register"});
