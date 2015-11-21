@@ -94,7 +94,7 @@
 	     </firebase-document>
 	    
 	    
-	    <!-- <paper-button id="pbRefresh" on-tap="refresh"><iron-icon icon="refresh"></iron-icon></paper-button> -->
+	    <paper-button id="pbRefresh" on-tap="refresh"><iron-icon icon="refresh"></iron-icon>Reload</paper-button>
 	    
 
 	    <div class="request-count">
@@ -205,7 +205,7 @@
 		},
 
 		refresh: function() {
-			
+			location.reload();
 		},
 
 		filterStatus: function(item) {

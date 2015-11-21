@@ -98,11 +98,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     page('/signup', function() {
         // importPage("../elements/main/sign-up.html");
-        app.route = 'signup';
         initDrawer('SIGN UP');
         document.querySelector('#paperToggle').setAttribute('hidden', '');
 
-        
+        app.route = 'signup';
     });
 
     page('/myprofile', function() {

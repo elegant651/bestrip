@@ -1,12 +1,18 @@
 
 <dom-module id="register-schedule">
 	<style>						
-
 		h2 {
 			text-align: center;
 			font-size: 15px;
 			font-weight: normal;
 		}
+
+		paper-radio-button {
+	      --paper-radio-button-checked-color: var(--paper-orange-500);
+	      --paper-radio-button-checked-ink-color: var(--paper-orange-500);
+	      --paper-radio-button-unchecked-color: var(--paper-orange-900);
+	      --paper-radio-button-unchecked-ink-color: var(--paper-orange-900);
+	    }
 
 		.destinationWrapper {
 			background-image: url("../../images/main/london_img.jpg");
@@ -82,6 +88,36 @@
 			background-image: url("../../images/main/accompany_icon_2.png");
 		}
 
+		#rgNumbers {
+			font-size: 13px;			
+			@apply(--layout-horizontal);	
+			@apply(--layout-center-justified);
+		}
+
+		#rgNumbers .imgSingle {
+			background-image: url("../../images/main/single_icon_1.png");
+			background-size: cover;
+			background-repeat: no-repeat;	
+			width: 30px;
+			height: 30px;
+		}
+
+		#rgNumbers .iron-selected .imgSingle {
+			background-image: url("../../images/main/single_icon_2.png");
+		}
+
+		#rgNumbers .imgSeveral {
+			background-image: url("../../images/main/several_icon_1.png");
+			background-size: cover;
+			background-repeat: no-repeat;	
+			width: 30px;
+			height: 30px;
+		}
+
+		#rgNumbers .iron-selected .imgSeveral {
+			background-image: url("../../images/main/several_icon_2.png");
+		}		
+
 		#btnRegister {			
 			margin-top: 20px;		
 			@apply(--layout-horizontal);	
@@ -131,6 +167,15 @@
 				<paper-radio-button name="accompany"><div class="imgAccompany"></div>Accompany</paper-radio-button>				
 			</paper-radio-group>
 		</div>		
+
+		<div class="vertical-section">
+			<h2>Numbers</h2>
+			<paper-radio-group id="rgNumbers" selected="several">
+				<paper-radio-button name="single"><div class="imgSingle"></div>single</paper-radio-button>
+				<paper-radio-button name="several"><div class="imgSeveral"></div>several</paper-radio-button>
+			</paper-radio-group>
+		</div>
+ 
 		<div class="vertical-section">
 			<paper-button id="btnRegister" noink disabled$="{{checkData(user, selCityIdx, startDate)}}" on-tap="register"><iron-image src="../../images/main/register_btn_2.png"></iron-image></paper-button>			
 		</div>
@@ -260,6 +305,10 @@
 				return;
 			}
 
+			if(this.userData.nationality==null){
+				this.userData.nationality = "";
+			}
+
 			var theme = this.$.rgTheme.selected;
 			var themeIdx = 2;
 			if(theme === "dining"){
@@ -268,7 +317,15 @@
 				themeIdx = 2;
 			} else if(theme === "accompany"){
 				themeIdx = 3;
-			} 			
+			} 
+
+			var numbers = this.$.rgNumbers.selected;
+			var numbersIdx = 1;
+			if(numbers === "single"){
+				numbersIdx = 0;
+			} else if(numbers === "several"){
+				numbersIdx = 1;
+			}		
 			
 			var startDateName = this.$.piStartDate.value;
 			var selCityName = this.cityNames[this.selCityIdx].name;
@@ -280,11 +337,13 @@
 				username: this.userData.username,				
 				userpic: this.userData.picture,
 				userbirth: this.userData.birth,
+				usernationality: this.userData.nationality,
 				usercountryCode: this.userData.countryCode,
 				userphone: this.userData.phone,
 				selCityIdx: this.selCityIdx,
 				selCityName: selCityName,
 				themeIdx: themeIdx,
+				numbersIdx: numbersIdx,
 				startDate: this.startDate,		
 				startDateName: startDateName,
 				schedule_title : schedule_title,				

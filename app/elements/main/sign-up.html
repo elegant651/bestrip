@@ -58,6 +58,10 @@
 			margin-right: 10px;
 		}
 
+		#nsModule {			
+			margin-top: 18px;
+		}
+
 		#piCountryCode {			
 			margin-right: 10px;
 			width: 90px;
@@ -65,8 +69,7 @@
 
 		.txtPolicy {
 			color: rgb(162,161,161);
-			text-align: center;
-			cursor: pointer;
+			text-align: center;			
 		}
 
 		#btnSignup {
@@ -128,10 +131,10 @@
 			<paper-input id="piBirthDay" type="number" label="D" value="{{birthDay}}" min="1" max="31" required></paper-input>
 			<!-- <paper-input id="ipBirth" type="date" value="{{birth}}" required auto-validate></paper-input> -->
 		</div>
-		<!-- <div class="field">
+		<div class="field">
 			<h2>Nationality</h2>
-			<paper-input id="piNationality"></paper-input>
-		</div> -->
+			<nationality-select id="nsModule" nationality="{{nationality}}"></nationality-select>
+		</div>
 		<div class="field">
 			<h2>Phone Number</h2>
 			<paper-input id="piCountryCode" type="number" label="country code" value="{{countryCode}}" required auto-validate></paper-input>
@@ -140,7 +143,7 @@
 		<div class="field">
 			<span class="txtPolicy">By continuing, you're confiming that you're read and agree to our <span class="underline" on-tap="showUseterms">terms and conditions</span> and <span class="underline" on-tap="showPrivacy">privacy policy</span></span>
 		</div>
-		<paper-button id="btnSignup" on-tap="signup" disabled$="{{checkData(provider, username, email, password, passwordCheck, birthYear, countryCode, phone)}}" noink class="colorful ripple">Start</paper-button>
+		<paper-button id="btnSignup" on-tap="signup" noink class="colorful ripple">Start</paper-button>
 
 		<privacy-dialog id="privacyDlog" on-tap="hidePrivacy"></privacy-dialog>
 		<useterms-dialog id="usetermsDlog" on-tap="hideUseterms"></useterms-dialog>
@@ -198,6 +201,8 @@
 	      		type: Number,
 	      		value: 1
 	      	},	      	
+
+	      	nationality: String,
 
 	      	countryCode: Number,
 
@@ -269,12 +274,12 @@
 			this.link = this.userData.link;
 		},
 
-		checkData: function(provider, username, email, password, passwordCheck, birthYear, countryCode, phone) {			
+		checkData: function() {			
 			if(this.username==''){
 				return true;
-			}
+			}			
 
-			if(provider=="password"){
+			if(this.provider=="password"){
 				if(this.email==''){
 					return true;
 				}
@@ -289,12 +294,17 @@
 			if(this.birthYear==null || this.birthYear==0){
 				return true;
 			}
+
+			if(this.nationality=="" || this.nationality==null){
+				return true;
+			}
+
 			if(this.countryCode==null || this.countryCode==0){
 				return true;
 			}
 			if(this.phone==null || this.phone==0){
 				return true;
-			}
+			}			
 
 			return false;
 		},
@@ -316,6 +326,10 @@
 		},
 
 		signup: function() {
+			if(this.checkData()){
+				alert("error on signup");
+				return;
+			}
 
 			var that = this;
 			var gender = this.$.rgGender.selected;	
@@ -328,6 +342,7 @@
 				username: this.username,
 				email: this.email,				
 				birth: this.birth,
+				nationality: this.nationality,
 				countryCode: this.countryCode,
 				phone: this.phone,
 				created_at: new Date().getTime(),
