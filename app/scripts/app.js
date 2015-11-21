@@ -97,13 +97,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     page('/signup', function() {
+        // importPage("../elements/main/sign-up.html");
+        app.route = 'signup';
         initDrawer('SIGN UP');
         document.querySelector('#paperToggle').setAttribute('hidden', '');
 
-        app.route = 'signup';
+        
     });
 
     page('/myprofile', function() {
+        // importPage("../elements/main/my-profile.html");
         initDrawer('PROFILE');
 
         app.route = 'profile';
@@ -117,24 +120,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     page('/register', function () {
+      // importPage("../elements/main/register-schedule.html");
       initDrawer('REGISTER');      
 
       app.route = 'register';            
     });
 
     page('/search', function() {
+      // importPage("../elements/main/finding-travelers.html");
       app.route = 'search';
 
       initDrawer('SEARCHING');
     });
 
     page('/schedules', function() {
+      // importPage("../elements/main/list-schedule.html");
       app.route = 'schedules';
 
       initDrawer('NOTIFICATION');
     });    
 
     page('/myschedule', function() {
+      // importPage("../elements/main/my-schedule.html");
       app.route = 'myschedule';
 
       initDrawer('MY TRAVELERS');

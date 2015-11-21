@@ -161,8 +161,10 @@ body.loading #splash {
 	color: rgb(254,254,254);
 	font-size: 20px;
 	display: inline-block;
-    margin-left: 80px;
+    /*margin-left: 80px;*/
     margin-top: 15px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 

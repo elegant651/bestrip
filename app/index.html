@@ -41,7 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- endbuild-->
 
   <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
-  <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js" async></script>  
+  <!--<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js" async></script> -->
   <!-- endbuild -->
  
   <!-- extra js -->
@@ -51,7 +51,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <!-- will be replaced with elements/elements.vulcanized.html -->
   <script src="bower_components/page/page.js"></script>    
-  <link rel="import" id="bundle" href="elements/elements.html">  
+  <link rel="import" href="bower_components/iron-pages/iron-pages.html">
+  <link rel="import" href="bower_components/paper-menu/paper-menu.html">
+  <link rel="import" id="bundle" href="elements/elements.html" async>  
   <base href="/">
   <!-- endreplace-->
 </head>
@@ -137,12 +139,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <!-- Main Toolbar -->
         <paper-toolbar id="mainToolbar" hidden class="nolanding">
           <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
-          <div id="titleMenu" hidden></div>
-
-          <span class="flex"></span>
           
-
-          <div id="imgLogo" class="middle paper-font-display2 app-name" style="margin-top: 25px;"><iron-image src="../../images/main/logo.png"></iron-image></div>                   
+          <div id="titleMenu" hidden></div>
+              
         </paper-toolbar>                       
 
         <!-- Main Content -->
@@ -150,35 +149,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
             <section data-route="home">                                               
-                <mobileweb-login id="mwLogin" provider="{{provider}}"></mobileweb-login>              
+                <mobileweb-login id="mwLogin" provider="{{provider}}" user="{{user}}"></mobileweb-login>              
             </section>
           
               <section data-route="signup">
-                 <sign-up id="signup" provider="{{provider}}" user="{{user}}"></sign-up>
+                 <sign-up id="signup" provider="[[provider]]" user="[[user]]"></sign-up>
               </section>
 
               <section data-route="profile">
-                <my-profile id="myprofile" user="{{user}}" userid="{{params.id}}"></my-profile>
+                <my-profile id="myprofile" user="[[user]]" userid="{{params.id}}"></my-profile>
               </section>
 
               <section data-route="register">
-                  <register-schedule id="registerSchedule" user="{{user}}"></register-schedule>
+                  <register-schedule id="registerSchedule" user="[[user]]"></register-schedule>
               </section>
 
               <section data-route="search">
-                  <finding-travelers id="findingTravelers" user="{{user}}"></finding-travelers>
+                  <finding-travelers id="findingTravelers" user="[[user]]"></finding-travelers>
               </section>
 
               <section data-route="schedules">              
-                  <list-schedule id="listSchedule" user="{{user}}"></list-schedule>
+                  <list-schedule id="listSchedule" user="[[user]]"></list-schedule>
               </section>
 
               <section data-route="myschedule">
-                  <my-schedule id="mySchedule" user="{{user}}"></my-schedule>
+                  <my-schedule id="mySchedule" user="[[user]]"></my-schedule>
               </section>
 
               <section data-route="logout">
-                  <logout-dialog id="logoutDlog" user="{{user}}"></logout-dialog>
+                  <logout-dialog id="logoutDlog" user="[[user]]"></logout-dialog>
               </section>              
 
           </iron-pages>

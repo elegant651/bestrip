@@ -10,6 +10,10 @@
 			margin-top: 20px;
 		}
 
+		.txtPolicy .underline {
+			text-decoration: underline;
+		}
+
 		h2 {
 			font-size:  20px;
 			color: rgb(138,138,138);
@@ -134,11 +138,12 @@
 			<paper-input id="piPhone" type="number" label="phone number" value="{{phone}}" required auto-validate maxlength="15"></paper-input>
 		</div>
 		<div class="field">
-			<span class="txtPolicy" on-tap="showPrivacy">By continuing, you're confiming that you're read and agree to our terms and conditions and privacy policy</span>
+			<span class="txtPolicy">By continuing, you're confiming that you're read and agree to our <span class="underline" on-tap="showUseterms">terms and conditions</span> and <span class="underline" on-tap="showPrivacy">privacy policy</span></span>
 		</div>
 		<paper-button id="btnSignup" on-tap="signup" disabled$="{{checkData(provider, username, email, password, passwordCheck, birthYear, countryCode, phone)}}" noink class="colorful ripple">Start</paper-button>
 
 		<privacy-dialog id="privacyDlog" on-tap="hidePrivacy"></privacy-dialog>
+		<useterms-dialog id="usetermsDlog" on-tap="hideUseterms"></useterms-dialog>
 	</template>
 </dom-module>
 <script>
@@ -300,6 +305,14 @@
 
 		hidePrivacy: function() {
 			this.$.privacyDlog.close();
+		},
+
+		showUseterms: function() {
+			this.$.usetermsDlog.open();
+		},
+
+		hideUseterms: function() {
+			this.$.usetermsDlog.close();
 		},
 
 		signup: function() {
