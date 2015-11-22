@@ -85,14 +85,16 @@
 			background-color: rgba(162,161,161,0.5);
 		}		
 	</style>
-	<template>
+	<template>				
+
 		<firebase-document
 	     	location="{{userTarget}}"
 	     	data="{{userData}}"
 	     	>
 	     </firebase-document>
+	     <span>{{userid}} : D</span>
 		
-		<!-- <span>{{provider}} Sign-Up</span> -->
+		<span>{{provider}} Sign-Up</span>
 
 		<div class="field picture">
 			<h2>Picture</h2>
@@ -219,9 +221,12 @@
 	      	},
 
 	      	user: {
-				type: Object,
-				value: null					
-			},
+	      		type: Object,
+	      		value: null,
+	      		observer: '_userChanged'
+	      	},
+
+	      	userid: String,
 
 	      	userTarget: {
 				type: String,
@@ -235,7 +240,7 @@
 		},
 
 		ready: function() {
-
+			
 		},
 
 		initialize: function() {
@@ -260,6 +265,13 @@
 			if(user!=null){				
 				return "https://flamingo365.firebaseio.com/users/"+user.uid;
 			}			
+		},
+
+		_userChanged: function() {
+			console.log("sss");
+			if(this.user!=null){
+				console.log("ttt:"+this.user.uid);
+			}
 		},
 
 		_userDataChanged: function() {						

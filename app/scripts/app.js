@@ -69,6 +69,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       });
     };
 
+    var getAuthData = function() {
+      if(!app.user){
+        var ref = new Firebase("https://flamingo365.firebaseio.com");
+        var authData = ref.getAuth();
+        if(authData) {
+          app.userid = authData.uid
+        }              
+      } else {
+        app.userid = app.user.uid;            
+      }      
+    };
+
     /// routing ///
     var initDrawer = function(title) {        
         document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "240px");
@@ -87,7 +99,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }        
     };
 
-    page('/', function () {            
+    page('/', function () {                
       app.route = 'home';
       
       initDrawer();
@@ -96,8 +108,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.querySelector('#mainToolbar').setAttribute('hidden', '');              
     });
 
-    page('/signup', function() {
-        // importPage("../elements/main/sign-up.html");
+    page('/signup', function() {        
+        Polymer.Base.importHref("../elements/main/sign-up.html", function() { 
+            getAuthData();
+        });        
+
         initDrawer('SIGN UP');
         document.querySelector('#paperToggle').setAttribute('hidden', '');
 
@@ -105,7 +120,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     page('/myprofile', function() {
-        // importPage("../elements/main/my-profile.html");
+        Polymer.Base.importHref("../elements/main/my-profile.html", function() {          
+            getAuthData();
+        });
+
         initDrawer('PROFILE');
 
         app.route = 'profile';
@@ -119,28 +137,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     page('/register', function () {
-      // importPage("../elements/main/register-schedule.html");
+      importPage("../elements/main/register-schedule.html");
       initDrawer('REGISTER');      
 
       app.route = 'register';            
     });
 
     page('/search', function() {
-      // importPage("../elements/main/finding-travelers.html");
+      importPage("../elements/main/finding-travelers.html");
       app.route = 'search';
 
       initDrawer('SEARCHING');
     });
 
     page('/schedules', function() {
-      // importPage("../elements/main/list-schedule.html");
+      importPage("../elements/main/list-schedule.html");
       app.route = 'schedules';
 
       initDrawer('NOTIFICATION');
     });    
 
     page('/myschedule', function() {
-      // importPage("../elements/main/my-schedule.html");
+      importPage("../elements/main/my-schedule.html");
       app.route = 'myschedule';
 
       initDrawer('MY TRAVELERS');

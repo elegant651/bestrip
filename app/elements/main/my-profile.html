@@ -114,16 +114,8 @@
 	Polymer({
 		is: "my-profile",
 
-		properties: {		
-			user: {
-				type: Object,
-				value: null							
-			},
-
-			userid: {
-				type: String,
-				computed: '_defaultUserId(user)'
-			},
+		properties: {					
+			userid: String,				
 
 	      	userTarget: {
 				type: String,
@@ -143,14 +135,13 @@
 		ready: function() {
 			this.prefItems = [
 				{name:'culinary', checked: false}, {name:'holiday', checked: false}, {name:'romantic', checked: false}, {name:'luxury', checked: false}, {name:'city tour', checked: false}, {name:'roadtrip', checked: false}, {name:'activity', checked: false}, {name:'beach', checked: false},
-				{name:'chiling', checked: false}, {name:'cultural', checked: false}, {name:'rest', checked: false}, {name:'adventure', checked: false}, {name:'health', checked: false}							
+				{name:'chiling', checked: false}, {name:'cultural', checked: false}, {name:'rest', checked: false}, {name:'adventure', checked: false}, {name:'health', checked: false}
 			];
 
 			this.lifeItems = [
 				{name:'swimming', checked: false}, {name:'surfing', checked: false}, {name:'skiing', checked: false}, {name:'diving', checked: false}, {name:'hiking', checked: false}, {name:'fishing', checked: false}, {name:'bicycling', checked: false}, {name:'shopping', checked: false},
 				{name:'movie', checked: false}, {name:'artist', checked: false}, {name:'music', checked: false}, {name:'cooking', checked: false}, {name:'photography', checked: false}
 			];
-		
 		},
 
 		_userDataChanged: function() {
@@ -160,15 +151,15 @@
 			}
 		},
 
-		_defaultUserId: function(user) {
-			if(user!=null){
-				console.log("user:"+user.uid);
-				return user.uid;
-			}
-		},
+		// _defaultUserId: function(user) {
+		// 	if(user!=null){
+		// 		console.log("user:"+user.uid);
+		// 		return user.uid;
+		// 	}
+		// },
 
 		_computeUserTarget: function(userid) {			
-			if(userid!=null){					
+			if(userid!=""){					
 				return "https://flamingo365.firebaseio.com/users/"+userid;
 			}			
 		},

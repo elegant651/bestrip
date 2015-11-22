@@ -172,9 +172,13 @@
 	    },
 
 	    _userChanged: function() {
+	    	if(this.user){
+	    		console.log("user:"+JSON.stringify(this.user));
+	    	}
+
 	    	if(this.user && this.route=="home"){	    		
 	    		// page.redirect("/register");
-	    		return;
+	    		// return;
 	    	}
 	    	
 	    	if (this.statusKnown && this.user) {	   	    		    				 	    	
@@ -231,7 +235,7 @@
 	    	} else {	    		
 
 	    		if(window.location.hash!==""){
-	    			console.log("tt");
+	    			// console.log("tt");
 	    			// location.href = "/";
 	    		}	    		
 	    	}
