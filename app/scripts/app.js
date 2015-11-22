@@ -39,7 +39,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var loadContainer = document.getElementById('splash');
       loadContainer.addEventListener('transitionend', function(e){
         loadContainer.parentNode.removeChild(loadContainer); // IE 10 doesn't support el.remove()
-        console.log("loaded");
+        console.log("loaded");                          
       });      
 
       document.body.classList.remove('loading');
@@ -87,7 +87,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }        
     };
 
-    page('/', function () {
+    page('/', function () {            
       app.route = 'home';
       
       initDrawer();

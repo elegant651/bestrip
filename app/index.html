@@ -149,7 +149,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
             <section data-route="home">                                               
-                <mobileweb-login id="mwLogin" provider="{{provider}}" user="{{user}}"></mobileweb-login>              
+                <mobileweb-login id="mwLogin" route="[[route]]" provider="{{provider}}" user="{{user}}"></mobileweb-login>              
             </section>
           
               <section data-route="signup">
