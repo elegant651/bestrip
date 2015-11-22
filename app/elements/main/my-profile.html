@@ -91,7 +91,7 @@
 				<h2>Preference</h2>
 				<div class="content">
 					<template is="dom-repeat" items="{{prefItems}}">
-						<paper-checkbox data-index$="{{index}}" on-iron-change="changeStatus" noink checked$="{{item.checked}}">{{item.name}}</paper-checkbox>
+						<paper-checkbox data-index$="{{index}}" on-iron-change="changeStatusPref" noink checked$="{{item.checked}}">{{item.name}}</paper-checkbox>
 					</template>					
 				</div>
 			</div>
@@ -99,14 +99,14 @@
 				<h2>Life style</h2>
 				<div class="content">
 					<template is="dom-repeat" items="{{lifeItems}}">
-						<paper-checkbox class="pcLife" noink checked$="{{item.checked}}">{{item.name}}</paper-checkbox>
+						<paper-checkbox data-index$="{{index}}" on-iron-change="changeStatusLife" noink checked$="{{item.checked}}">{{item.name}}</paper-checkbox>
 					</template>					
 				</div>
 			</div>
 		</div>		
 
 		<div class="field">
-			<paper-button id="btnUpdate" on-tap="updateProfile" hidden raised class="colorful ripple">Update</paper-button>
+			<paper-button id="btnUpdate" on-tap="updateProfile" raised class="colorful ripple">Update</paper-button>
 		</div>
 	</template>
 </dom-module>
@@ -131,7 +131,8 @@
 			},
 
 			userData: {
-				type: Object				
+				type: Object,
+				observer: '_userDataChanged'				
 			},
 
 			prefItems: Array,
@@ -149,6 +150,14 @@
 				{name:'swimming', checked: false}, {name:'surfing', checked: false}, {name:'skiing', checked: false}, {name:'diving', checked: false}, {name:'hiking', checked: false}, {name:'fishing', checked: false}, {name:'bicycling', checked: false}, {name:'shopping', checked: false},
 				{name:'movie', checked: false}, {name:'artist', checked: false}, {name:'music', checked: false}, {name:'cooking', checked: false}, {name:'photography', checked: false}
 			];
+		
+		},
+
+		_userDataChanged: function() {
+			if(this.userData!=null){
+				this.prefItems=JSON.parse(this.userData.strPref);
+				this.lifeItems=JSON.parse(this.userData.strLife);
+			}
 		},
 
 		_defaultUserId: function(user) {
@@ -182,27 +191,51 @@
 			return Math.abs(ageDate.getFullYear()-1970);
 		},
 
-		changeStatus: function(e) {
+		changeStatusPref: function(e) {
 			var dataIndex = e.currentTarget.getAttribute("data-index");
-			console.log("dd:"+dataIndex);
+			var checked = e.currentTarget.getAttribute("checked");
+			if(checked!=null){
+				checked = true;
+			} else {
+				checked = false;
+			}
+			
+			if(this.prefItems[dataIndex]!=undefined){
+				this.prefItems[dataIndex].checked = checked;
+			}			
+		},
+
+		changeStatusLife: function(e) {
+			var dataIndex = e.currentTarget.getAttribute("data-index");
+			var checked = e.currentTarget.getAttribute("checked");
+			if(checked!=null){
+				checked = true;
+			} else {
+				checked = false;
+			}
+			
+			if(this.lifeItems[dataIndex]!=undefined){
+				this.lifeItems[dataIndex].checked = checked;
+			}			
 		},
 
 		updateProfile: function() {			
 						
-			var strPref = JSON.stringify(this.pcPref);						
+			var strPref = JSON.stringify(this.prefItems);						
+			var strLife = JSON.stringify(this.lifeItems);
+			
 
-			console.log(strPref);
+			if(strPref==null || strLife==null){
+				return;
+			}
 
-			var data = {								
-								
-			};
-
-			// var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
-			// ref.push(data);	  			
-
-			// this.fire('show-dialog', {content: "Sign-up has completed.", url: "/register"});
-
-			// this.initialize();
+			var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
+			ref.child(this.userid).update({
+				"strPref": strPref,
+				"strLife": strLife
+			});					
+			
+			alert("Update Complete!!");
 		}
 	});
 </script>
