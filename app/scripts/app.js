@@ -74,11 +74,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var ref = new Firebase("https://flamingo365.firebaseio.com");
         var authData = ref.getAuth();
         if(authData) {
-          app.userid = authData.uid
-        }              
+          app.userid = authData.uid;
+        }                      
       } else {
         app.userid = app.user.uid;            
       }      
+      return app.userid;
     };
 
     /// routing ///
@@ -119,9 +120,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         app.route = 'signup';
     });
 
-    page('/myprofile', function() {
-        Polymer.Base.importHref("../elements/main/my-profile.html", function() {          
-            getAuthData();
+    page('/myprofile', function() {            
+        Polymer.Base.importHref("../elements/main/my-profile.html", function() {                    
+            var userid = getAuthData();            
+            document.querySelector("#tempBindP").userid = userid;
         });
 
         initDrawer('PROFILE');
@@ -136,22 +138,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         app.params = data.params;
     });
 
-    page('/register', function () {
-      importPage("../elements/main/register-schedule.html");
+    page('/register', function () {            
+      Polymer.Base.importHref("../elements/main/register-schedule.html", function() {                    
+          var userid = getAuthData();            
+          document.querySelector("#tempBindR").userid = userid;
+      });
       initDrawer('REGISTER');      
 
       app.route = 'register';            
     });
 
     page('/search', function() {
-      importPage("../elements/main/finding-travelers.html");
+      Polymer.Base.importHref("../elements/main/finding-travelers.html", function() {                    
+          var userid = getAuthData();            
+          document.querySelector("#tempBindS").userid = userid;
+      });      
       app.route = 'search';
 
       initDrawer('SEARCHING');
     });
 
-    page('/schedules', function() {
-      importPage("../elements/main/list-schedule.html");
+    page('/schedules', function() {      
+      Polymer.Base.importHref("../elements/main/list-schedule.html", function() {                    
+          var userid = getAuthData();            
+          document.querySelector("#tempBindSC").userid = userid;
+      });      
       app.route = 'schedules';
 
       initDrawer('NOTIFICATION');

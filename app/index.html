@@ -36,8 +36,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
   <!-- build:css styles/main.css -->
-  <link rel="stylesheet" href="styles/main.css">
-  <link rel="import" href="styles/my-custom-style.html">
+  <link rel="stylesheet" href="styles/main.css" async>
+  <link rel="import" href="styles/my-custom-style.html" async>
   <!-- endbuild-->
 
   <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
@@ -151,24 +151,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <mobileweb-login id="mwLogin" route="[[route]]" provider="{{provider}}" user="{{user}}"></mobileweb-login>              
             </section>
           
-              <section data-route="signup">                
-                  <sign-up id="signup" provider="{{provider}}" userid="{{userid}}"></sign-up>
+              <section data-route="signup">                   
+                  <sign-up id="signup" provider="{{provider}}" userid="[[userid]]"></sign-up>                
               </section>
 
-              <section data-route="profile">                
-                  <my-profile id="myprofile" userid="{{userid}}"></my-profile>                
+              <section data-route="profile">  
+                <template is="dom-bind" id="tempBindP">              
+                  <my-profile id="myprofile" userid="[[userid]]"></my-profile>                
+                </template>
               </section>
 
               <section data-route="register">
-                  <register-schedule id="registerSchedule" user="[[user]]"></register-schedule>
+                <template is="dom-bind" id="tempBindR">    
+                  <register-schedule id="registerSchedule" userid="[[userid]]"></register-schedule>
+                </template>
               </section>
 
               <section data-route="search">
-                  <finding-travelers id="findingTravelers" user="[[user]]"></finding-travelers>
+                <template is="dom-bind" id="tempBindS">    
+                  <finding-travelers id="findingTravelers" userid="[[userid]]"></finding-travelers>
+                </template>
               </section>
 
-              <section data-route="schedules">              
-                  <list-schedule id="listSchedule" user="[[user]]"></list-schedule>
+              <section data-route="schedules">
+                <template is="dom-bind" id="tempBindSC">              
+                  <list-schedule id="listSchedule" userid="[[userid]]"></list-schedule>
+                </template>
               </section>
 
               <section data-route="myschedule">

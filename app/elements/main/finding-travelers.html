@@ -146,16 +146,10 @@
 	</style>
 	<template>
 
-		<firebase-document
-	     	location="{{userTarget}}"
-	     	data="{{userData}}"
-	     	>
-	     </firebase-document>      
-
 	    <firebase-collection	  
 			id="fcRequests"        
           location="https://flamingo365.firebaseio.com/requests"
-          ></firebase-collection>	     
+          ></firebase-collection>	           
 	    	    
 			<paper-material elevation="1">
 				<div class="searchWrapper">
@@ -239,12 +233,16 @@
 	Polymer({
 		is: "finding-travelers",
 
-		properties: {			
-			schedules: Object,
-			user: {
-				type: Object,
-				value: null				
+		properties: {		
+
+			userid: {
+				type: String,				
+				observer: '_useridChanged'
 			},
+
+			userData: Object,
+
+			schedules: Object,
 
 			selCityIdx: {
 				type: Number,
@@ -269,23 +267,8 @@
 			themeIdx: {
 				type: Number,
 				value: 0
-			},
-
-			userTarget: {
-				type: String,
-				computed: '_computeUserTarget(user)'
-			},
-
-			userData: {
-				type: Object				
-			}
-		},
-
-		_computeUserTarget: function(user) {
-			if(user!=null){				
-				return "https://flamingo365.firebaseio.com/users/"+user.uid;
 			}			
-		},
+		},		
 
 		ready: function() {	
 			//default london		
@@ -295,6 +278,16 @@
 
 			this.search();			
 		},
+
+		_useridChanged: function() {
+			if(this.userid!=""){			
+				var that = this;						 
+				var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
+				ref.child(this.userid).once("value", function(snap) {					
+					that.userData = snap.val();						
+				});
+			}	
+		},		
 
 		filterStatus: function(item) {			
 			if(this.themeIdx==0){
@@ -324,7 +317,7 @@
 
 		dateValueChanged: function() {			
 			var date = this.$.datePicker.date;
-			if(this.$.datePicker.date==null){
+			if(date==null){
 				return;
 			}
 						

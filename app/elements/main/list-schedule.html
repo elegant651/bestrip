@@ -72,7 +72,7 @@
 			  id="fcRequests"        
 	          location="https://flamingo365.firebaseio.com/requests"
 	          order-by-child="schedule_userid"
-	          equal-to="{{user.uid}}"
+	          equal-to="{{userid}}"
 	          data="{{requests}}"	          
 	          ></firebase-collection>
 
@@ -85,17 +85,11 @@
 	     	location="{{requestTarget}}"
 	     	data="{{requestData}}"
 	     	>
-	     </firebase-document>
-
-	     <firebase-document
-	     	location="{{userTarget}}"
-	     	data="{{userData}}"
-	     	>
-	     </firebase-document>
-	    
-	    
+	     </firebase-document>	    
+	    	     
 	    <paper-button id="pbRefresh" on-tap="refresh"><iron-icon icon="refresh"></iron-icon>Reload</paper-button>
 	    
+	    <div>{{userid}} :D</div>    
 
 	    <div class="request-count">
 	    </div> 	     
@@ -142,6 +136,16 @@
 		is: "list-schedule",
 
 		properties: {
+			userid: {
+				type: String,				
+				observer: '_useridChanged'
+			},
+
+			userData: {
+				type: Object,
+				observer: '_userDataChanged'
+			},
+
 			requests: {
 				type: Array				
 			},
@@ -151,12 +155,7 @@
 			},
 
 			requestId: Number,
-			scheduleId: Number,			
-
-			userData: {
-				type: Object,
-				observer: '_userDataChanged'
-			},
+			scheduleId: Number,						
 
 			requestTarget: {
 				type: String,
@@ -166,42 +165,42 @@
 			scheduleTarget: {
 				type: String,
 				computed: 'computeScheduleTarget(scheduleId)'
-			},
-
-			userTarget: {
-				type: String,
-				computed: 'computeUserTarget(user)'
-			},
-
-			user: {
-				type: Object,
-				value: null					
-			}
+			}			
 		},
 
-		_userDataChanged: function() {		
-			console.log(this.requests.length+"/r");	
-			if(this.requests.length==0){
-				this.reqblank = true;
-			} else {
-				this.reqblank = false;
-			}
-
-			if(this.userData.numRT!=this.requests.length){
-				console.log("differentRT");
-
-				var ref = new Firebase(this.userTarget);
-				ref.update({
-					"numRT": this.requests.length
+		_useridChanged: function() {
+			if(this.userid!=""){			
+				var that = this;						 
+				var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
+				ref.child(this.userid).once("value", function(snap) {					
+					that.userData = snap.val();						
 				});
+			}	
+		},		
 
-				this.userData.numRT = this.requests.length;
-		  		this.notifyPath('userData.numRT', this.userData.numRT);
+		_userDataChanged: function() {		
+			// console.log(this.requests.length+"/r");	
+			// if(this.requests.length==0){
+			// 	this.reqblank = true;
+			// } else {
+			// 	this.reqblank = false;
+			// }
 
-		  		this.fire('show-newflag');
-		 	} else {
-		 		this.fire('hide-newflag');
-		 	}
+			// if(this.userData.numRT!=this.requests.length){
+			// 	console.log("differentRT");
+
+			// 	var ref = new Firebase(this.userTarget);
+			// 	ref.update({
+			// 		"numRT": this.requests.length
+			// 	});
+
+			// 	this.userData.numRT = this.requests.length;
+		 //  		this.notifyPath('userData.numRT', this.userData.numRT);
+
+		 //  		this.fire('show-newflag');
+		 // 	} else {
+		 // 		this.fire('hide-newflag');
+		 // 	}
 		},
 
 		refresh: function() {
@@ -219,13 +218,7 @@
 		computeScheduleTarget: function(scheduleId) {
 			return "https://flamingo365.firebaseio.com/schedules/"+scheduleId+"/req_users";
 		},
-
-		computeUserTarget: function(user) {
-			if(user!=null){				
-				return "https://flamingo365.firebaseio.com/users/"+user.uid;
-			}			
-		},
-
+		
 		accept: function(e) {
 			this.requestId = e.currentTarget.getAttribute("data-key");	
 			this.scheduleId = e.currentTarget.getAttribute("data-scheduleid");					

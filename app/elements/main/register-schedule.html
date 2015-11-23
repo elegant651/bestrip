@@ -126,19 +126,11 @@
 		}
 		
 	</style>	
-	<template>		
-		<firebase-document
-	     	location="{{userTarget}}"
-	     	data="{{userData}}"
-	     	>
-	     </firebase-document>      
-
+	<template>			 
 		<firebase-collection	  
 				id="fcSchedules"        
 	          location="https://flamingo365.firebaseio.com/schedules"
-	          ></firebase-collection>	    	    
-		
-	    <!-- <div>{{user.uid}}</div> -->
+	          ></firebase-collection>	    	    			    
 
 		<div class="destinationWrapper">
 			<h2 id="txtSelCity">London</h2>
@@ -149,15 +141,7 @@
 			<div class="wrapperDate">
 				<iron-icon class="icDate" src="../../images/main/calendar_icon_2.png"></iron-icon>
 				<paper-input id="piStartDate" label="Select Start Date" on-tap="showStartDateDlog"></paper-input>			
-			</div>
-			
-			<paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
-				<div class="buttons">
-		          <paper-button dialog-dismiss>Cancel</paper-button>
-		          <paper-button dialog-confirm>OK</paper-button>
-		        </div>
-		        <paper-date-picker id="datePicker" date="{{pickerDate}}" responsive-width="655px"></paper-date-picker>      
-		      </paper-dialog>
+			</div>						
 		</div>
 		<div class="vertical-section">
 			<h2>Theme</h2>
@@ -179,7 +163,16 @@
 		<div class="vertical-section">
 			<paper-button id="btnRegister" noink disabled$="{{checkData(user, selCityIdx, startDate)}}" on-tap="register"><iron-image src="../../images/main/register_btn_2.png"></iron-image></paper-button>			
 		</div>
+
 		<city-dialog id="cityDlog" on-select-city="onSelectCity" modal></city-dialog>		
+
+		<paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
+				<div class="buttons">
+		          <paper-button dialog-dismiss>Cancel</paper-button>
+		          <paper-button dialog-confirm>OK</paper-button>
+		        </div>
+		        <paper-date-picker id="datePicker" date="{{pickerDate}}" responsive-width="655px"></paper-date-picker>      
+		      </paper-dialog>
 	</template>
 </dom-module>
 <script>
@@ -187,10 +180,13 @@
 		is: "register-schedule",
 
 		properties: {
-			user: {
-				type: Object,
-				value: null							
+
+			userid: {
+				type: String,				
+				observer: '_useridChanged'
 			},
+
+			userData: Object,
 			
 			selCityIdx: {
 				type: Number,
@@ -205,23 +201,9 @@
 			pickerDate: {
 				type: Number,
 				observer: '_pickerDateChanged'
-			},
+			}
 
-			userTarget: {
-				type: String,
-				computed: '_computeUserTarget(user)'
-			},
-
-			userData: {
-				type: Object				
-			}			
-		},		
-
-		_computeUserTarget: function(user) {
-			if(user!=null){				
-				return "https://flamingo365.firebaseio.com/users/"+user.uid;
-			}			
-		},
+		},	
 
 		ready: function() {
 			this.cityNames = [	
@@ -239,14 +221,24 @@
 			this.initialize();
 		},		
 
+		_useridChanged: function() {
+			if(this.userid!=""){			
+				var that = this;						 
+				var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
+				ref.child(this.userid).once("value", function(snap) {					
+					that.userData = snap.val();						
+				});
+			}	
+		},		
+
 		initialize: function() {			
 			this.$.txtSelCity.innerHTML = "London";
 			this.selCityIdx = 1;
 			this.startDate = -1;			
 			this.$.piStartDate.value = "Select Start Date";  			
 			this.$.rgTheme.selected = "party";
-			this.$.cityDlog.close();
-			this.$.dpDlog.close();			
+			// this.$.cityDlog.close();
+			// this.$.dpDlog.close();			
 		},
 			
 		showCityDlog: function() {									
@@ -263,12 +255,10 @@
 		},
 
 		dateValueChanged: function() {			
+			var date = this.$.datePicker.date;						
 			if(this.$.datePicker.date==null){
 				return;
-			}
-
-			this.locale = 'en-US';
-			var date = this.$.datePicker.date;						
+			}						
 
 			var year = this.$.datePicker.dateFormat(date, 'YYYY');
 			var month = this.$.datePicker.dateFormat(date, 'MMM');
@@ -303,7 +293,7 @@
 		register: function() {			
 			if(this.userData==null){
 				return;
-			}
+			}			
 
 			if(this.userData.nationality==null){
 				this.userData.nationality = "";

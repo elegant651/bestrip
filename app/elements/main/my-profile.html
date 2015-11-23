@@ -64,13 +64,8 @@
       	margin: 0 auto;	      	
       }
 	</style>
-	<template>		
-		<firebase-document
-	     	location="{{userTarget}}"
-	     	data="{{userData}}"
-	     	>
-	     </firebase-document>
-		
+	<template>					     
+
 		<div class="userbox">
 			<div class="pictureField">				
 				<iron-image src="{{userData.picture}}" style="width:100px; height:100px;"></iron-image>			
@@ -115,17 +110,12 @@
 		is: "my-profile",
 
 		properties: {					
-			userid: String,				
-
-	      	userTarget: {
-				type: String,
-				computed: '_computeUserTarget(userid)'
+			userid: {
+				type: String,				
+				observer: '_useridChanged'
 			},
 
-			userData: {
-				type: Object,
-				observer: '_userDataChanged'				
-			},
+			userData: Object,
 
 			prefItems: Array,
 
@@ -141,14 +131,20 @@
 			this.lifeItems = [
 				{name:'swimming', checked: false}, {name:'surfing', checked: false}, {name:'skiing', checked: false}, {name:'diving', checked: false}, {name:'hiking', checked: false}, {name:'fishing', checked: false}, {name:'bicycling', checked: false}, {name:'shopping', checked: false},
 				{name:'movie', checked: false}, {name:'artist', checked: false}, {name:'music', checked: false}, {name:'cooking', checked: false}, {name:'photography', checked: false}
-			];
+			];			
 		},
 
-		_userDataChanged: function() {
-			if(this.userData!=null){
-				this.prefItems=JSON.parse(this.userData.strPref);
-				this.lifeItems=JSON.parse(this.userData.strLife);
-			}
+		_useridChanged: function() {
+			if(this.userid!=""){			
+				var that = this;						 
+				var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
+				ref.child(this.userid).once("value", function(snap) {					
+					var userData = snap.val();
+					that.prefItems=JSON.parse(userData.strPref);
+					that.lifeItems=JSON.parse(userData.strLife);		
+					that.userData = userData;			
+				});
+			}	
 		},
 
 		// _defaultUserId: function(user) {
@@ -158,11 +154,6 @@
 		// 	}
 		// },
 
-		_computeUserTarget: function(userid) {			
-			if(userid!=""){					
-				return "https://flamingo365.firebaseio.com/users/"+userid;
-			}			
-		},
 
 		_computeUserGender: function(gender) {
 			if(gender==="male"){
