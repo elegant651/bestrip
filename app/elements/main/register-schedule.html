@@ -161,7 +161,7 @@
 		</div>
  
 		<div class="vertical-section">
-			<paper-button id="btnRegister" noink disabled$="{{checkData(user, selCityIdx, startDate)}}" on-tap="register"><iron-image src="../../images/main/register_btn_2.png"></iron-image></paper-button>			
+			<paper-button id="btnRegister" noink disabled$="{{checkData(selCityIdx, startDate)}}" on-tap="register"><iron-image src="../../images/main/register_btn_2.png"></iron-image></paper-button>			
 		</div>
 
 		<city-dialog id="cityDlog" on-select-city="onSelectCity" modal></city-dialog>		
@@ -276,10 +276,7 @@
 			this.$.txtSelCity.innerHTML = strName;
 		},				
 
-		checkData: function(user, selCityIdx, startDate) {			
-			if(this.user==null){
-				return true;
-			}
+		checkData: function(selCityIdx, startDate) {						
 			if(this.selCityIdx==-1){				
 				return true;
 			}						
@@ -322,7 +319,7 @@
 			var schedule_title = startDateName + " : " + selCityName;			
 
 			var data = {
-				userid: this.user.uid,
+				userid: this.userid,
 				usergender: this.userData.gender,
 				username: this.userData.username,				
 				userpic: this.userData.picture,
@@ -339,7 +336,7 @@
 				schedule_title : schedule_title,				
 				created_at: new Date().getTime(),
 				status: 0				
-			};
+			};			
 			
 			this.$.fcSchedules.add(data);					
 			

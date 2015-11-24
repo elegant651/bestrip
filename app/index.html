@@ -52,8 +52,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- will be replaced with elements/elements.vulcanized.html -->  
   <script src="bower_components/page/page.js"></script>    
   <script src="bower_components/firebase/firebase.js"></script>
-  <link rel="import" href="bower_components/iron-pages/iron-pages.html">
-  <link rel="import" href="bower_components/paper-menu/paper-menu.html">
+  <link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html">
+  <link rel="import" href="bower_components/iron-pages/iron-pages.html">  
   <link rel="import" id="bundle" href="elements/elements.html" async>  
   <base href="/">
   <!-- endreplace-->
@@ -85,7 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>          
 
           <!-- Drawer Content -->          
-            <paper-menu id="drawerList" class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">                
+            <iron-selector id="drawerList" class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">                
                 
                   <!-- <a data-route="signup" href="/signup">
                     <span>SignUp</span>
@@ -132,7 +132,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       <span>Log out</span>
                       <div id="icLogout" class="icon"></div>                                        
                   </a>                            
-            </paper-menu>
+            </iron-selector>
         </div>      
 
       <paper-header-panel id="headerPanel" main mode="cover">
