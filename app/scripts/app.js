@@ -75,6 +75,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var authData = ref.getAuth();
         if(authData) {
           app.userid = authData.uid;
+        } else {
+          page.redirect('/');
         }                      
       } else {
         app.userid = app.user.uid;            
@@ -109,10 +111,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.querySelector('#mainToolbar').setAttribute('hidden', '');              
     });
 
-    page('/signup', function() {        
-        // Polymer.Base.importHref("../elements/main/sign-up.html", function() { 
-        //     getAuthData();
-        // });        
+    page('/signup', function() {                
 
         initDrawer('SIGN UP');
         document.querySelector('#paperToggle').setAttribute('hidden', '');

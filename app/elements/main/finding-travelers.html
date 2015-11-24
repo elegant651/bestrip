@@ -109,6 +109,12 @@
 			@apply(--layout-horizontal);				
 		}
 
+		.travelBox .scheduleTitle {
+			margin-left: 15px;
+			font-size: 15px;
+			font-weight: bold;
+		}
+
 		.travelBox .userinfoWrapper {
 			@apply(--layout-horizontal);				
 		}
@@ -190,7 +196,7 @@
 					<div class="travelBox">						
 						<iron-image src="[[schedule.userpic]]" style="width:90px; height:90px;"></iron-image>
 						<div class="vertical-section">
-							<div>[[schedule.schedule_title]]</div>
+							<div class="scheduleTitle">[[schedule.schedule_title]]</div>
 							<div class="userinfoWrapper">
 								<iron-icon class="icGender" src="{{_computeUserGender(schedule.usergender)}}"></iron-icon>
 								<div class="name">[[schedule.username]]</div>
