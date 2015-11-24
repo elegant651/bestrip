@@ -180,7 +180,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </section>
 
               <section data-route="myschedule">
-                  <my-schedule id="mySchedule" user="[[user]]"></my-schedule>
+                <template is="dom-bind" id="tempBindM">
+                  <my-schedule id="mySchedule" userid="[[userid]]"></my-schedule>
+                </template>
               </section>
 
               <section data-route="logout">

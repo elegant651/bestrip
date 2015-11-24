@@ -168,8 +168,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       initDrawer('NOTIFICATION');
     });    
 
-    page('/myschedule', function() {
-      importPage("../elements/main/my-schedule.html");
+    page('/myschedule', function() {      
+      Polymer.Base.importHref("../elements/main/my-schedule.html", function() {                    
+          var userid = getAuthData();            
+          document.querySelector("#tempBindM").userid = userid;
+      });      
       app.route = 'myschedule';
 
       initDrawer('MY TRAVELERS');

@@ -81,12 +81,6 @@
 	     	data="{{scheduleData}}"
 	     	>
 	     </firebase-document>
-
-	     <firebase-document
-	     	location="{{userTarget}}"
-	     	data="{{userData}}"
-	     	>
-	     </firebase-document>
 		
 		<div class="vertical-section">
 			<template is="dom-repeat" items="{{schedules}}" sort="_sort" filter="filterOutdated" as="schedule"> 				
@@ -160,6 +154,11 @@
 		is: "my-schedule",
 
 		properties: {
+			userid: {
+				type: String,				
+				observer: '_useridChanged'
+			},
+
 			scheduleId: Number,
 
 			userData: {
@@ -167,22 +166,22 @@
 				observer: '_userDataChanged'
 			},
 
-			user: {
-				type: Object,
-				value: null
-			},			
-
 			scheduleTarget: {
 				type: String,
 				computed: 'computeScheduleTarget(scheduleId)'
 			},
 
-			userTarget: {
-				type: String,
-				computed: 'computeUserTarget(user)'
-			},
-
 			selUserId: String			
+		},
+
+		_useridChanged: function() {
+			if(this.userid!=""){			
+				var that = this;						 
+				var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
+				ref.child(this.userid).once("value", function(snap) {						
+					that.userData = snap.val();					
+				});
+			}	
 		},
 
 		_userDataChanged: function() {			
@@ -213,12 +212,6 @@
 
 		computeScheduleTarget: function(scheduleId) {
 			return "https://flamingo365.firebaseio.com/schedules/"+scheduleId;
-		},
-
-		computeUserTarget: function(user) {
-			if(user!=null){				
-				return "https://flamingo365.firebaseio.com/users/"+user.uid;
-			}			
 		},
 
 		computeContactSrc: function(scheduleId){
