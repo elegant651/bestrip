@@ -62,28 +62,15 @@
 		}
 	</style>
 	<template>
-		<firebase-collection	  
-			id="fcSchedules"        
-	          location="https://flamingo365.firebaseio.com/schedules"
-	          order-by-child="userid"
-	          equal-to="{{user.uid}}"
-	          data="{{schedules}}"></firebase-collection>
-
-	    <firebase-collection
-	    	id="fcRequests" 
-	    	location="https://flamingo365.firebaseio.com/requests"
-	    	order-by-child="userid" 
-	    	equal-to="{{user.uid}}"
-	    	data="{{requests}}"></firebase-collection>
 
 	    <firebase-document
 	     	location="{{scheduleTarget}}"
 	     	data="{{scheduleData}}"
 	     	>
-	     </firebase-document>
+	     </firebase-document>	     
 		
 		<div class="vertical-section">
-			<template is="dom-repeat" items="{{schedules}}" sort="_sort" filter="filterOutdated" as="schedule"> 				
+			<template is="dom-repeat" items="[[schedules]]" sort="_sort" filter="filterOutdated" as="schedule"> 				
 				<div class="list-element">					
 					<h2>{{schedule.schedule_title}}</h2>
 					<div class="listWrapper">
@@ -124,7 +111,7 @@
 		<hr />
 
 		<div class="vertical-section">			 
-			<template is="dom-repeat" items="{{requests}}" as="request"> 
+			<template is="dom-repeat" items="[[requests]]" as="request"> 
 				
 				<div class="list-element">					
 					<h2>{{request.schedule_title}}</h2>
@@ -161,10 +148,14 @@
 
 			scheduleId: Number,
 
-			userData: {
-				type: Object,
-				observer: '_userDataChanged'
-			},
+			// userData: {
+			// 	type: Object,
+			// 	observer: '_userDataChanged'
+			// },
+
+			schedules: Object,
+
+			requests: Object,
 
 			scheduleTarget: {
 				type: String,
@@ -177,9 +168,29 @@
 		_useridChanged: function() {
 			if(this.userid!=""){			
 				var that = this;						 
-				var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
-				ref.child(this.userid).once("value", function(snap) {						
-					that.userData = snap.val();					
+				// var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
+				// ref.child(this.userid).once("value", function(snap) {						
+				// 	that.userData = snap.val();					
+				// });
+			
+				var scheduleRef = new Firebase("https://flamingo365.firebaseio.com/schedules");
+				scheduleRef.orderByChild("userid").equalTo(this.userid).on("value", function(querySnapshot){
+					that.schedules = [];
+					querySnapshot.forEach(function(snapshot){
+						var sv = snapshot.val();
+						sv["__firebaseKey__"] = snapshot.key();									
+						that.push("schedules", sv);									
+					});
+				});
+	
+				var reqRef = new Firebase("https://flamingo365.firebaseio.com/requests");
+				reqRef.orderByChild("userid").equalTo(this.userid).on("value", function(querySnapshot){
+					that.requests = [];
+					querySnapshot.forEach(function(snapshot){
+						var sv = snapshot.val();
+						sv["__firebaseKey__"] = snapshot.key();									
+						that.push("requests", sv);														
+					});
 				});
 			}	
 		},
@@ -213,11 +224,7 @@
 		computeScheduleTarget: function(scheduleId) {
 			return "https://flamingo365.firebaseio.com/schedules/"+scheduleId;
 		},
-
-		computeContactSrc: function(scheduleId){
-			return "/contactinfo/"+scheduleId;
-		},
-
+		
 		_computeUserGender: function(gender) {
 			if(gender==="male"){
 				return "../../images/main/male_imae.png";
@@ -255,6 +262,9 @@
 
 		makeTeam: function(e) {
 			this.scheduleId = e.currentTarget.getAttribute("data-scheduleid");
+
+			console.log(this.scheduleId+"///");
+			return;
 
 			if(this.scheduleId!=null){
 				this.scheduleData.status = 1;

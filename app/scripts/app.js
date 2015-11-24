@@ -110,9 +110,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     page('/signup', function() {        
-        Polymer.Base.importHref("../elements/main/sign-up.html", function() { 
-            getAuthData();
-        });        
+        // Polymer.Base.importHref("../elements/main/sign-up.html", function() { 
+        //     getAuthData();
+        // });        
 
         initDrawer('SIGN UP');
         document.querySelector('#paperToggle').setAttribute('hidden', '');
