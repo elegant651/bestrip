@@ -52,6 +52,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- will be replaced with elements/elements.vulcanized.html -->  
   <script src="bower_components/page/page.js"></script>    
   <script src="bower_components/firebase/firebase.js"></script>
+  <!-- <link rel="import" href="bower_components/iron-selector/iron-selector.html"> -->
   <link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html">
   <link rel="import" href="bower_components/iron-pages/iron-pages.html">  
   <link rel="import" id="bundle" href="elements/elements.html" async>  
@@ -77,15 +78,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">            
 
-    <paper-drawer-panel id="paperDrawerPanel" drawer-width="240px">      
+    <paper-drawer-panel id="paperDrawerPanel" drawer-width="240px" >      
         <div id="drawerWrap" drawer>          
           <!-- Drawer Toolbar -->
           <div id="drawerHeader">
             <span class="paper-font-title">FLAMINGO</span>
           </div>          
 
-          <!-- Drawer Content -->          
-            <iron-selector id="drawerList" class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">                
+          <!-- Drawer Content -->                      
+            <div id="drawerList" class="list">                
                 
                   <!-- <a data-route="signup" href="/signup">
                     <span>SignUp</span>
@@ -93,49 +94,49 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                   <hr /> -->
 
-                  <a data-route="profile" href="/myprofile">
+                  <a href="/profile">
                     <span>Profile</span>
                     <div id="icProfile" class="icon"></div>
                   </a>
 
                   <hr />
 
-                  <a data-route="register" href="/register">
+                  <a href="/register">
                     <span>Register</span>
                     <div id="icRegister" class="icon"></div>                    
                   </a>
 
                   <hr />
 
-                  <a data-route="search" href="/search">                    
+                  <a href="/search">                    
                     <span>Search</span>
                     <div id="icSearch" class="icon"></div>                    
                   </a>
 
                   <hr />
 
-                  <a data-route="schedules" href="/schedules">                    
+                  <a href="/schedules">                    
                     <span class="menu_rt">Notification <!-- <span class="newAlarm" hidden>New</span> --></span>
                     <div id="icNotification" class="icon"></div>                    
                   </a>
 
                   <hr />
 
-                  <a data-route="myschedule" href="/myschedule">                    
+                  <a href="/myschedule">                    
                     <span class="menu_mt">My travelers</span>
                     <div id="icTravelers" class="icon"></div>                    
                   </a>                  
 
                   <hr />
                   
-                  <a data-route="logout" href="/logout">                    
+                  <a href="/logout">                    
                       <span>Log out</span>
                       <div id="icLogout" class="icon"></div>                                        
                   </a>                            
-            </iron-selector>
+            </div>
         </div>      
 
-      <paper-header-panel id="headerPanel" main mode="cover">
+      <paper-header-panel id="headerPanel" main mode="standard">
 
         <!-- Main Toolbar -->
         <paper-toolbar id="mainToolbar" hidden class="nolanding">
@@ -145,7 +146,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <!-- Main Content -->
         <div class="content">
-          <iron-pages attr-for-selected="data-route" selected="{{route}}">
+          <iron-pages attr-for-selected="data-route" selected="[[route]]">
 
             <section data-route="home">                                               
                 <mobileweb-login id="mwLogin" route="[[route]]" provider="{{provider}}" user="{{user}}"></mobileweb-login>              

@@ -239,7 +239,7 @@
 
 		moveProfile: function(e) {
 			var userid = e.currentTarget.getAttribute("data-userid");
-			page.redirect("/myprofile/"+userid);
+			page.redirect("/profile/"+userid);
 		},
 
 		arrayify: function(obj) { 		
@@ -270,16 +270,14 @@
 		},		
 
 		makeTeam: function(e) {
-			this.scheduleId = e.currentTarget.getAttribute("data-scheduleid");
-
-			console.log(this.scheduleId+"///");
-			return;
+			this.scheduleId = e.currentTarget.getAttribute("data-scheduleid");			
 
 			if(this.scheduleId!=null){
 				this.scheduleData.status = 1;
 				this.notifyPath('scheduleData.status', this.scheduleData.status);
 
-				this.fire('show-dialog', {content: "The task has completed.", url: "/myschedule"});
+				// this.fire('show-dialog', {content: "The task has completed.", url: "/myschedule"});
+				alert("The task has completed.");
 			}
 		},
 

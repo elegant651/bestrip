@@ -86,20 +86,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     /// routing ///
     var initDrawer = function(title) {        
-        document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "240px");
+        var drawerPanel = document.querySelector('#paperDrawerPanel');            
+        drawerPanel.setAttribute('drawer-width', "240px");
         document.querySelector('#drawerWrap').removeAttribute('hidden');
         document.querySelector('#mainToolbar').removeAttribute('hidden');
-        document.querySelector('#mainToolbar').className = 'nolanding';
-        document.querySelector('#headerPanel').setAttribute('mode', 'standard');   
+        document.querySelector('#mainToolbar').className = 'nolanding';        
         document.querySelector('#paperToggle').removeAttribute('hidden');
-        if(document.querySelector('#imgLogo')!=null){
-          document.querySelector('#imgLogo').setAttribute('hidden', '');
-        }       
+        
         document.querySelector('#titleMenu').removeAttribute('hidden');
         document.querySelector('#titleMenu').innerHTML = title;
         if(document.querySelector('.titleWrap')!=null){
           document.querySelector('.titleWrap').setAttribute('hidden', '');          
         }        
+        
+        drawerPanel.closeDrawer();            
     };
 
     page('/', function () {                
@@ -119,7 +119,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         app.route = 'signup';
     });
 
-    page('/myprofile', function() {            
+    page('/profile', function() {            
         Polymer.Base.importHref("../elements/main/my-profile.html", function() {                    
             var userid = getAuthData();            
             document.querySelector("#tempBindP").userid = userid;
@@ -131,12 +131,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         app.route = 'profile';
     });
 
-    page('/myprofile/:id', function(data) {
+    page('/profile/:id', function(data) {
         var userid = data.params.id;               
 
         Polymer.Base.importHref("../elements/main/my-profile.html", function() {  
             document.querySelector("#tempBindP").userid = null;                              
-            document.querySelector("#tempBindP").publicid = userid;
+            document.querySelector("#tempBindP").publicid = userid;            
         });
         initDrawer('PROFILE');
 
@@ -281,9 +281,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   });
 
   // Close drawer after menu item is selected if drawerPanel is narrow
-  app.onMenuSelect = function() {        
-    var drawerPanel = document.querySelector('#paperDrawerPanel');        
-    drawerPanel.closeDrawer();        
+  app.onMenuSelect = function() {     
+    console.log("se:"+app.route);   
+    var drawerPanel = document.querySelector('#paperDrawerPanel');            
+    drawerPanel.closeDrawer();            
   };
 
   app._computeStyle = function(isLargeScreen){

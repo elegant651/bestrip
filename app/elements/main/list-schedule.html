@@ -225,7 +225,7 @@
 
 		moveProfile: function(e) {
 			var userid = e.currentTarget.getAttribute("data-userid");
-			page.redirect("/myprofile/"+userid);
+			page.redirect("/profile/"+userid);
 		},
 		
 		accept: function(e) {
@@ -245,7 +245,8 @@
 				};
 				this.$.fcSchedule.add(data);
 
-				this.fire('show-dialog', {content: "The task has completed.", url: "/schedules"});
+				// this.fire('show-dialog', {content: "The task has completed.", url: "/schedules"});
+				alert("The task has completed.");
 			}						
 		},
 
@@ -255,7 +256,8 @@
 				this.requestData.status = 2;
 				this.notifyPath('requestData.status', this.requestData.status);
 
-				this.fire('show-dialog', {content: "The task has completed.", url: "/schedules"});
+				// this.fire('show-dialog', {content: "The task has completed.", url: "/schedules"});
+				alert("The task has completed.");
 			}			
 		}
 	});

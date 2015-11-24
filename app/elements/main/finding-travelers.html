@@ -419,7 +419,7 @@
 
 		moveProfile: function(e) {
 			var userid = e.currentTarget.getAttribute("data-schedule-userid");
-			page.redirect("/myprofile/"+userid);
+			page.redirect("/profile/"+userid);
 		},
 
 		request: function(e) {						
@@ -450,7 +450,8 @@
 				created_at: new Date().getTime()				
 			};
 			this.$.fcRequests.add(data);
-			this.fire('show-dialog', {content: "Request has sent.",url: "/search"});
+			// this.fire('show-dialog', {content: "Request has sent.",url: "/search"});
+			alert("Request has sent.");
 		}
 	});
 </script>
