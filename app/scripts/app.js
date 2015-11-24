@@ -123,6 +123,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         Polymer.Base.importHref("../elements/main/my-profile.html", function() {                    
             var userid = getAuthData();            
             document.querySelector("#tempBindP").userid = userid;
+            document.querySelector("#tempBindP").publicid = null;
         });
 
         initDrawer('PROFILE');
@@ -131,10 +132,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     page('/myprofile/:id', function(data) {
+        var userid = data.params.id;               
+
+        Polymer.Base.importHref("../elements/main/my-profile.html", function() {  
+            document.querySelector("#tempBindP").userid = null;                              
+            document.querySelector("#tempBindP").publicid = userid;
+        });
         initDrawer('PROFILE');
 
-        app.route = 'profile';
-        app.params = data.params;
+        app.route = 'profile';        
     });
 
     page('/register', function () {            

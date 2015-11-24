@@ -64,7 +64,7 @@
       	margin: 0 auto;	      	
       }
 	</style>
-	<template>					     
+	<template>					     		
 
 		<div class="userbox">
 			<div class="pictureField">				
@@ -112,7 +112,14 @@
 		properties: {					
 			userid: {
 				type: String,				
-				observer: '_useridChanged'
+				observer: '_useridChanged',
+				value: null
+			},
+
+			publicid: {
+				type: String,
+				observer: '_publicidChanged',
+				value: null
 			},
 
 			userData: Object,
@@ -135,16 +142,33 @@
 		},
 
 		_useridChanged: function() {
-			if(this.userid!=""){			
-				var that = this;						 
-				var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
-				ref.child(this.userid).once("value", function(snap) {					
-					var userData = snap.val();
-					that.prefItems=JSON.parse(userData.strPref);
-					that.lifeItems=JSON.parse(userData.strLife);		
-					that.userData = userData;			
-				});
+			if(this.userid!="" && this.userid!=null){			
+				this.getUserData(this.userid);
+				this.$.btnUpdate.removeAttribute("hidden");
 			}	
+		},
+
+		_publicidChanged: function() {
+			if(this.publicid!="" && this.publicid!=null){				
+				this.getUserData(this.publicid);
+				this.$.btnUpdate.setAttribute("hidden", null);
+			}
+		},
+
+		getUserData: function(thisid) {			
+			var that = this;						 
+			var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
+			ref.child(thisid).once("value", function(snap) {					
+				var userData = snap.val();
+
+				if(userData.strPref){
+					that.prefItems=JSON.parse(userData.strPref);	
+				}
+				if(userData.strLife){
+					that.lifeItems=JSON.parse(userData.strLife);		
+				}				
+				that.userData = userData;			
+			});
 		},
 
 		// _defaultUserId: function(user) {
