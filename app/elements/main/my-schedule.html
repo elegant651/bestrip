@@ -32,6 +32,10 @@
 			@apply(--layout-horizontal);			
 		}
 
+		.usersWrapper .userpic {
+			cursor: pointer;
+		}
+
 		.userbox {
 			width: 110px;			
 			text-align: center;
@@ -77,7 +81,7 @@
 						<div class="usersWrapper">							
 							<div class="userbox">
 								<iron-icon class="icHost" src="../../images/main/host_icon.png"></iron-icon>								
-								<iron-image src="{{schedule.userpic}}" sizing="cover" style="width:70px; height:70px;"></iron-image>
+								<iron-image class="userpic" src="{{schedule.userpic}}" sizing="cover" style="width:70px; height:70px;" data-userid$="{{schedule.userid}}" on-tap="moveProfile"></iron-image>
 								<div class="infos">
 									<iron-icon class="icGender" src="{{_computeUserGender(schedule.usergender)}}"></iron-icon>									
 									<div class="username">{{schedule.username}}</div>
@@ -86,7 +90,7 @@
 
 							<template is="dom-repeat" items="{{arrayify(schedule.req_users)}}" as="requser">						
 								<div class="userbox">
-									<iron-image src="{{requser.userpic}}" sizing="cover" style="width:70px; height:70px;"></iron-image>
+									<iron-image class="userpic" src="{{requser.userpic}}" sizing="cover" style="width:70px; height:70px;" data-userid$="{{requser.userid}}" on-tap="moveProfile"></iron-image>
 									<div class="infos">
 										<iron-icon class="icGender" src="{{_computeUserGender(requser.usergender)}}"></iron-icon>
 										<div class="username">{{requser.username}}</div>
@@ -120,7 +124,7 @@
 						<div class="usersWrapper">													
 							<div class="userbox">
 								<iron-icon class="icHost" src="../../images/main/host_icon.png"></iron-icon>								
-								<iron-image src="{{request.schedule_userpic}}" sizing="cover" style="width:70px; height:70px;"></iron-image>
+								<iron-image class="userpic" src="{{request.schedule_userpic}}" sizing="cover" style="width:70px; height:70px;" data-userid$="{{request.schedule_userid}}" on-tap="moveProfile"></iron-image>
 								<div class="infos">
 									<iron-icon class="icGender" src="{{_computeUserGender(request.schedule_usergender)}}"></iron-icon>
 									<div class="username">{{request.schedule_username}}</div>
@@ -233,6 +237,11 @@
 			}
 		},
 
+		moveProfile: function(e) {
+			var userid = e.currentTarget.getAttribute("data-userid");
+			page.redirect("/myprofile/"+userid);
+		},
+
 		arrayify: function(obj) { 		
 			if(obj==null) return null;
 
@@ -258,7 +267,7 @@
 			} else {
 				return true;
 			}
-		},
+		},		
 
 		makeTeam: function(e) {
 			this.scheduleId = e.currentTarget.getAttribute("data-scheduleid");

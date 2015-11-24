@@ -109,6 +109,10 @@
 			@apply(--layout-horizontal);				
 		}
 
+		.travelBox .userpic {
+			cursor: pointer;
+		}
+
 		.travelBox .scheduleTitle {
 			margin-left: 15px;
 			font-size: 15px;
@@ -194,7 +198,7 @@
 
 				<template is="dom-repeat" items="[[schedules]]" filter="filterStatus" sort="_sort" as="schedule">					
 					<div class="travelBox">						
-						<iron-image src="[[schedule.userpic]]" style="width:90px; height:90px;"></iron-image>
+						<iron-image class="userpic" src="[[schedule.userpic]]" data-schedule-userid$="{{schedule.userid}}" style="width:90px; height:90px;" on-tap="moveProfile"></iron-image>
 						<div class="vertical-section">
 							<div class="scheduleTitle">[[schedule.schedule_title]]</div>
 							<div class="userinfoWrapper">
@@ -411,6 +415,11 @@
 			}
 
 			return false;
+		},
+
+		moveProfile: function(e) {
+			var userid = e.currentTarget.getAttribute("data-schedule-userid");
+			page.redirect("/myprofile/"+userid);
 		},
 
 		request: function(e) {						
