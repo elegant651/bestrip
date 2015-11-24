@@ -1,3 +1,5 @@
+<!-- <link rel="import" href="../dialogs/city-dialog.html"> -->
+<!-- <link rel="import" href="../../bower_components/paper-date-picker/paper-date-picker.html"> -->
 
 <dom-module id="finding-travelers">
 	<style>
@@ -227,7 +229,7 @@
 			</div>
 		</div>		
 
-		<city-dialog id="cityDlog" on-select-city="onSelectCity" modal></city-dialog>
+		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>
 
 
 		<paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
@@ -409,8 +411,8 @@
 			}
 		},
 
-		checkData: function(userid) {						
-			if(this.user==null || this.user.uid==userid){
+		checkData: function(suserid) {						
+			if(this.userid==suserid){
 				return true;
 			}
 
@@ -430,7 +432,7 @@
 			var schedule_username = e.currentTarget.getAttribute("data-schedule-username");			
 			var schedule_userpic = e.currentTarget.getAttribute("data-schedule-userpic");			
 
-			if(this.user==null || this.user.uid==schedule_userid){
+			if(this.userid==schedule_userid){
 				alert("It's impossible to request its user");
 				return;
 			}
@@ -442,7 +444,7 @@
 				schedule_usergender: schedule_usergender,
 				schedule_username: schedule_username,				
 				schedule_userpic: schedule_userpic,
-				userid: this.user.uid,
+				userid: this.userid,
 				username: this.userData.username,
 				usergender: this.userData.gender,				
 				userpic: this.userData.picture,

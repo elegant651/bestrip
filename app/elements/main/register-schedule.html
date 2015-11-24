@@ -1,3 +1,5 @@
+<!-- <link rel="import" href="../dialogs/city-dialog.html"> -->
+<!-- <link rel="import" href="../../bower_components/paper-date-picker/paper-date-picker.html"> -->
 
 <dom-module id="register-schedule">
 	<style>						
@@ -161,10 +163,10 @@
 		</div>
  
 		<div class="vertical-section">
-			<paper-button id="btnRegister" noink disabled$="{{checkData(selCityIdx, startDate)}}" on-tap="register"><iron-image src="../../images/main/register_btn_2.png"></iron-image></paper-button>			
+			<paper-button id="btnRegister" noink on-tap="register"><iron-image src="../../images/main/register_btn_2.png"></iron-image></paper-button>			
 		</div>
 
-		<city-dialog id="cityDlog" on-select-city="onSelectCity" modal></city-dialog>		
+		<city-dialog id="cityDlog" on-select-city="onSelectCity"></city-dialog>		
 
 		<paper-dialog id="dpDlog" class="paper-date-picker-dialog" on-iron-overlay-closed="dateValueChanged">
 				<div class="buttons">
@@ -276,7 +278,7 @@
 			this.$.txtSelCity.innerHTML = strName;
 		},				
 
-		checkData: function(selCityIdx, startDate) {						
+		checkData: function() {						
 			if(this.selCityIdx==-1){				
 				return true;
 			}						
@@ -291,6 +293,13 @@
 			if(this.userData==null){
 				return;
 			}			
+
+			if(this.checkData()){
+				alert("Select city or Select start date");
+				return;
+			}
+
+			this.$.btnRegister.setAttribute('hidden', '');
 
 			if(this.userData.nationality==null){
 				this.userData.nationality = "";
@@ -342,9 +351,10 @@
 			
 			// this.fire('show-dialog', {content: "Registration has completed.", url: "/register"});	
 			alert("Registration has completed.");
+			this.$.btnRegister.removeAttribute('hidden');
 
 			//initialize
-			this.initialize();
+			this.initialize();			
 		}		
 	});
 </script>
