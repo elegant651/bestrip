@@ -191,10 +191,10 @@ padding: 0 16px;
 #titleMenu {	
 	color: rgb(254,254,254);
 	font-size: 20px;
-	display: inline-block;
-    /*margin-left: 80px;*/
-    margin-top: 15px;
-    margin: 0 auto;
+	font-weight: bold;
+	display: inline-block;    
+    margin-top: 15px;    
+    margin: 0 auto;    
     text-align: center;
 }
 
