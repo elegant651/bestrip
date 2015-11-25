@@ -196,6 +196,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     //////routing end ////
 
     // imports are loaded and elements have been registered
+    var icClose = document.querySelector('#icClose');
     var paperDrawerPanel = document.querySelector('#paperDrawerPanel');
     var signup = document.querySelector('#signup');
     var registerSchedule = document.querySelector("#registerSchedule");
@@ -204,6 +205,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var mySchedule = document.querySelector('#mySchedule');        
     var logoutDlog = document.querySelector('#logoutDlog');
     var paperDlog = document.querySelector('#paperDlog');
+
+    icClose.addEventListener('click', function(){
+        var drawerPanel = document.querySelector('#paperDrawerPanel');            
+        drawerPanel.closeDrawer();
+    });
 
 
     logoutDlog.addEventListener('logout-complete', function(e) {

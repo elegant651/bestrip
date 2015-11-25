@@ -7,6 +7,7 @@
 			text-align: center;
 			font-size: 15px;
 			font-weight: normal;
+			margin: 3px;
 		}
 
 		hr {
@@ -14,6 +15,13 @@
 		    height: 1px;
 		    background: rgb(200,200,200);		 		    
 		}
+
+		paper-radio-button {
+	      --paper-radio-button-checked-color: rgb(258,68,19);
+	      --paper-radio-button-checked-ink-color: rgb(258,68,19);
+	      --paper-radio-button-unchecked-color: var(--paper-orange-900);
+	      --paper-radio-button-unchecked-ink-color: var(--paper-orange-900);
+	    }
 
 		.searchWrapper {			
 			width: 100%;
@@ -288,7 +296,7 @@
 			var strName = "London";
 			this.$.piSelCity.value = strName;	
 
-			this.search();			
+			// this.search();			
 		},
 
 		_useridChanged: function() {
