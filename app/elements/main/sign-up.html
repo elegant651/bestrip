@@ -47,7 +47,7 @@
 			background-image: url("../../images/main/signup_female_unselected.png");
 			background-size: cover;
 			background-repeat: no-repeat;	
-			width: 100px;
+			width: 101px;
 			height: 26px;
 		}
 		#rgGender .iron-selected .imgFemale {
@@ -75,8 +75,8 @@
 		#btnSignup {
 			width: 300px;
 			background-color: rgb(162,161,161);
-			color: rgb(255,254,254);
-			margin-left: 35px;
+			color: rgb(255,254,254);			
+			margin: 0 auto;
 			margin-top: 20px;
 			margin-bottom: 10px;
 			text-align: center;
@@ -145,7 +145,9 @@
 		<div class="field">
 			<span class="txtPolicy">By continuing, you're confiming that you're read and agree to our <span class="underline" on-tap="showUseterms">terms and conditions</span> and <span class="underline" on-tap="showPrivacy">privacy policy</span></span>
 		</div>
-		<paper-button id="btnSignup" on-tap="signup" noink class="colorful ripple">Start</paper-button>
+		<div class="field">
+			<paper-button id="btnSignup" on-tap="signup" noink class="colorful ripple">Start</paper-button>
+		</div>
 
 		<privacy-dialog id="privacyDlog" on-tap="hidePrivacy"></privacy-dialog>
 		<useterms-dialog id="usetermsDlog" on-tap="hideUseterms"></useterms-dialog>

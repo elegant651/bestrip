@@ -42,7 +42,7 @@
 		.infoWrapper .title {
 			font-size: 20px;
 			color: rgb(253,68,19);	
-		}
+		}		
 
 		paper-checkbox{
 	        --paper-checkbox-checked-color: var(--paper-orange-500);
@@ -75,6 +75,7 @@
 				<iron-icon class="icGender" src="{{_computeUserGender(userData.gender)}}"></iron-icon>
 				<div class="username">{{userData.username}}</div>
 				<div class="age">, [[_computeUserAge(userData.birth)]]</div>
+				<div class="nationality">, {{userData.nationality}}</div>
 			</div>
 		</div>
 

@@ -177,7 +177,7 @@
 	    	}
 
 	    	if(this.user && this.route=="home"){	    		
-	    		page.redirect("/register");
+	    		page.redirect("/profile");
 	    		return;
 	    	}
 	    	
@@ -202,7 +202,7 @@
 
 			    					// that.setUserData(snapshot);
 			    					console.log("login complete");			    					
-			    					page.redirect('/register');
+			    					page.redirect("/profile");
 			    				}
 			    			});	    												
 	    				} else {
@@ -228,7 +228,7 @@
 	    			// 	that.setUserData(snapshot);
 
 	    				console.log("login complete");	    			
-	    				page.redirect('/register');
+	    				page.redirect("/profile");
 	    			// });	    			
 	    		}	    		
 	    			    		    			    			    		
