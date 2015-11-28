@@ -73,13 +73,15 @@
           	<div class="moBody">
             	<div><iron-image id="moBtnFacebook" src="../../images/main/facebook.png" on-tap="facebookLogin"></iron-image></div>
             	<div style="color:rgb(129,129,129); margin: 5px;">or</div>
-            	<div class="moField"><input placeholder="email" value="{{email::input}}" /><iron-icon class="icField" src="../../images/main/main_email_icon.png"></iron-icon></div>
+            	<div class="moField"><input placeholder="email" value="{{email::change}}" /><iron-icon class="icField" src="../../images/main/main_email_icon.png"></iron-icon></div>
             	<div class="moField"><input placeholder="password" type="password" value="{{password::input}}" /><iron-icon class="icField" src="../../images/main/main_password_icon.png"></iron-icon></div>          
 
             	<div><paper-button id="moBtnLogin" disabled$="{{computeLogin(email,password)}}" on-tap="emailLogin"><iron-image src="../../images/main/main_login_btn.png"></iron-image></paper-button></div>
           	</div>
-        </div>        
-	</template>
+        </div> 
+
+        <iron-localstorage id="llUserEmail" name="fl-useremail" value="{{email}}" on-iron-localstorage-load-empty="initializeDefaultValue"></iron-localstorage>        
+	</template>	
 </dom-module>
 <script>
 	Polymer({
@@ -123,6 +125,10 @@
 
 		ready: function() {
 
+		},
+
+		initializeDefaultValue: function(ev) {
+			this.email = "";
 		},
 
 		moveSignup: function() {
