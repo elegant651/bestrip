@@ -17,8 +17,10 @@
 		h2 {
 			font-size:  20px;
 			color: rgb(138,138,138);
+			margin-left: 10px;
 			margin-right: 20px;
 			font-weight: normal;
+			width: 130px;
 		}
 
 		paper-radio-button.orange {
@@ -110,7 +112,7 @@
 			<paper-input id="piPassword" value="{{password}}" type="password" label="ex) 12345678" minlength="6" required auto-validate error-message="minimum 6 characters" char-counter maxlength="20"></paper-input>
 		</div>			
 		<div class="field" hidden$="{{isFacebookMode(provider)}}">
-			<h2>Password Check</h2>
+			<h2>Re-Password</h2>
 			<paper-input id="piPasswordCheck" value="{{passwordCheck}}" type="password" minlength="6" required auto-validate error-message="minimum 6 characters" char-counter maxlength="20"></paper-input>
 		</div>			
 
@@ -138,7 +140,7 @@
 			<nationality-select id="nsModule" nationality="{{nationality}}"></nationality-select>
 		</div>
 		<div class="field">
-			<h2>Phone Number</h2>
+			<h2>Phone</h2>
 			<paper-input id="piCountryCode" type="number" label="country code" value="{{countryCode}}" required auto-validate></paper-input>
 			<paper-input id="piPhone" type="number" label="phone number" value="{{phone}}" required auto-validate maxlength="15"></paper-input>
 		</div>
