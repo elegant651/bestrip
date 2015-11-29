@@ -57,8 +57,9 @@ body.loading #splash {
 }
 
 #drawerHeader span {
-	margin-left: 16px;
+	margin-left: 13px;
 	line-height: 55px;
+	font-size: 15pt;
 	display: inline-block;
 }
 
@@ -70,7 +71,7 @@ body.loading #splash {
 	width: 27px;
 	height: 27px;
 	display: inline-block;	
-	margin-left: 82px;	
+	margin-left: 67px;	
 	margin-bottom: -9px;
 }
 
@@ -186,14 +187,19 @@ padding: 0 16px;
 }
 
 #mainToolbar {
-	
+	width: 100%;
+}
+
+#mainToolbar #paperToggle {
+	position: fixed;
+	top: 10px;
 }
 
 #mainToolbar.landing {
 	background-image: url("../images/main/img1_100.jpg");
 	background-color: rgb(258,68,19);
 	background-size: cover;
-	background-repeat: no-repeat;	
+	background-repeat: no-repeat;		
 	height: 600px;	
 }
 
@@ -208,8 +214,7 @@ padding: 0 16px;
 	font-weight: bold;
 	display: inline-block;    
     margin-top: 15px;    
-    margin: 0 auto;    
-    margin-left: 85px;
+    margin: 0 auto;           
     text-align: center;
 }
 

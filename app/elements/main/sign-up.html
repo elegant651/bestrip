@@ -20,7 +20,7 @@
 			margin-left: 10px;
 			margin-right: 20px;
 			font-weight: normal;
-			width: 130px;
+			width: 100px;
 		}
 
 		paper-radio-button.orange {
@@ -112,7 +112,7 @@
 			<paper-input id="piPassword" value="{{password}}" type="password" label="ex) 12345678" minlength="6" required auto-validate error-message="minimum 6 characters" char-counter maxlength="20"></paper-input>
 		</div>			
 		<div class="field" hidden$="{{isFacebookMode(provider)}}">
-			<h2>Re-Password</h2>
+			<h2>Password Check</h2>
 			<paper-input id="piPasswordCheck" value="{{passwordCheck}}" type="password" minlength="6" required auto-validate error-message="minimum 6 characters" char-counter maxlength="20"></paper-input>
 		</div>			
 
