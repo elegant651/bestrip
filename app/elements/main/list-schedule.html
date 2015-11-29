@@ -62,7 +62,7 @@
 
 		.blank {
 			text-align: center;
-			margin-top: 100px;
+			margin-top: 40px;
 		}
 
 		.blanktitle {			
@@ -170,10 +170,13 @@
 				var reqRef = new Firebase("https://flamingo365.firebaseio.com/requests");
 				reqRef.orderByChild("schedule_userid").equalTo(this.userid).on("value", function(querySnapshot){
 					that.requests = [];					
-					querySnapshot.forEach(function(snapshot){
-						that.$.blankImg.setAttribute('hidden', null);
+					querySnapshot.forEach(function(snapshot){						
 
 						var sv = snapshot.val();
+						if(sv.status==0){
+							that.$.blankImg.setAttribute('hidden', null);
+						}
+
 						sv["__firebaseKey__"] = snapshot.key();									
 						that.push("requests", sv);						
 					});
