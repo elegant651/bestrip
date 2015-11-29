@@ -7,7 +7,11 @@
 			text-align: center;
 			font-size: 15px;
 			font-weight: normal;
-			margin: 3px;
+			margin: 3px;			
+		}
+
+		.vertical-section {
+			margin-top: 3px;
 		}
 
 		.iron-selected {
@@ -18,6 +22,11 @@
 			border: 0;
 		    height: 1px;
 		    background: rgb(200,200,200);		 		    
+		}
+
+		.wrapperIc {
+			width: 80px;
+			text-align: left;
 		}
 
 		paper-radio-button {
@@ -50,10 +59,10 @@
 		.wrapperDate {
 			@apply(--layout-horizontal);			
 			@apply(--layout-center-justified);
-		}
+		}		
 
 		.wrapperDate .icDate {
-			margin: 20px;
+			margin: 20px;			
 		}
 
 		.wrapperDate paper-input {
@@ -176,14 +185,18 @@
 					<div class="vertical-section">
 						<h2>City</h2>
 						<div class="wrapperCity">
-							<iron-icon class="icCity" src="../../images/main/nationality_icon.png"></iron-icon>
+							<div class="wrapperIc">
+								<iron-icon class="icCity" src="../../images/main/nationality_icon.png"></iron-icon>
+							</div>
 							<paper-input id="piSelCity" data-dialog="dlogCity" label="Select City" on-tap="showCityDlog"><paper-input>
 						</div>
 					</div>
 					<div class="vertical-section">											
 						<h2>Date</h2>			
 						<div class="wrapperDate">
-							<iron-icon class="icDate" src="../../images/main/calendar_icon_2.png"></iron-icon>
+							<div class="wrapperIc">
+								<iron-icon class="icDate" src="../../images/main/calendar_icon_2.png"></iron-icon>
+							</div>
 							<paper-input id="piPickDate" label="Select Start Date" on-tap="showDateDlog"></paper-input>				
 						</div>
 					</div>
