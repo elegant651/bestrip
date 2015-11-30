@@ -196,6 +196,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     //////routing end ////
 
     // imports are loaded and elements have been registered
+    var mwLogin = document.querySelector('#mwLogin');
     var icClose = document.querySelector('#icClose');
     var paperDrawerPanel = document.querySelector('#paperDrawerPanel');
     var signup = document.querySelector('#signup');
@@ -205,6 +206,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var mySchedule = document.querySelector('#mySchedule');        
     var logoutDlog = document.querySelector('#logoutDlog');
     var paperDlog = document.querySelector('#paperDlog');
+
+    mwLogin.addEventListener('show-newflag', function(e) {
+      console.log("show-newflag");
+      document.querySelector('.newAlarm').removeAttribute('hidden');
+    }); 
 
     icClose.addEventListener('click', function(){
         var drawerPanel = document.querySelector('#paperDrawerPanel');            
@@ -250,13 +256,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
     });
 
-    // listSchedule.addEventListener('show-newflag', function(e) {
-    //   document.querySelector('.menu_rt').querySelector('.newAlarm').removeAttribute('hidden');
-    // }); 
+    listSchedule.addEventListener('show-newflag', function(e) {
+      console.log("show-newflag");
+      document.querySelector('.newAlarm').removeAttribute('hidden');
+    }); 
 
-    // listSchedule.addEventListener('hide-newflag', function(e) {
-    //   document.querySelector('.menu_rt').querySelector('.newAlarm').setAttribute('hidden', '');
-    // });
+    listSchedule.addEventListener('hide-newflag', function(e) {
+      document.querySelector('.newAlarm').setAttribute('hidden', '');
+    });
 
     mySchedule.addEventListener('show-dialog', function(e) {
         paperDlog.toggle();

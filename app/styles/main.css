@@ -111,9 +111,12 @@ padding: 0 16px;
 
 
 #drawerList .newAlarm{
+	position: absolute;
+	background-image: url("../images/main/new_image.png");	
 	color: rgb(255,0,0);
-	background: rgba(3, 84, 46, 0.1);
-	/*visibility: hidden;*/
+	width: 25px;
+	height: 14px;	   
+    right: 20px;
 }
 
 #drawerList span {

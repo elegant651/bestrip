@@ -177,6 +177,23 @@
 	      alert(this.message);
 	    },
 
+	    loginComplete: function() {
+	    	console.log("login complete");	    			
+	    	page.redirect("/profile");
+
+	    	var that = this;
+	    	var reqRef = new Firebase("https://flamingo365.firebaseio.com/requests");
+			reqRef.orderByChild("schedule_userid").equalTo(this.user.uid).on("value", function(querySnapshot){				
+				querySnapshot.forEach(function(snapshot){						
+					var sv = snapshot.val();
+					if(sv.status==0){
+						that.fire('show-newflag');						
+						return;
+					}
+				});
+			});	    	
+	    },
+
 	    _userChanged: function() {
 	    	if(this.user){
 	    		// console.log("user:"+JSON.stringify(this.user));
@@ -207,8 +224,7 @@
 			    				}  else {
 
 			    					// that.setUserData(snapshot);
-			    					console.log("login complete");			    					
-			    					page.redirect("/profile");
+			    					that.loginComplete();
 			    				}
 			    			});	    												
 	    				} else {
@@ -227,15 +243,9 @@
 	    				}
 	    			});	    			
 
-	    		} else {
-	    			// var ref = new Firebase("https://flamingo365.firebaseio.com/users");
-	    			// var that = this;
-	    			// ref.child(this.user.uid).once('value', function(snapshot){
-	    			// 	that.setUserData(snapshot);
+	    		} else {	    			
 
-	    				console.log("login complete");	    			
-	    				page.redirect("/profile");
-	    			// });	    			
+	    				this.loginComplete();	    			   		
 	    		}	    		
 	    			    		    			    			    		
 	    	} else {	    		

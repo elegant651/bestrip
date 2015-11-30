@@ -166,6 +166,7 @@
 			if(this.userid!=""){			
 				var that = this;	
 				that.$.blankImg.removeAttribute('hidden');					 
+				that.fire('hide-newflag');
 
 				var reqRef = new Firebase("https://flamingo365.firebaseio.com/requests");
 				reqRef.orderByChild("schedule_userid").equalTo(this.userid).on("value", function(querySnapshot){
@@ -175,6 +176,7 @@
 						var sv = snapshot.val();
 						if(sv.status==0){
 							that.$.blankImg.setAttribute('hidden', null);
+							that.fire('show-newflag');
 						}
 
 						sv["__firebaseKey__"] = snapshot.key();									
