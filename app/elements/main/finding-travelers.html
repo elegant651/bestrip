@@ -10,6 +10,11 @@
 			margin: 3px;			
 		}
 
+		iron-selector > * {
+        	padding: 8px;
+        	width: 60px;
+      	}      	
+
 		.vertical-section {
 			margin-top: 3px;
 		}
@@ -27,20 +32,22 @@
 		.wrapperIc {
 			width: 80px;
 			text-align: left;
-		}
-
-		paper-radio-button {
-	      --paper-radio-button-checked-color: rgb(258,68,19);
-	      --paper-radio-button-checked-ink-color: rgb(258,68,19);
-	      --paper-radio-button-unchecked-color: var(--paper-orange-900);
-	      --paper-radio-button-unchecked-ink-color: var(--paper-orange-900);
-	    }
+		}		
 
 		.searchWrapper {			
 			width: 100%;
 			text-align: center;
 			margin-top: 30px;
-		}		
+		}				
+
+		.searchWrapper .selImg {
+			margin: 0 auto;
+		}
+
+		.searchWrapper .selTitle {
+			text-align: center;
+			margin-top: 5px;
+		}
 
 		.wrapperCity {
 			@apply(--layout-horizontal);			
@@ -67,12 +74,7 @@
 
 		.wrapperDate paper-input {
 			margin-right: 20px;
-		}
-
-		iron-selector > * {
-        	padding: 8px;
-        	width: 60px;
-      	}      	
+		}		
 
       	#rgTheme {
 			font-size: 13px;			
@@ -90,6 +92,9 @@
 		#rgTheme .iron-selected .imgDining {
 			background-image: url("../../images/main/dining_icon_2.png");
 		}
+		#rgTheme .iron-selected .txtDining {
+			color: rgb(258,68,19);
+		}
 
 		#rgTheme .imgParty {
 			background-image: url("../../images/main/party_icon_1.png");
@@ -101,6 +106,9 @@
 		#rgTheme .iron-selected .imgParty {
 			background-image: url("../../images/main/party_icon_2.png");
 		}
+		#rgTheme .iron-selected .txtParty {
+			color: rgb(258,68,19);
+		}
 
 		#rgTheme .imgAccompany {
 			background-image: url("../../images/main/accompany_icon_1.png");
@@ -111,6 +119,9 @@
 		}
 		#rgTheme .iron-selected .imgAccompany {
 			background-image: url("../../images/main/accompany_icon_2.png");
+		}
+		#rgTheme .iron-selected .txtAccompany {
+			color: rgb(258,68,19);
 		}
 
 		#btnSearch {
@@ -203,11 +214,11 @@
 
 					<div class="vertical-section">
 						<h2>Theme</h2>
-						<paper-radio-group id="rgTheme" selected="party">
-							<paper-radio-button name="dining" noink><div class="imgDining"></div>Dining</paper-radio-button>
-							<paper-radio-button name="party" noink><div class="imgParty"></div>Party</paper-radio-button>
-							<paper-radio-button name="accompany" noink><div class="imgAccompany"></div>Accompany</paper-radio-button>				
-						</paper-radio-group>
+						<iron-selector id="rgTheme" attr-for-selected="name" selected="party">
+							<div name="dining"><div class="imgDining selImg"></div><div class="txtDining selTitle">Dining</div></div>
+							<div name="party"><div class="imgParty selImg"></div><div class="txtParty selTitle">Party</div></div>
+							<div name="accompany"><div class="imgAccompany selImg"></div><div class="txtAccompany selTitle">Accompany</div></div>						
+						</iron-selector>
 					</div>
 							
 

@@ -184,7 +184,7 @@
 	    	var that = this;
 	    	var reqRef = new Firebase("https://flamingo365.firebaseio.com/requests");
 			reqRef.orderByChild("schedule_userid").equalTo(this.user.uid).on("value", function(querySnapshot){				
-				querySnapshot.forEach(function(snapshot){						
+				querySnapshot.forEach(function(snapshot){							
 					var sv = snapshot.val();
 					if(sv.status==0){
 						that.fire('show-newflag');						

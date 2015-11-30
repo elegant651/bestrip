@@ -8,14 +8,21 @@
 			font-size: 15px;
 			font-weight: normal;
 			margin: 3px;
+		}		
+
+		iron-selector > * {
+        	padding: 8px;
+        	width: 60px;
+      	}      	
+
+      	.selImg {
+			margin: 0 auto;
 		}
 
-		paper-radio-button {
-	      --paper-radio-button-checked-color: rgb(258,68,19);
-	      --paper-radio-button-checked-ink-color: rgb(258,68,19);
-	      --paper-radio-button-unchecked-color: var(--paper-orange-900);
-	      --paper-radio-button-unchecked-ink-color: var(--paper-orange-900);
-	    }
+		.selTitle {
+			text-align: center;
+			margin-top: 5px;
+		}
 
 		.destinationWrapper {
 			background-image: url("../../images/main/london_img.jpg");
@@ -31,7 +38,7 @@
 			padding-top: 60px;
 			font-size: 30px;
 			font-weight: bold;
-		}
+		}		
 
 		.destinationWrapper #btnSelCity {
 			text-align: center;			
@@ -71,6 +78,9 @@
 		#rgTheme .iron-selected .imgDining {
 			background-image: url("../../images/main/dining_icon_2.png");
 		}
+		#rgTheme .iron-selected .txtDining {
+			color: rgb(258,68,19);
+		}
 
 		#rgTheme .imgParty {
 			background-image: url("../../images/main/party_icon_1.png");
@@ -82,6 +92,9 @@
 		#rgTheme .iron-selected .imgParty {
 			background-image: url("../../images/main/party_icon_2.png");
 		}
+		#rgTheme .iron-selected .txtParty {
+			color: rgb(258,68,19);
+		}
 
 		#rgTheme .imgAccompany {
 			background-image: url("../../images/main/accompany_icon_1.png");
@@ -92,6 +105,9 @@
 		}
 		#rgTheme .iron-selected .imgAccompany {
 			background-image: url("../../images/main/accompany_icon_2.png");
+		}
+		#rgTheme .iron-selected .txtAccompany {
+			color: rgb(258,68,19);
 		}
 
 		#rgNumbers {
@@ -107,9 +123,11 @@
 			width: 36px;
 			height: 32px;
 		}
-
 		#rgNumbers .iron-selected .imgSingle {
 			background-image: url("../../images/main/single_icon_2.png");
+		}
+		#rgNumbers .iron-selected .txtSingle {
+			color: rgb(258,68,19);
 		}
 
 		#rgNumbers .imgSeveral {
@@ -119,9 +137,11 @@
 			width: 40px;
 			height: 32px;
 		}
-
 		#rgNumbers .iron-selected .imgSeveral {
 			background-image: url("../../images/main/several_icon_2.png");
+		}
+		#rgNumbers .iron-selected .txtSeveral {
+			color: rgb(258,68,19);
 		}		
 
 		#btnRegister {			
@@ -151,19 +171,19 @@
 		</div>
 		<div class="vertical-section">
 			<h2>Theme</h2>
-			<paper-radio-group id="rgTheme" selected="party">
-				<paper-radio-button name="dining" noink><div class="imgDining"></div>Dining</paper-radio-button>
-				<paper-radio-button name="party" noink><div class="imgParty"></div>Party</paper-radio-button>
-				<paper-radio-button name="accompany" noink><div class="imgAccompany"></div>Accompany</paper-radio-button>				
-			</paper-radio-group>
+			<iron-selector id="rgTheme" attr-for-selected="name" selected="party">
+				<div name="dining"><div class="imgDining selImg"></div><div class="txtDining selTitle">Dining</div></div>
+				<div name="party"><div class="imgParty selImg"></div><div class="txtParty selTitle">Party</div></div>
+				<div name="accompany"><div class="imgAccompany selImg"></div><div class="txtAccompany selTitle">Accompany</div></div>						
+			</iron-selector>
 		</div>		
 
 		<div class="vertical-section">
 			<h2>Numbers</h2>
-			<paper-radio-group id="rgNumbers" selected="several">
-				<paper-radio-button name="single" noink><div class="imgSingle"></div>single</paper-radio-button>
-				<paper-radio-button name="several" noink><div class="imgSeveral"></div>several</paper-radio-button>
-			</paper-radio-group>
+			<iron-selector id="rgNumbers" attr-for-selected="name" selected="several">
+				<div name="single"><div class="imgSingle selImg"></div><div class="txtSingle selTitle">single</div></div>
+				<div name="several"><div class="imgSeveral selImg"></div><div class="txtSeveral selTitle">several</div></div>
+			</iron-selector>			
 		</div>
  
 		<div class="vertical-section">
