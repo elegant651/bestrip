@@ -1,8 +1,10 @@
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src='../../scripts/jquery.ui.widget.js' type='text/javascript'></script>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<!-- <script src='../../scripts/jquery.ui.widget.js' type='text/javascript'></script>
 <script src='../../scripts/jquery.iframe-transport.js' type='text/javascript'></script>
 <script src='../../scripts/jquery.fileupload.js' type='text/javascript'></script>
 <script src='../../scripts/jquery.cloudinary.js' type='text/javascript'></script>
+ -->
+<script src="http://widget.cloudinary.com/global/all.js" type="text/javascript"></script>  
 <!-- <script src="../../../bower_components/cloudinary-core/cloudinary-core.js"></script>
 <script src="../../../bower_components/cloudinary-jquery/cloudinary-jquery.js"></script>
 <script src="../../../bower_components/cloudinary-jquery-file-upload/cloudinary-jquery-file-upload.js"></script> -->
@@ -10,36 +12,25 @@
 <dom-module id="imgupload-dialog">
 	<style>
 		:host {
-			background: rgb(255,255,255);			
+			background: rgb(255,255,0);			
 			text-align: center;
 			@apply(--layout-center-justified);
-		}		
-
-		.logoutWrapper {
-			width: 100%;			
-			@apply(--layout-horizontal);			
-			@apply(--layout-center-justified);
-			text-align: center;
-			cursor: pointer;
-			margin-top: 200px;
-		}
-
-		.logoutWrapper paper-button {
-			text-align: center;
-			width: 100%;
-			font-size: 22px;
-			font-weight: bold;
-		}
+		}				
+		
 	</style>	
 
 	<template>		
 
-		
 		<div class="uploadWrapper">
+		<!-- <div class="uploadWrapper">
 			<input name="file" type="file" 
 			   class="cloudinary-fileupload" data-cloudinary-field="image_id" 
 			   data-form-data=" ... html-escaped JSON data ... " ></input>
-		</div>					
+
+			<button on-tap="uploadImg"></button>
+		</div>					 -->			
+			<div id="upload_widget_opener">Upload multiple images</div>				          
+		</div>
 	</template>
 </dom-module>
 <script>
@@ -58,7 +49,16 @@
 
 		ready: function() {			
 			// var cl = cloudinary.Cloudinary.new({cloud_name: "dvq70nb3i", api_key: "391357267719618"});
-			$.cloudinary.config({cloud_name: "dvq70nb3i", api_key: "391357267719618"});			
+			// $.cloudinary.config({cloud_name: "dvq70nb3i", api_key: "391357267719618"});			
+
+			this.$.upload_widget_opener.addEventListener('click', function() {
+				cloudinary.openUploadWidget({ cloud_name: 'dvq70nb3i', upload_preset: 'fm23qgor'}, 
+			      function(error, result) { console.log(error, result) });
+			});
+		},
+
+		uploadImg: function() {
+
 		}
 	   
 	});
