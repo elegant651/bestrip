@@ -2,7 +2,8 @@
 <!-- <link rel="import" href="../../bower_components/paper-date-picker/paper-date-picker.html"> -->
 
 <dom-module id="register-schedule">
-	<style>						
+	<style>			
+
 		h2 {
 			text-align: center;
 			font-size: 15px;
@@ -74,6 +75,7 @@
 			background-repeat: no-repeat;	
 			width: 36px;
 			height: 32px;
+			cursor: pointer;
 		}
 		#rgTheme .iron-selected .imgDining {
 			background-image: url("../../images/main/dining_icon_2.png");
@@ -88,6 +90,7 @@
 			background-repeat: no-repeat;	
 			width: 36px;
 			height: 36px;
+			cursor: pointer;
 		}
 		#rgTheme .iron-selected .imgParty {
 			background-image: url("../../images/main/party_icon_2.png");
@@ -102,6 +105,7 @@
 			background-repeat: no-repeat;	
 			width: 38px;
 			height: 32px;
+			cursor: pointer;
 		}
 		#rgTheme .iron-selected .imgAccompany {
 			background-image: url("../../images/main/accompany_icon_2.png");
@@ -169,7 +173,7 @@
 				<paper-input id="piStartDate" on-tap="showStartDateDlog"></paper-input>			
 			</div>						
 		</div>
-		<div class="vertical-section">
+		<div class="vertical-section" style="border: 1px solid #EAEAEA;">
 			<h2>Theme</h2>
 			<iron-selector id="rgTheme" attr-for-selected="name" selected="party">
 				<div name="dining"><div class="imgDining selImg"></div><div class="txtDining selTitle">Dining</div></div>
