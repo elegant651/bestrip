@@ -29,6 +29,8 @@
 
 			<button on-tap="uploadImg"></button>
 		</div>					 -->			
+			<iron-image src="{{picture}}" style="width:100px; height:100px;" sizing="cover"></iron-image>			
+
 			<div id="upload_widget_opener">Upload multiple images</div>				          
 		</div>
 	</template>
@@ -43,23 +45,33 @@
 	        	type: Object,
 	        	value: null,	        	
 	        	notify: true
+	      	},
+
+	      	picture: {
+	      		type: String,
+	      		value: 'https://flamingofly.com/images/main/photo_img.png'	      	
 	      	}
-	      	
 		},
 
 		ready: function() {			
 			// var cl = cloudinary.Cloudinary.new({cloud_name: "dvq70nb3i", api_key: "391357267719618"});
 			// $.cloudinary.config({cloud_name: "dvq70nb3i", api_key: "391357267719618"});			
 
+			var that = this;
 			this.$.upload_widget_opener.addEventListener('click', function() {
 				cloudinary.openUploadWidget({ cloud_name: 'dvq70nb3i', upload_preset: 'fm23qgor'}, 
-			      function(error, result) { console.log(error, result) });
+			      function(error, result) { 
+			      	console.log(error, result) 
+			      	if(error){
+			      		alert("Error occured while uploading image");
+			      		return;
+			      	}
+
+			      	var thumb = result[0].thumbnail_url;
+			      	var imgUrl = result[0].url;
+			      	that.picture = imgUrl;
+			      });
 			});
-		},
-
-		uploadImg: function() {
-
-		}
-	   
+		}	   
 	});
 </script>
