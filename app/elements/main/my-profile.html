@@ -1,3 +1,5 @@
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://widget.cloudinary.com/global/all.js" type="text/javascript"></script>  
 
 <dom-module id="my-profile">
 	<style>
@@ -70,8 +72,9 @@
 	<template>					     		
 
 		<div class="userbox">
-			<div class="pictureField">				
-				<iron-image src="{{userData.picture}}" style="width:100px; height:100px;"></iron-image>			
+			<div id="uploadPicture" class="pictureField">				
+				<iron-image src="{{picture}}" style="width:100px; height:100px; cursor: pointer" sizing="cover"></iron-image>
+				<!-- <div>Select Picture</div>	 -->
 			</div>
 
 			<div class="infos">
@@ -128,6 +131,8 @@
 
 			userData: Object,
 
+			picture: String,
+
 			prefItems: Array,
 
 			lifeItems: Array
@@ -143,6 +148,23 @@
 				{name:'swimming', checked: false}, {name:'surfing', checked: false}, {name:'skiing', checked: false}, {name:'diving', checked: false}, {name:'hiking', checked: false}, {name:'fishing', checked: false}, {name:'bicycling', checked: false}, {name:'shopping', checked: false},
 				{name:'movie', checked: false}, {name:'artist', checked: false}, {name:'music', checked: false}, {name:'cooking', checked: false}, {name:'photography', checked: false}
 			];			
+
+			var that = this;
+			this.$.uploadPicture.addEventListener('click', function() {
+				cloudinary.openUploadWidget({ cloud_name: 'dvq70nb3i', upload_preset: 'fm23qgor'}, 
+			      function(error, result) { 			      	
+			      	if(error){
+			      		alert("Error occured while uploading image");
+			      		return;
+			      	}
+
+			      	var thumb = result[0].thumbnail_url;
+			      	var imgUrl = result[0].url;
+			      	that.picture = imgUrl;
+
+			      	that.updateProfileImg(imgUrl);
+			      });
+			});
 		},
 
 		_useridChanged: function() {
@@ -172,16 +194,20 @@
 					that.lifeItems=JSON.parse(userData.strLife);		
 				}				
 				that.userData = userData;			
+				that.picture = userData.picture;
 			});
 		},
 
-		// _defaultUserId: function(user) {
-		// 	if(user!=null){
-		// 		console.log("user:"+user.uid);
-		// 		return user.uid;
-		// 	}
-		// },
+		updateProfileImg: function(profileImg) {			
+			if(this.userid==null || profileImg==null){
+				return;
+			}
 
+			var ref = new Firebase("https://flamingo365.firebaseio.com/users");	    
+			ref.child(this.userid).update({
+				"picture": profileImg
+			});
+		},
 
 		_computeUserGender: function(gender) {
 			if(gender==="male"){
@@ -234,7 +260,6 @@
 			var strPref = JSON.stringify(this.prefItems);						
 			var strLife = JSON.stringify(this.lifeItems);
 			
-
 			if(strPref==null || strLife==null){
 				return;
 			}
