@@ -102,8 +102,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         drawerPanel.closeDrawer();            
     };
 
-    page('/', function () {                
+    page('/', function (ctx, next) {                
       app.route = 'home';
+      window.history.pushState(null, null, '/');
       
       initDrawer();
       document.querySelector('#paperDrawerPanel').setAttribute('drawer-width', "0px"); 
